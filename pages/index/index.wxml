@@ -1,0 +1,136 @@
+<!--pages/index/index.wxml-->
+<view class='container-shop'>
+  <view class='search-bar'>
+    <!-- 搜索框开始 -->
+      <view class='search-box'>
+          <view class="search-box-bar" bindtap='searchClick'>
+              <icon type='search' size="16"></icon>
+              <input class="search-view-input" placeholder='搜索'/>
+          </view>
+          <view class='activity-add' wx:if="{{addflag}}"><image bindtap='addhandle' src='{{addimg}}'></image></view>
+      </view>
+      </view>
+  <!-- 搜索框结束 -->
+  <!-- banner -->
+    <view class="wrap">
+      <swiper class="swipers" autoplay="{{autoplay}}" style="height:360rpx" current="{{currentSwiper}}" bindchange="swiperChange">  
+          <block wx:for="{{banner}}">  
+              <swiper-item>  
+                  <image bindload='imageLoad' style="height:360rpx" src="{{item.pictureUrl}}" ></image>  
+              </swiper-item>  
+          </block>  
+      </swiper>  
+      <view class="dots">  
+          <block wx:for="{{banner}}">  
+              <view class="dot {{index == currentSwiper ? ' active' : ''}}"></view>  
+          </block>  
+      </view>  
+  </view>
+  <!-- banner结束 -->
+
+  <view class='tag-content'>
+    <view class='flex-list'>
+      <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190220/6887d9ff272a4d98ab601dd3c6880508.png"></image>
+    </view>
+    <view class='flex-list'>
+<image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190220/a774c335ad6243fcb52aa87c44fa28fa.png"></image>
+    </view>
+    <view class='flex-list'>
+<image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190220/95056367fd8041c9857ff71946b70267.png"></image>
+    </view>
+  </view>
+
+  <view class='advertisement'>
+    <view class='left-ment'>
+      <view class='left-ment-text'>
+        <view class='banner-title'>限时秒杀</view>
+        <view class='banner-desc'>精细打算组合</view>
+        <view class='image'>
+          <image src='/assets/index/xiangyou.png'></image>
+        </view>
+      </view>
+      <image src="/assets/index/yintao.png"></image>
+    </view>
+    <view class='right-ment'>
+      <view class='item first'>
+          <view class='ban'>
+              <text class='ban-title'>限时秒杀</text>
+              <view class='ban-desc'>精细打算组合</view>
+              <view class='image'>
+                <image src='/assets/index/xiangyou.png'></image>
+              </view>
+          </view>
+          <image src="/assets/index/pinggou.png"></image>
+      </view>
+      <view class='item'>
+          <view class='ban'>
+              <view class='ban-title'>限时秒杀</view>
+              <view class='banner-desc'>精细打算组合</view>
+              <view class='image'>
+                <image src='/assets/index/xiangyou.png'></image>
+              </view>
+          </view>
+          <image src="/assets/index/haoyou.png"></image>
+        <!-- </view> -->
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品列表 -->
+  <view class='good-content'>
+    <view class='good-list'>
+      <view class='good-img'>
+        <image src="/assets/index/qicheng.png"></image>
+      </view>
+      <view class='good-desc'>
+        <view class='desc'>
+          <view class='title'>秭归精选应季伦晚鲜橙 甜橙子 </view>
+          <view class='text'>严苛品质万里挑一</view>
+        </view>
+        <view class='good-price'>
+          <view class='price present-price'>￥119.90</view>
+          <view class='price original'>￥155.90</view>
+          <view class='price add'>
+            <image src="/assets/index/add.png"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='good-list'>
+      <view class='good-img'>
+        <image src="/assets/index/huolongguo.png"></image>
+      </view>
+      <view class='good-desc'>
+        <view class='desc'>
+          <view class='title'>秭归精选应季伦晚鲜橙 甜橙子 </view>
+          <view class='text'>严苛品质万里挑一</view>
+        </view>
+        <view class='good-price'>
+          <view class='price present-price'>￥119.90</view>
+          <view class='price original'>￥155.90</view>
+          <view class='price add'>
+            <image src="/assets/index/add.png"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+      <view class='good-list'>
+      <view class='good-img'>
+        <image src="/assets/index/liulan.png"></image>
+      </view>
+      <view class='good-desc'>
+        <view class='desc'>
+          <view class='title'>秭归精选应季伦晚鲜橙 甜橙子 </view>
+          <view class='text'>严苛品质万里挑一</view>
+        </view>
+        <view class='good-price'>
+          <view class='price present-price'>￥119.90</view>
+          <view class='price original'>￥155.90</view>
+          <view class='price add'>
+            <image src="/assets/index/add.png"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  </view>

@@ -1,0 +1,250 @@
+/* pages/index/index.wxss */
+/* 商品首页 */
+.search-bar{
+  position: relative;
+}
+
+/*搜索 开始*/
+.search-box{
+  background: #fff;
+  height: 60rpx;
+  padding:0 40rpx;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.search-box-bar{
+  padding: 0 32rpx;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height:60rpx;
+  background:rgba(242,242,246,1);
+  border-radius:30px;
+  padding-left: 32rpx;
+}
+.search-box-bar .tit_seabox_add{
+  width:calc( 100% - 22rpx );
+}
+.tit_seabox_bar icon{
+  margin-right: 20rpx;
+
+}
+.activity_add{
+  width:60rpx;
+  text-align:right;
+  border-left:4rpx solid #f2f2f2;
+  margin-left:20rpx;
+
+}
+.activity_add image{
+  width: 40rpx;
+  height: 40rpx;
+}
+.search-view-input{
+  font-size: 13px;
+  width: 100%;
+  color: #A8A8A8;
+}
+/*搜索 结束*/
+.wrap{
+  position: relative;
+  padding: 0 40rpx;
+  margin-top:14rpx;
+  border-radius:10rpx;
+}
+
+/*用来包裹所有的小圆点  */
+.dots{  
+  /* width: 156rpx; */
+  height: 36rpx; 
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  left: 335rpx;
+  bottom: 20rpx;
+}  
+/*未选中时的小圆点样式 */
+.dot{  
+  width: 12rpx;  
+  height: 12rpx;
+  margin: 0 10rpx 0 0;
+  border-radius: 50%;
+  background-color: white;
+}  
+/*选中以后的小圆点样式  */
+.active{  
+  width: 40rpx;   
+  height: 12rpx;
+  box-shadow:0px 1rpx 2rpx 0px rgba(4,0,0,0.2);
+  border-radius:6rpx;
+  background-color: #37D260;
+} 
+.swipers image{
+  width: 670rpx;
+  border-radius:10rpx;
+}
+
+.tag-content{
+  display: flex;
+  padding: 0 40rpx;
+  margin: 30rpx 0 60rpx 0;
+  justify-content: center;
+}
+.flex-list{
+  flex: 1;
+  text-align: center;
+}
+.flex-list image{
+  width: 156rpx;
+  height: 156rpx;
+}
+.advertisement{
+  display: flex;
+  padding: 0 40rpx;
+}
+.advertisement .left-ment{
+  height:280rpx;
+  width:325rpx;
+  margin: 0 20rpx 0 0;
+  position: relative;
+}
+.left-ment-text{
+  position: absolute;
+  left: 29rpx;
+  top:29rpx;
+}
+.advertisement .left-ment .left-ment-text .image image{
+  width: 56rpx;
+  height: 36rpx;
+  margin-top: 59rpx;
+}
+.banner-title{
+  font-size: 18px;
+  color:#212121;
+  font-weight:bold;
+}
+.banner-desc{
+  color: #656565;
+  font-size: 11px;
+}
+.advertisement .right-ment .item .image image{
+  width: 45rpx;
+  height: 36rpx;
+  /* margin-top: 59rpx; */
+}
+.advertisement .left-ment image{
+  width: 100%;
+  height: 100%;
+}
+.advertisement .right-ment{
+  background: #ffffff;
+  height:280rpx;
+  flex:1;
+  display:flex;
+  flex-wrap: wrap;
+}
+.advertisement .right-ment .item{
+  width:325rpx;
+  height: 130rpx;
+  position: relative
+}
+.right-item{
+  position: relative;
+    width:325rpx;
+  height: 130rpx;
+}
+.ban-title{
+  left: 19rpx;
+  color:#212121;
+  font-size: 15px
+}
+.ban{
+  font-weight:bold;
+  position: absolute;
+  left: 19rpx;
+  bottom:0;
+  font-size: 15px
+}
+.ban-desc{
+  font-size: 11px;
+  color: #656565
+}
+.advertisement .right-ment .item image{
+  width: 100%;
+  height: 100%;
+}
+.advertisement .right-ment .first{
+  margin: 0 0 20rpx 0;
+}
+
+/*商品*/
+.good-content{
+  padding: 0 40rpx;
+  /* margin-top: 50rpx; */
+}
+.good-list{
+  display: flex;
+  padding: 30rpx 0;
+  border-bottom: 1px solid #EEEEEE;
+}
+.good-img{
+  display: flex;
+  align-items: center;
+}
+.good-list .good-img{
+  margin: 0 50rpx 0 0;
+}
+.good-list .good-img image{
+  width: 180rpx;
+  height: 180rpx;
+}
+.good-desc{
+  position: relative;
+  width: 100%;
+}
+.good-list .title{
+  font-size:14px;
+  font-family:PingFang-SC-Bold;
+  font-weight:bold;
+  color:#212121;
+}
+.good-list .text{
+  font-size:14px;
+  color:#656565;
+}
+.good-price{
+  position: absolute;
+  bottom: 0;
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 30rpx;
+}
+.price{
+  flex: 1;
+  /* margin:  0 10rpx; */
+}
+.present-price{
+  color: #FF9F06;
+  font-size: 15px;
+  padding: 0 20rpx 0 0;
+}
+.original{
+  text-decoration:line-through;
+  color: #969696;
+  font-size: 15px;
+}
+.add{
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content:flex-end; 
+}
+
+.add image{
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block;
+}

@@ -1,0 +1,16 @@
+<!--components/banner/banner.wxml-->
+<view class="wrap">
+    <swiper class="swipers" autoplay="{{autoplay}}" current="{{currentSwiper}}" bindchange="swiperChange">  
+        <block wx:for="{{imgs}}">  
+            <swiper-item>  
+                 <image src="{{item.url}}"></image>  
+            </swiper-item>  
+        </block>  
+    </swiper>  
+   <!--重置小圆点的样式  -->
+    <view class="dots">  
+        <block wx:for="{{imgs}}">  
+            <view class="dot{{index == currentSwiper ? ' active' : ''}}"></view>  
+        </block>  
+    </view>  
+</view>
