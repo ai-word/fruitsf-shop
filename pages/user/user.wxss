@@ -1,1 +1,33 @@
 /* pages/user/user.wxss */
+.header{
+  width:100%;
+  height: 367rpx;
+}
+.user-content-info{
+  padding: 40rpx 40rpx;
+  display: flex;
+  align-items: center;
+}
+.user-content-info image{
+  width: 124rpx;
+  height: 124rpx;
+}
+.user-name{
+  margin-left: 30rpx;
+  /* display: flex; */
+}
+.user-name .name{
+  color: #FFFEFE;
+  font-size: 16px;
+  padding: 0 0 20rpx 0;
+}
+.type-user{
+  width:106rpx;
+  height:32rpx;
+  background:rgba(44,194,84,1);
+  border:1px solid rgba(141,229,164,1);
+  border-radius:16rpx;
+  font-size: 11px;
+  color: #FFFEFE;
+  text-align: center;
+}

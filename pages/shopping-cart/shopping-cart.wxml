@@ -1,2 +1,23 @@
-<!--pages/shopping-cart/shopping-cart.wxml-->
-<text>购物车</text>
+<view class="">
+  <!-- 导航栏 -->
+  <view class='shop'>
+    <view class="weui-navbar">
+        <scroll-view scroll-x="{{true}}" class='scroll-view-x'>
+        <block wx:for="{{navbarTitle}}" wx:key="index">
+          <view class="navbar-item {{navbarActiveIndex === index ? 'navbar-item-active' : ''}}" data-navbar-index="{{index}}" catchtap="onNavBarTap">
+            <text>{{item}}</text>
+          </view>
+        </block>
+        </scroll-view>
+      </view>
+      <view class="shop-content-wrapper">
+        <swiper current="{{navbarActiveIndex}}" bindanimationfinish="onBindAnimationFinish">
+          <swiper-item wx:for="{{navbarTitle}}" wx:key="index">
+            <scroll-view scroll-y="{{true}}">
+              {{item}}
+            </scroll-view>
+          </swiper-item>
+        </swiper>
+      </view>
+  </view>
+</view>

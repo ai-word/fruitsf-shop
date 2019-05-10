@@ -1,0 +1,9 @@
+<!--components/slideTab/slideTab.wxml-->
+<!-- 自定义tab标签组件-->
+<scroll-view scroll-x="true" class="scroll-view-x">
+  <view class="scroll-view-item" wx:for="{{tList}}" wx:key="*this">
+      <view class="{{currentTab==(index) ? 'on' : ''}}" bindtap="_swichNav" data-current="{{index}}">{{item.name}}</view>
+    </view>
+</scroll-view>
+<slot>
+</slot>
