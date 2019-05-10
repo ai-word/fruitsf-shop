@@ -9,6 +9,52 @@
         <view class='name'>不忘初心</view>
         <view class='type-user'>普通用户</view>
       </view>
+      <view class='user-price'>
+        <image src="/assets/user/price.png"></image>
+      </view>
+    </view>
+    <view class='coupon-content'>
+        <view class='coupon'>
+            <view>2</view>
+            <view class='coupon-color'>优惠券</view>
+        </view>
+        <view class='coupon'>
+            <view>￥100.50</view>
+            <view class='balance'>余额</view>
+        </view>
+    </view>
+  </view>
+
+  <view class='user-status'>
+    <view class='flex-item'>
+      <view class='item'>
+        <image src="/assets/user/delete.png"></image>
+        <view>全部订单</view>
+      </view>
+    </view>
+    <view class='flex-item'>
+      <view class='item'>
+        <image src="/assets/user/payment.png"></image>
+        <view>全部订单</view>
+      </view>
+    </view>
+    <view class='flex-item'>
+      <view class='item'>
+        <image src="/assets/user/distribution.png"></image>
+        <view>全部订单</view>
+      </view>
+    </view>
+    <view class='flex-item'>
+      <view class='item'>
+        <image src="/assets/user/mention.png"></image>
+        <view>全部订单</view>
+      </view>
+    </view>
+    <view class='flex-item'>
+      <view class='item'>
+        <image src="/assets/user/complete.png"></image>
+        <view>全部订单</view>
+      </view>
     </view>
   </view>
 </view>

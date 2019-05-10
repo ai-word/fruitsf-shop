@@ -7,8 +7,10 @@
               <icon type='search' size="16"></icon>
               <input class="search-view-input" placeholder='搜索'/>
           </view>
-          <view class='activity-add' wx:if="{{addflag}}"><image bindtap='addhandle' src='{{addimg}}'></image></view>
+          <view class='activity-add' ><image bindtap='addhandle' src='/assets/index/erweima.png'></image></view>
+     
       </view>
+
       </view>
   <!-- 搜索框结束 -->
   <!-- banner -->
@@ -127,7 +129,9 @@
           <view class='price present-price'>￥119.90</view>
           <view class='price original'>￥155.90</view>
           <view class='price add'>
-            <image src="/assets/index/add.png"></image>
+            <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
+                        <image src="/assets/index/add.png"></image>
+            </button>
           </view>
         </view>
       </view>

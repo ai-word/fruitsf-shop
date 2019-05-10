@@ -1,69 +1,71 @@
 <view class="class-cation">
-  <!-- tab导航栏 -->
-  <view class='navbar'>
-    <scroll-view scroll-x="true" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
-      <block wx:for="{{navData}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
-        <view class="nav-item {{currentTab == idx ?'active':''}}" data-current="{{idx}}" bindtap="switchNav">
-          <view class="name {{currentTab == idx ?'active':''}}">{{navItem.text}}</view>
-        </view>
-      </block>
+    <!-- tab导航栏 -->
+    <!-- scroll-left属性可以控制滚动条位置 -->
+    <!-- scroll-with-animation滚动添加动画过渡 -->
+<view class='navbar'>
+    <scroll-view scroll-x="true" style="height:80rpx" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
+        <block wx:for="{{navData}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
+            <view class="nav-item {{currentTab == idx ?'active':''}}"  data-current="{{idx}}" bindtap="switchNav">
+            <view class="name {{currentTab == idx ?'active':''}}" >{{navItem.text}}</view>
+            </view>
+        </block>
     </scroll-view>
-  </view>
+</view>
 
-  <view class='good-content'>
-    <view class='good-list' current="{{currentTab}}" wx:for="{{3}}" wx:for-item="tabItem" wx:for-index="idx" wx:key="idx">
-      <view class='good-img'>
-        <image src="/assets/index/qicheng.png"></image>
-      </view>
-      <view class='good-desc'>
-        <view class='desc'>
-          <view class='title'>秭归精选应季伦晚鲜橙 甜橙子 </view>
-          <view class='text'>严苛品质万里挑一</view>
+    <view class='good-content'>
+      <view class='good-list' current="{{currentTab}}" wx:for="{{3}}" wx:for-item="tabItem" wx:for-index="idx" wx:key="idx">
+        <view class='good-img'>
+          <image src="/assets/index/qicheng.png"></image>
         </view>
-        <view class='good-price'>
-          <view class='price present-price'>￥119.90</view>
-          <view class='price original'>￥155.90</view>
-          <view class='price add'>
-            <image src="/assets/index/add.png"></image>
+        <view class='good-desc'>
+          <view class='desc'>
+            <view class='title'>秭归精选应季伦晚鲜橙 甜橙子 </view>
+            <view class='text'>严苛品质万里挑一</view>
+          </view>
+          <view class='good-price'>
+            <view class='price present-price'>￥119.90</view>
+            <view class='price original'>￥155.90</view>
+            <view class='price add'>
+              <image src="/assets/index/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class='good-list'>
+        <view class='good-img'>
+          <image src="/assets/index/huolongguo.png"></image>
+        </view>
+        <view class='good-desc'>
+          <view class='desc'>
+            <view class='title'>秭归精选应季伦晚鲜橙 甜橙子 </view>
+            <view class='text'>严苛品质万里挑一</view>
+          </view>
+          <view class='good-price'>
+            <view class='price present-price'>￥119.90</view>
+            <view class='price original'>￥155.90</view>
+            <view class='price add'>
+              <image src="/assets/index/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+        <view class='good-list'>
+        <view class='good-img'>
+          <image src="/assets/index/liulan.png"></image>
+        </view>
+        <view class='good-desc'>
+          <view class='desc'>
+            <view class='title'>秭归精选应季伦晚鲜橙 甜橙子 </view>
+            <view class='text'>严苛品质万里挑一</view>
+          </view>
+          <view class='good-price'>
+            <view class='price present-price'>￥119.90</view>
+            <view class='price original'>￥155.90</view>
+            <view class='price add'>
+              <image src="/assets/index/add.png"></image>
+            </view>
           </view>
         </view>
       </view>
     </view>
-    <view class='good-list'>
-      <view class='good-img'>
-        <image src="/assets/index/huolongguo.png"></image>
-      </view>
-      <view class='good-desc'>
-        <view class='desc'>
-          <view class='title'>秭归精选应季伦晚鲜橙 甜橙子 </view>
-          <view class='text'>严苛品质万里挑一</view>
-        </view>
-        <view class='good-price'>
-          <view class='price present-price'>￥119.90</view>
-          <view class='price original'>￥155.90</view>
-          <view class='price add'>
-            <image src="/assets/index/add.png"></image>
-          </view>
-        </view>
-      </view>
-    </view>
-    <view class='good-list'>
-      <view class='good-img'>
-        <image src="/assets/index/liulan.png"></image>
-      </view>
-      <view class='good-desc'>
-        <view class='desc'>
-          <view class='title'>秭归精选应季伦晚鲜橙 甜橙子 </view>
-          <view class='text'>严苛品质万里挑一</view>
-        </view>
-        <view class='good-price'>
-          <view class='price present-price'>￥119.90</view>
-          <view class='price original'>￥155.90</view>
-          <view class='price add'>
-            <image src="/assets/index/add.png"></image>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
 </view>

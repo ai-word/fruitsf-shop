@@ -4,13 +4,27 @@
   height: 367rpx;
 }
 .user-content-info{
-  padding: 40rpx 40rpx;
+  padding: 40rpx 40rpx 30rpx 40rpx;
   display: flex;
   align-items: center;
+  position: relative;
 }
 .user-content-info image{
   width: 124rpx;
   height: 124rpx;
+}
+.user-price{
+  position: absolute;
+  right: 40rpx;
+  top: 51rpx;
+}
+.user-price image{
+  width:40rpx;
+  height: 40rpx;
+}
+.userimg{
+  display: flex;
+  align-items: center;
 }
 .user-name{
   margin-left: 30rpx;
@@ -30,4 +44,48 @@
   font-size: 11px;
   color: #FFFEFE;
   text-align: center;
+}
+
+/*优惠券*/
+.coupon-content{
+  display: flex;
+  padding: 0 40rpx;
+}
+.coupon{
+  flex: 1;
+  text-align: center;
+  color:#ffffff;
+  font-size: 16px;
+}
+.coupon-color,.balance{
+  font-size:13px;
+}
+.user-info{
+  position: relative
+}
+.user-status{
+  width: 670rpx;
+  height: 152rpx;
+  background: #F5F5F5;
+  position: absolute;
+  top: 292rpx;
+  margin:auto;
+  left:0;
+  right:0;
+  display: flex;
+  justify-content: space-between;
+  box-shadow:0px 6rpx 20rpx 0px rgba(4,0,0,0.1);
+  border-radius:10rpx;
+}
+.flex-item{
+  text-align: center;
+  font-size: 13px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-item image{
+  width: 60rpx;
+  height: 60rpx;
 }

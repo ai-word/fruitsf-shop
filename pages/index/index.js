@@ -1,4 +1,6 @@
 // pages/detail/detail.js
+const Http = require('../../utils/request.js');
+const app = getApp();
 Page({
 
   /**
@@ -7,40 +9,7 @@ Page({
   data: {
     currentSwiper: 0,
     autoplay: true,
-    banner: [
-      {
-        "id": "1125915891812581378",
-        "pictureUrl": "http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190508/89640ecbf8744e9991cf56bf7fe90681.jpg",
-        "bannerType": "HOME",
-        "pictureId": "1125915883180703746"
-      },
-      {
-        "bannerType": "HOME",
-        "id": "1123146750600994818",
-        "pictureUrl": "http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190430/45d08ae9311946f18c54c4042cf81e77.jpg",
-        "productId": "1121340374883020801",
-        "pictureId": "1123146458836815873",
-        "linkType": "PRODUCT"
-      },
-      {
-        "pictureId": "1125577180411457537",
-        "id": "1121614701859819521",
-        "linkType": "URL",
-        "orderNum": 2,
-        "link": "https://xianfengapp.gomoretech.com/newretail-admin/#/advertShow?id=1120949662920339458",
-        "pictureUrl": "http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190507/765576150e37473b8cca0dcf784abb1f.jpg",
-        "bannerType": "HOME"
-      },
-      {
-        "pictureId": "1119156293718040578",
-        "id": "1115523389905498113",
-        "linkType": "URL",
-        "orderNum": 4,
-        "link": "https://xianfengapp.gomoretech.com/newretail-admin/#/advertShow?id=1116605312237121538",
-        "pictureUrl": "http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190419/36e86a922c334a558016ca2dde57f8c1.jpg",
-        "bannerType": "HOME"
-      }
-    ],
+    banner: [],
     tag: [
       {
         "height": 300,
@@ -95,14 +64,63 @@ Page({
     //默认  
     currentSwiper: 0
   },
+  ifGetUserInfo: function () {
+    wx.getSetting({
+      success: res => {
+        console.log(res.authSetting, '23333')
+        if (res.authSetting['scope.userInfo']) {
+          if (wx.getStorageSync('token')) {
+            this.setData({
+              hasUserInfo: true
+            })
+            this.pageInit()
+          } else {
+            this.setData({
+              showAuthorizeBtn: true
+            })
+          }
+        } else {
+          this.setData({
+            showAuthorizeBtn: true
+          })
+        }
+      }
+    })
 
+  },
+  getBanner() {
+    let that = this
+    console.log('5555')
+    Http.HttpRequst(true, '/idx/getBanner', false, '', '', 'get', false, function (res) {
+      console.log(res,'5555')
+      // that.setData({
+      //   banner: res.data.data
+      // })
+    })
+  },
+    /**
+   * 获取手机号码服务端解密用户信息接口，获取手机号码
+   */
+  getPhoneNumber(e) {
+    console.log(e)
+    console.log(app.globalData.userInfo)
+    console.log(e.detail.encryptedData)
+    var params = {
+      signature: app.globalData.userInfo.signature,
+      rawData: app.globalData.userInfo.rawData,
+      encryptedData: e.detail.encryptedData,
+      iv: e.detail.iv
+    }
+    Http.HttpRequst(true, '/login/getPhoneNumber', false, '', params, 'get', false, function (res) {
+      console.log(res)
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getBanner()
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -134,7 +152,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    console.log(this.data.code, 'this.data.code')
+    if (this.data.code) {
+      this.ifGetUserInfo()
+    } else {
+      this.employIdCallback = res => {
+        this.ifGetUserInfo()
+      }
+    }
   },
 
   /**

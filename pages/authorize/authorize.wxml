@@ -1,0 +1,13 @@
+<!--pages/authorize/authorize.wxml-->
+<view wx:if="{{canIUse}}">
+    <view class='content'>
+        <view>未授权</view>
+        <text>获得你的公开信息(昵称，头像等)</text>
+    </view>
+
+    <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+        一键授权
+    </button>
+</view>
+
+<view wx:else>请升级微信版本</view>

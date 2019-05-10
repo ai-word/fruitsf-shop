@@ -28,11 +28,13 @@ Page({
         text: '火龙果'
       }
     ],
+    toView: 'the-0',
     currentTab: 0,
     navScrollLeft: 0,
     activeIndex: 0,
     sliderOffset: 0,
-    sliderLeft: 0
+    sliderLeft: 0,
+    windowHeight: ''
   },
   //事件处理函数
   onLoad: function () {
@@ -41,19 +43,17 @@ Page({
       success: function (res) {
         that.setData({
           sliderLeft: (res.windowWidth / that.data.navData.length - sliderWidth) / 10,
-          sliderOffset: res.windowWidth / that.data.navData.length * that.data.activeIndex
+          sliderOffset: res.windowWidth / that.data.navData.length * that.data.activeIndex,
+          windowHeight: res.windowHeight
         });
       }
     });
   },
   switchNav(event) {
+    console.log(event)
     this.setData({
       sliderOffset: event.currentTarget.offsetLeft,
-      activeIndex: event.currentTarget.id
-    });
-    wx.pageScrollTo({
-      scrollTop: 300,
-      duration: 0
+      toView: 'the-' + event.currentTarget.dataset.current
     });
     var cur = event.currentTarget.dataset.current;
     //每个tab选项宽度占1/5

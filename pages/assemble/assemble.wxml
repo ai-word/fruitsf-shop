@@ -17,7 +17,7 @@
       <view class='self mention' hidden="{{activeIndex != 0}}">
         <view class='mention-list'>
           <view class='commodity-img'>
-            <image src="/assets/index/huolongguo.png"></image>
+            <image mode='aspectFill' src="/assets/index/huolongguo.png"></image>
           </view>
           <view class='commodity-desc'>
             <view class='tag-view'>
@@ -37,7 +37,7 @@
 
         <view class='mention-list'>
           <view class='commodity-img'>
-            <image src="/assets/index/huolongguo.png"></image>
+            <image mode='aspectFill' src="/assets/index/huolongguo.png"></image>
           </view>
           <view class='commodity-desc'>
             <view class='tag-view'>
@@ -57,7 +57,7 @@
 
         <view class='mention-list'>
           <view class='commodity-img'>
-            <image src="/assets/index/huolongguo.png"></image>
+            <image mode='aspectFill' src="/assets/index/huolongguo.png"></image>
           </view>
           <view class='commodity-desc'>
             <view class='tag-view'>

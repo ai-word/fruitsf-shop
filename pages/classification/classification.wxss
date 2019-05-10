@@ -19,6 +19,7 @@ page {
 .navbar{
   background: #fff;
   height: 80rpx;
+  margin-bottom: 20rpx;
 }
 
 .nav {
@@ -49,10 +50,13 @@ page {
 .name.active {
   border-bottom: 6rpx solid #37d260;
 }
-
+::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  color: transparent;
+}
 .good-content {
   background: #ffffff;
-  margin-top: 20rpx;
   width: 100%;
   box-sizing: border-box;
 }

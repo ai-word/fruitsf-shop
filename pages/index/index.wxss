@@ -8,6 +8,7 @@
 .search-box{
   background: #fff;
   height: 60rpx;
+  width: calc(100% - 64rpx);
   padding:0 40rpx;
   display: flex;
   align-items: center;
@@ -16,9 +17,10 @@
 .search-box-bar{
   padding: 0 32rpx;
   display: flex;
-  width: 100%;
+
   align-items: center;
   height:60rpx;
+  width: calc(100% - 142rpx);
   background:rgba(242,242,246,1);
   border-radius:30px;
   padding-left: 32rpx;
@@ -29,6 +31,13 @@
 .tit_seabox_bar icon{
   margin-right: 20rpx;
 
+}
+.activity-add{
+  margin-left:30rpx;
+}
+.activity-add image{
+  width: 34rpx;
+  height: 34rpx;
 }
 .activity_add{
   width:60rpx;
@@ -247,4 +256,45 @@
   width: 40rpx;
   height: 40rpx;
   display: inline-block;
+}
+
+/* 授权坦克 */
+.authorizeShadow {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+}
+
+.authorizeShadow .authorize_main {
+  width: 88%;
+  height: auto;
+  font-size: 26rpx;
+  padding: 25rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 20rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.authorizeShadow .authorize_main image {
+  width: 26%;
+  margin: 20rpx 0;
+}
+
+.authorizeShadow .authorize_main>view {
+  text-align: center;
+  line-height: 90rpx;
+}
+
+.authorizeShadow .authorize_main .main {
+  margin-top: 20rpx;
 }

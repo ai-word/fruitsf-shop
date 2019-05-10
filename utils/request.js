@@ -4,7 +4,7 @@ module.exports = {
 // const baseUrl = 'http://172.16.1.226/invi';
 const baseUrl = 'https://bms.microc.cn/shopguide';
 // const baseUrl = 'http://x34mm3.natappfree.cc/invi';
-const dataUrl = "http://172.16.0.200:8080/shopguide";//数据统计测试环境
+const dataUrl = "https://xfshop.mynatapp.cc";//数据统计测试环境
 var app = getApp()
 
 
@@ -36,55 +36,55 @@ function HttpRequst(loading, url, sessionChoose, sessionId, params, method, ask,
     session = 'application/x-www-form-urlencoded'
   }
   wx.request({
-    url: baseUrl + url,
+    url: dataUrl + url,
     data: params,
     header: {
       'content-type': session,
-      // token: token
-      token: app.globalData.token
+      'wxa-sessionid': wx.getStorageSync('sessionkey')
     },
     method: method,
     success: function (res) {
-      // console.log(res)
-      wx.hideLoading()
-      if (res.statusCode == 200) {
-        if (loading == true) {
-          wx.hideToast();//隐藏提示框
-        }
-        console.log(res.data.code, url, 'urlurlurlurlurlurl')
-        if (res.data.code === 1001) {
-          // 登录失效
-          wx.showToast({
-            title: '登录信息失效',
-            icon: 'none'
-          })
-          setTimeout(function () {
-            wx.redirectTo({
-              url: '/pages/login/login',
-            })
-          }, 1000)
-        } else if (res.data.code == 101) {
-          wx.showModal({
-            title: '提示',
-            content: '异常',
-            showCancel: false,
-            success: function (res) {
-              if (res.confirm) {
-                console.log('用户点击确定')
-              }
-            }
-          })
-        } else if (res.data.code === undefined) {
+      console.log(res,88888)
+      // wx.hideLoading()
+      callBack(res)
+      // if (res.statusCode == 200) {
+      //   if (loading == true) {
+      //     wx.hideToast();//隐藏提示框
+      //   }
+      //   console.log(res.data.code, url, 'urlurlurlurlurlurl')
+      //   if (res.data.code === 1001) {
+      //     // 登录失效
+      //     wx.showToast({
+      //       title: '登录信息失效',
+      //       icon: 'none'
+      //     })
+      //     setTimeout(function () {
+      //       wx.redirectTo({
+      //         url: '/pages/login/login',
+      //       })
+      //     }, 1000)
+      //   } else if (res.data.code == 101) {
+      //     wx.showModal({
+      //       title: '提示',
+      //       content: '异常',
+      //       showCancel: false,
+      //       success: function (res) {
+      //         if (res.confirm) {
+      //           console.log('用户点击确定')
+      //         }
+      //       }
+      //     })
+      //   } else if (res.data.code === undefined) {
 
-        } else {
-          callBack(res.data);
-        }
-      } else if (res.statusCode == 502) {
-        wx.showModal({
-          title: '提示',
-          content: '服务器异常',
-        })
-      }
+      //   } else {
+      //     callBack(res.data);
+      //   }
+      // } else if (res.statusCode == 502) {
+      //   wx.showModal({
+      //     title: '提示',
+      //     content: '服务器异常',
+      //   })
+      // }
     },
     fail: function (e) {
       console.log(e)
