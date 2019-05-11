@@ -8,7 +8,6 @@
               <input class="search-view-input" placeholder='搜索'/>
           </view>
           <view class='activity-add' ><image bindtap='addhandle' src='/assets/index/erweima.png'></image></view>
-     
       </view>
 
       </view>
@@ -16,14 +15,14 @@
   <!-- banner -->
     <view class="wrap">
       <swiper class="swipers" autoplay="{{autoplay}}" style="height:360rpx" current="{{currentSwiper}}" bindchange="swiperChange">  
-          <block wx:for="{{banner}}">  
+          <block wx:for="{{banner}}" wx:key='index'>  
               <swiper-item>  
-                  <image bindload='imageLoad' style="height:360rpx" src="{{item.pictureUrl}}" ></image>  
+                  <image bindload='imageLoad' style="height:360rpx" src="{{item.pic}}" ></image>  
               </swiper-item>  
           </block>  
       </swiper>  
       <view class="dots">  
-          <block wx:for="{{banner}}">  
+          <block wx:for="{{banner}}" wx:key='index'>  
               <view class="dot {{index == currentSwiper ? ' active' : ''}}"></view>  
           </block>  
       </view>  
@@ -32,109 +31,70 @@
 
   <view class='tag-content'>
     <view class='flex-list'>
-      <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190220/6887d9ff272a4d98ab601dd3c6880508.png"></image>
+      <image src="/assets/index/firend.png"></image>
+      <view>邀请好友</view>
     </view>
     <view class='flex-list'>
-<image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190220/a774c335ad6243fcb52aa87c44fa28fa.png"></image>
+        <image src="/assets/index/pingtuan.png"></image>
+        <view>多人拼团</view>
     </view>
     <view class='flex-list'>
-<image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190220/95056367fd8041c9857ff71946b70267.png"></image>
+        <image src="/assets/index/youhui.png"></image>
+        <view>领优惠券</view>
     </view>
   </view>
 
   <view class='advertisement'>
     <view class='left-ment'>
-      <view class='left-ment-text'>
-        <view class='banner-title'>限时秒杀</view>
-        <view class='banner-desc'>精细打算组合</view>
-        <view class='image'>
-          <image src='/assets/index/xiangyou.png'></image>
-        </view>
-      </view>
-      <image src="/assets/index/yintao.png"></image>
+      <image src="{{indexPrd.pic}}"></image>
     </view>
     <view class='right-ment'>
-      <view class='item first'>
+      <view class='item first' wx:for="{{activityList}}">
           <view class='ban'>
-              <text class='ban-title'>限时秒杀</text>
-              <view class='ban-desc'>精细打算组合</view>
+          </view>
+          <image src="{{item.pic}}"></image>
+      </view>
+      <!-- <view class='item'>
+          <view class='ban'>
+              <view class='ban-title'>拼购</view>
+              <view class='banner-desc'>享超值开团价</view>
               <view class='image'>
                 <image src='/assets/index/xiangyou.png'></image>
               </view>
           </view>
-          <image src="/assets/index/pinggou.png"></image>
-      </view>
-      <view class='item'>
-          <view class='ban'>
-              <view class='ban-title'>限时秒杀</view>
-              <view class='banner-desc'>精细打算组合</view>
-              <view class='image'>
-                <image src='/assets/index/xiangyou.png'></image>
-              </view>
-          </view>
-          <image src="/assets/index/haoyou.png"></image>
-        <!-- </view> -->
-      </view>
+          <image src="{{activityList[1].pic}}"></image>
+        </view>
+      </view> -->
     </view>
+  </view>
+
+  <view class='good-quality'>
+    <image mode='widthFix' src="/assets/index/haohuo.png"></image>
   </view>
 
   <!-- 商品列表 -->
   <view class='good-content'>
-    <view class='good-list'>
+    <view class='good-list' wx:for="{{goodList}}" wx:key="index">
       <view class='good-img'>
-        <image src="/assets/index/qicheng.png"></image>
+        <image src="{{item.pic}}"></image>
       </view>
       <view class='good-desc'>
         <view class='desc'>
-          <view class='title'>秭归精选应季伦晚鲜橙 甜橙子 </view>
-          <view class='text'>严苛品质万里挑一</view>
+          <view class='title'>{{item.sub_title}}</view>
+          <view class='text'>{{item.name}}</view>
         </view>
         <view class='good-price'>
-          <view class='price present-price'>￥119.90</view>
-          <view class='price original'>￥155.90</view>
+          <view class='price present-price'>￥{{item.price}}</view>
+          <view class='price original'>￥{{item.original_price}}</view>
           <view class='price add'>
             <image src="/assets/index/add.png"></image>
           </view>
-        </view>
-      </view>
-    </view>
-    <view class='good-list'>
-      <view class='good-img'>
-        <image src="/assets/index/huolongguo.png"></image>
-      </view>
-      <view class='good-desc'>
-        <view class='desc'>
-          <view class='title'>秭归精选应季伦晚鲜橙 甜橙子 </view>
-          <view class='text'>严苛品质万里挑一</view>
-        </view>
-        <view class='good-price'>
-          <view class='price present-price'>￥119.90</view>
-          <view class='price original'>￥155.90</view>
-          <view class='price add'>
-            <image src="/assets/index/add.png"></image>
-          </view>
-        </view>
-      </view>
-    </view>
-      <view class='good-list'>
-      <view class='good-img'>
-        <image src="/assets/index/liulan.png"></image>
-      </view>
-      <view class='good-desc'>
-        <view class='desc'>
-          <view class='title'>秭归精选应季伦晚鲜橙 甜橙子 </view>
-          <view class='text'>严苛品质万里挑一</view>
-        </view>
-        <view class='good-price'>
-          <view class='price present-price'>￥119.90</view>
-          <view class='price original'>￥155.90</view>
-          <view class='price add'>
-            <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
+           <!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
                         <image src="/assets/index/add.png"></image>
-            </button>
-          </view>
+            </button> -->
         </view>
       </view>
     </view>
+  
   </view>
-  </view>
+</view>

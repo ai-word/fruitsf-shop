@@ -10,53 +10,9 @@ Page({
     currentSwiper: 0,
     autoplay: true,
     banner: [],
-    tag: [
-      {
-        "height": 300,
-        "orderNumber": 0,
-        "id": "1098021366205296641",
-        "width": 300,
-        "imageUrl": "http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190220/3038ba31e5b046c29757f30950cc0cfe.png",
-        "type": "JIN_GANG",
-        "linkModel": "grab_activity"
-      },
-      {
-        "height": 300,
-        "orderNumber": 1,
-        "id": "1098021366222073858",
-        "width": 300,
-        "imageUrl": "http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190220/6887d9ff272a4d98ab601dd3c6880508.png",
-        "type": "JIN_GANG",
-        "linkModel": "invite_member"
-      },
-      {
-        "height": 300,
-        "orderNumber": 2,
-        "id": "1098021366230462466",
-        "width": 300,
-        "imageUrl": "http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190220/a774c335ad6243fcb52aa87c44fa28fa.png",
-        "type": "JIN_GANG",
-        "linkModel": "teambuying_activity"
-      },
-      {
-        "height": 300,
-        "orderNumber": 3,
-        "id": "1098021366243045378",
-        "width": 300,
-        "imageUrl": "http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190220/95056367fd8041c9857ff71946b70267.png",
-        "type": "JIN_GANG",
-        "linkModel": "sign_in"
-      },
-      {
-        "height": 300,
-        "orderNumber": 4,
-        "id": "1098021366255628290",
-        "width": 300,
-        "imageUrl": "http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190220/0299e95ba38747dca0f4431958255ae3.png",
-        "type": "JIN_GANG",
-        "linkModel": "score_mall"
-      }
-    ],
+    goodList: [],
+    activityList: [],
+    indexPrd: [],
     //所有图片的高度  
     imgheights: [],
     //图片宽度 
@@ -93,9 +49,39 @@ Page({
     console.log('5555')
     Http.HttpRequst(true, '/idx/getBanner', false, '', '', 'get', false, function (res) {
       console.log(res,'5555')
-      // that.setData({
-      //   banner: res.data.data
-      // })
+      that.setData({
+        banner: res.data.data
+      })
+    })
+  },
+    /**
+   * 首页商品列表
+   */
+  recommandPruduct() { 
+    let that = this
+    console.log('5555')
+    Http.HttpRequst(true, '/idx/recommandPruduct', false, '', '', 'get', false, function (res) {
+      console.log(res, '5555')
+      that.setData({
+        goodList: res.data.data.list
+      })
+    })
+  },
+  getIdxPrd() { 
+    let that = this
+    Http.HttpRequst(true, '/idx/getIdxPrd', false, '', '', 'get', false, function (res) {
+      console.log(res, '5555')
+      that.setData({
+        indexPrd: res.data.data
+      })
+    })
+  },
+  getActivityList() {
+    let that = this
+    Http.HttpRequst(true, '/idx/getAdvs', false, '', '', 'get', false, function (res) {
+      that.setData({
+        activityList: res.data.data
+      })
     })
   },
     /**
@@ -120,6 +106,9 @@ Page({
    */
   onLoad: function (options) {
     this.getBanner()
+    this.recommandPruduct()
+    this.getIdxPrd()
+    this.getActivityList()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

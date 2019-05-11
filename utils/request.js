@@ -46,7 +46,12 @@ function HttpRequst(loading, url, sessionChoose, sessionId, params, method, ask,
     success: function (res) {
       console.log(res,88888)
       // wx.hideLoading()
-      callBack(res)
+      
+      if (res.statusCode == 200) {
+        callBack(res)
+      } else if (res.state == 'ok') {
+        callBack(res)
+      }
       // if (res.statusCode == 200) {
       //   if (loading == true) {
       //     wx.hideToast();//隐藏提示框
