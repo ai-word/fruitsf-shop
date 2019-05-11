@@ -91,6 +91,7 @@
           </view>
            <!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
                         <image src="/assets/index/add.png"></image>
+                        <image src="/assets/index/add.png"></image>
             </button> -->
         </view>
       </view>
