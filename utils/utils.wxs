@@ -1,0 +1,10 @@
+function getTextByArray(start,end) {
+  var startMont = parseInt(start.substring(5, 7))
+  var end = parseInt(end.substring(8))
+  var day = parseInt(start.substring(8))
+  var str = startMont + '月' + day + '日' + '-' + end + '日'
+  return str
+}
+module.exports = {
+  getTextByArray: getTextByArray
+}

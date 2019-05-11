@@ -1,11 +1,12 @@
 <!--pages/assemble/assemble.wxml-->
+<wxs src="../../utils/utils.wxs" module="tools"></wxs>
 <view class='assemble-container'>
   <view class='navbar'>
     <view class="weui-tab">
       <view class="weui-navbar">
         <block wx:for="{{tabs}}" wx:key="*this">
-          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
-            <view class="weui-navbar__title">{{item}}</view>
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick" data-type="{{item.value}}">
+            <view class="weui-navbar__title">{{item.name}}</view>
           </view>
         </block>
         <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
@@ -13,21 +14,21 @@
     </view>
   </view>
   <view class="weui-tab-content">
-    <view class="weui-tab__content">
-      <view class='self mention' hidden="{{activeIndex != 0}}">
-        <view class='mention-list'>
+
+      <view class='self mention'>
+        <view class='mention-list' wx:for="{{groupList}}" wx:for-item="item">
           <view class='commodity-img'>
-            <image mode='aspectFill' src="/assets/index/huolongguo.png"></image>
+            <image mode='aspectFill' src="{{item.img}}"></image>
           </view>
           <view class='commodity-desc'>
             <view class='tag-view'>
-              <view class='tag-title tag-color'>三人拼团</view>
+              <view class='tag-title tag-color'>{{item.attend_count}}人拼团</view>
               <view class='tag-title tag-color-desc'>距结束：1天</view>
             </view>
-            <view class='fruits-desc'>进口 红心火龙果 3个装 单果约330-420g</view>
-            <view class='fruits-time'>提货时间：4月15日-22日</view>
+            <view class='fruits-desc'>{{item.name}} {{item.desc}}</view>
+            <view class='fruits-time'>提货时间：{{tools.getTextByArray(item.getstart,item.getend)}}</view>
             <view class='fruits-price'>
-              <view class='price'>￥49.90</view>
+              <view class='price'>￥{{item.multi_price}}</view>
             </view>
             <view class='go-assemble'>
               去拼团 >
@@ -35,70 +36,6 @@
           </view>
         </view>
 
-        <view class='mention-list'>
-          <view class='commodity-img'>
-            <image mode='aspectFill' src="/assets/index/huolongguo.png"></image>
-          </view>
-          <view class='commodity-desc'>
-            <view class='tag-view'>
-              <view class='tag-title tag-color'>三人拼团</view>
-              <view class='tag-title tag-color-desc'>距结束：1天</view>
-            </view>
-            <view class='fruits-desc'>进口 红心火龙果 3个装 单果约330-420g</view>
-            <view class='fruits-time'>提货时间：4月15日-22日</view>
-            <view class='fruits-price'>
-              <view class='price'>￥49.90</view>
-            </view>
-            <view class='go-assemble'>
-              去拼团 >
-            </view>
-          </view>
-        </view>
-
-        <view class='mention-list'>
-          <view class='commodity-img'>
-            <image mode='aspectFill' src="/assets/index/huolongguo.png"></image>
-          </view>
-          <view class='commodity-desc'>
-            <view class='tag-view'>
-              <view class='tag-title tag-color'>三人拼团</view>
-              <view class='tag-title tag-color-desc'>距结束：1天</view>
-            </view>
-            <view class='fruits-desc'>进口 红心火龙果 3个装 单果约330-420g</view>
-            <view class='fruits-time'>提货时间：4月15日-22日</view>
-            <view class='fruits-price'>
-              <view class='price'>￥49.90</view>
-            </view>
-            <view class='go-assemble'>
-              去拼团 >
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-    <view class="weui-tab__content">
-      <view class='self mention' hidden="{{activeIndex != 1}}">
-        <view class='mention-list'>
-          <view class='commodity-img'>
-            <image src="/assets/index/huolongguo.png"></image>
-          </view>
-          <view class='commodity-desc'>
-            <view class='tag-view'>
-              <view class='tag-title tag-color'>三人拼团</view>
-              <view class='tag-title tag-color-desc'>距结束：1天</view>
-            </view>
-            <view class='fruits-desc'>进口 红心火龙果 3个装 单果约330-420g</view>
-            <view class='fruits-time'>提货时间：4月15日-22日</view>
-            <view class='fruits-price'>
-              <view class='price'>￥49.90</view>
-            </view>
-            <view class='go-assemble'>
-              去拼团 >
-            </view>
-          </view>
-        </view>
-      </view>
- 
     </view>
   </view>
 </view>

@@ -48,9 +48,9 @@ function HttpRequst(loading, url, sessionChoose, sessionId, params, method, ask,
       // wx.hideLoading()
       
       if (res.statusCode == 200) {
-        callBack(res)
+        callBack(res.data)
       } else if (res.state == 'ok') {
-        callBack(res)
+        callBack(res.data)
       }
       // if (res.statusCode == 200) {
       //   if (loading == true) {

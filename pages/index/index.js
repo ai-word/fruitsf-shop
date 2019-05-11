@@ -50,7 +50,7 @@ Page({
     Http.HttpRequst(true, '/idx/getBanner', false, '', '', 'get', false, function (res) {
       console.log(res,'5555')
       that.setData({
-        banner: res.data.data
+        banner: res.data
       })
     })
   },
@@ -63,7 +63,7 @@ Page({
     Http.HttpRequst(true, '/idx/recommandPruduct', false, '', '', 'get', false, function (res) {
       console.log(res, '5555')
       that.setData({
-        goodList: res.data.data.list
+        goodList: res.data.list
       })
     })
   },
@@ -72,7 +72,7 @@ Page({
     Http.HttpRequst(true, '/idx/getIdxPrd', false, '', '', 'get', false, function (res) {
       console.log(res, '5555')
       that.setData({
-        indexPrd: res.data.data
+        indexPrd: res.data
       })
     })
   },
@@ -80,7 +80,7 @@ Page({
     let that = this
     Http.HttpRequst(true, '/idx/getAdvs', false, '', '', 'get', false, function (res) {
       that.setData({
-        activityList: res.data.data
+        activityList: res.data
       })
     })
   },

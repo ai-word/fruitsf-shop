@@ -1,5 +1,7 @@
 // pages/assemble/assemble.js
 var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+const Http = require('../../utils/request.js');
+const app = getApp();
 Page({
 
   /**
@@ -9,7 +11,9 @@ Page({
     tabs: ["自提拼团", "物流拼团"],
     activeIndex: 0,
     sliderOffset: 0,
-    sliderLeft: 0
+    sliderLeft: 0,
+    type: 1,
+    groupList: []
   },
 
   /**
@@ -17,6 +21,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    that.getGroupType()
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -27,10 +32,14 @@ Page({
     });
   },
   tabClick: function (e) {
+    // this.data.groupList = []
     this.setData({
       sliderOffset: e.currentTarget.offsetLeft,
-      activeIndex: e.currentTarget.id
+      activeIndex: e.currentTarget.id,
+      type: e.currentTarget.dataset.type,
+      groupList: []
     });
+    this.getGroupType()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -38,7 +47,39 @@ Page({
   onReady: function () {
 
   },
+  /**
+ * 获取拼团分类
+ */
+  getGroupType() {
+    let that = this
+    console.log('5555')
+    Http.HttpRequst(false, '/group/getGroupType', false, '', '', 'get', false, function (res) {
+      console.log(res, '5555')
+      that.setData({
+        tabs: res.data,
+      })
+      that.getGroupList()
+    })
+  },
+  getGroupList() {
+    let that = this
+    let params = {
+      type: that.data.type
+    }
+    wx.showToast({
+      title: '数据加载中',
+      icon: 'loading'
+    })
+    Http.HttpRequst(false, '/group/getGroups', false, '', params, 'get', false, function (res) {
+      setTimeout(() => {
+        wx.hideLoading()
+        that.setData({
+          groupList: res.data.list
+        })
+      }, 1000)
 
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
