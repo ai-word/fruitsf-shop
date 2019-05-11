@@ -1,6 +1,6 @@
 <!--pages/user/user.wxml-->
 <view class='user-info'>
-  <view class='header' style='background-image: url(../../assets/user/userbg.png)'>
+  <view class='header' style='background-image: url(http://shopimg123.test.upcdn.net/img/backgroupd.png)'>
     <view class='user-content-info'>
       <view class='userimg'>
         <image src="/assets/user/userImg.png"></image>

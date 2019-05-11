@@ -1,31 +1,60 @@
-.shop-container{
-  background: red;
-  height: 100%;
+page{
+  background: #f5f5f5;
 }
-.scroll-view-x{
-  background: #fff;
-  white-space: nowrap;
+.nodata image{
+  width: 252rpx;
+  height: 219rpx;
 }
-.weui-navbar{
-  background: #ffffff;
-  border-bottom: none;
-  border-top: 1px solid #D2D2D2
+.shop-nodata{
+  margin-top: 294rpx;
 }
-.navbar-item{
-  display: inline-block;
-  flex: 1;
-  padding: 20rpx 30rpx;
-  color: #656565;
+.nodata{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.msg{
+  color: #969696;
   font-size: 13px;
-}
-.navbar-item-active{
-  border-bottom: 6rpx solid #37D260;
-  color: #37D260;
-  font-size: 13px;
+  text-align: center;
+  padding: 20rpx 0;
 }
 
-.shop-content-wrapper{
-  margin-top: 120rpx;
-  background: red;
-  width: 100%;
-}
+ /* 全选 */
+ .bottom-info{
+   height: 130rpx;
+   background: #ffffff;
+   display: flex;
+   align-items: center;
+   position: fixed;
+   bottom:1rpx;
+   width:100%;
+ }
+ .check-box{
+   margin-left: 40rpx;
+   color: #212121;
+   font-weight: bold;
+ }
+ .calc-info text{
+   font-size: 11px;
+ }
+  .calc-info text:first-child{
+     padding: 0 15rpx;
+  }
+ .total-price{
+   color: #FF9F06;
+   font-size: 16px;
+   padding: 0!important;
+ }
+ .tocalc{
+  width:220rpx;
+  height:90rpx;
+  text-align: center;
+  line-height: 90rpx;
+  color: #ffffff;
+  font-size: 16px;
+  background:#37D260;
+  border-radius:6px;
+   position:absolute;
+   right: 40rpx; 
+ }

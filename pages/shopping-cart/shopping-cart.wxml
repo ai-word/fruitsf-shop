@@ -1,23 +1,40 @@
-<view class="">
+<view class="shop-content">
   <!-- 导航栏 -->
-  <view class='shop'>
-    <view class="weui-navbar">
-        <scroll-view scroll-x="{{true}}" class='scroll-view-x'>
-        <block wx:for="{{navbarTitle}}" wx:key="index">
-          <view class="navbar-item {{navbarActiveIndex === index ? 'navbar-item-active' : ''}}" data-navbar-index="{{index}}" catchtap="onNavBarTap">
-            <text>{{item}}</text>
-          </view>
-        </block>
-        </scroll-view>
-      </view>
-      <view class="shop-content-wrapper">
-        <swiper current="{{navbarActiveIndex}}" bindanimationfinish="onBindAnimationFinish">
-          <swiper-item wx:for="{{navbarTitle}}" wx:key="index">
-            <scroll-view scroll-y="{{true}}">
-              {{item}}
-            </scroll-view>
-          </swiper-item>
-        </swiper>
-      </view>
+  <view class='shop-nodata'>
+    <view class='nodata'>
+    <image src="/assets/nodata.png"></image>
+    </view>
+    <view class='msg'>主人，购物车还是空的呢！</view>
   </view>
+
+  <view class="bottom-info">
+    <!-- <checkbox-group bindchange="checkboxAllChange" class="check-box">
+        <label class="checkbox" style="display:flex;" for="checkAll">
+            <checkbox checked="{{checkedAll}}" value="all"></checkbox> 全选
+    </label>
+    </checkbox-group> -->
+
+
+   
+    <checkbox-group  bindchange="checkboxAllChange" class="check-box">
+      <label class="checkbox" style="display:flex;" for="checkAll">
+        <checkbox value="all" checked="{{checkedAll}}">全选</checkbox>
+      </label>
+    </checkbox-group>
+
+    <view class="calc-info">
+        <view wx:if="{{discount>0}}">
+            <text>已优惠:</text>
+            <text class="total-price">￥{{discount}}</text>
+            <text>（不含运费）</text>
+        </view>
+        <view>
+            <!-- allPrice -->
+            <text>合计:</text>
+            <text class="total-price">￥{{59.80}}</text>
+            <text hidden="{{discount>0}}">（不含运费）</text>
+        </view>
+    </view>
+    <text bindtap="toPerfectOrder" class="tocalc">去结算</text>
+</view>
 </view>

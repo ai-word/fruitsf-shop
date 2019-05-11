@@ -13,6 +13,9 @@ Page({
       "Top250",
       "口碑榜",
       "新片榜"
+    ],
+    checkAll: [
+      { name: 'USA', value: '美国' }
     ]
   },
 

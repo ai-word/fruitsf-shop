@@ -1,1 +1,31 @@
-/* pages/detail/detail.wxss */
+.shop-container{
+  background: red;
+  height: 100%;
+}
+.scroll-view-x{
+  background: #fff;
+  white-space: nowrap;
+}
+.weui-navbar{
+  background: #ffffff;
+  border-bottom: none;
+  border-top: 1px solid #D2D2D2
+}
+.navbar-item{
+  display: inline-block;
+  flex: 1;
+  padding: 20rpx 30rpx;
+  color: #656565;
+  font-size: 13px;
+}
+.navbar-item-active{
+  border-bottom: 6rpx solid #37D260;
+  color: #37D260;
+  font-size: 13px;
+}
+
+.shop-content-wrapper{
+  margin-top: 120rpx;
+  background: red;
+  width: 100%;
+}
