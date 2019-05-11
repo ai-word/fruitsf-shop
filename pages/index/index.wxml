@@ -46,13 +46,13 @@
 
   <view class='advertisement'>
     <view class='left-ment'>
-      <image src="{{indexPrd.pic}}"></image>
+      <image mode='widthFix' src="{{indexPrd.pic}}"></image>
     </view>
     <view class='right-ment'>
       <view class='item first' wx:for="{{activityList}}">
           <view class='ban'>
           </view>
-          <image src="{{item.pic}}"></image>
+          <image mode='widthFix' src="{{item.pic}}"></image>
       </view>
       <!-- <view class='item'>
           <view class='ban'>
@@ -76,7 +76,7 @@
   <view class='good-content'>
     <view class='good-list' wx:for="{{goodList}}" wx:key="index">
       <view class='good-img'>
-        <image src="{{item.pic}}"></image>
+        <image mode='widthFix' src="{{item.pic}}"></image>
       </view>
       <view class='good-desc'>
         <view class='desc'>
@@ -87,7 +87,7 @@
           <view class='price present-price'>￥{{item.price}}</view>
           <view class='price original'>￥{{item.original_price}}</view>
           <view class='price add'>
-            <image src="/assets/index/add.png"></image>
+            <image  src="/assets/index/add.png"></image>
           </view>
            <!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
                         <image src="/assets/index/add.png"></image>
@@ -96,6 +96,12 @@
         </view>
       </view>
     </view>
-  
+    <view class="weui-loadmore weui-loadmore_line" wx:if='{{hasmoreData}}'>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无更多数据</view>
+    </view>
+    <view class="weui-loadmore" wx:if="{{hiddenloading}}">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+    </view>
   </view>
 </view>

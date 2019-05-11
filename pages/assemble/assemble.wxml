@@ -23,7 +23,7 @@
           <view class='commodity-desc'>
             <view class='tag-view'>
               <view class='tag-title tag-color'>{{item.attend_count}}人拼团</view>
-              <view class='tag-title tag-color-desc'>距结束：1天</view>
+              <view class='tag-title tag-color-desc'>距结束：{{tools.getTime(item.start_time,item.ent_time)}}天</view>
             </view>
             <view class='fruits-desc'>{{item.name}} {{item.desc}}</view>
             <view class='fruits-time'>提货时间：{{tools.getTextByArray(item.getstart,item.getend)}}</view>

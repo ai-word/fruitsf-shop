@@ -18,7 +18,12 @@ Page({
     //图片宽度 
     imgwidth: 750,
     //默认  
-    currentSwiper: 0
+    currentSwiper: 0,
+    pageNumber: 1,
+    pageSize: 10,
+    hasmoreData: false,
+    loaderMore: true,
+    hiddenloading: false,
   },
   ifGetUserInfo: function () {
     wx.getSetting({
@@ -59,12 +64,25 @@ Page({
    */
   recommandPruduct() { 
     let that = this
-    console.log('5555')
-    Http.HttpRequst(true, '/idx/recommandPruduct', false, '', '', 'get', false, function (res) {
-      console.log(res, '5555')
-      that.setData({
-        goodList: res.data.list
-      })
+    let params = {
+      pageNumber: that.data.pageNumber,
+      pageSize: that.data.pageSize,
+    }
+    Http.HttpRequst(false, '/idx/recommandPruduct', false, '', params, 'get', false, function (res) {
+      if (res.data.list.length < that.data.pageSize) {
+        that.setData({
+          goodList: that.data.goodList.concat(res.data.list),
+        })
+        that.setData({
+          hasmoreData: true,
+          hiddenloading: false,
+          loaderMore: false
+        })
+      } else {
+        that.setData({
+          goodList: that.data.goodList.concat(res.data.list),
+        })
+      }
     })
   },
   getIdxPrd() { 
@@ -175,10 +193,25 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
+  /**
+   * 页面上拉触底事件的处理函数
+   */
   onReachBottom: function () {
-
+    console.log('触底了');
+    var that = this
+    if (that.data.loaderMore) {
+      that.setData({
+        hasmoreData: false,
+        hiddenloading: true,
+      })
+      setTimeout(function () {
+        that.setData({
+          pageNumber: parseInt(that.data.pageNumber + 1)
+        })
+        that.recommandPruduct()
+      }, 500)
+    }
   },
-
   /**
    * 用户点击右上角分享
    */
