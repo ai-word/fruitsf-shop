@@ -89,3 +89,28 @@
   width: 60rpx;
   height: 60rpx;
 }
+
+.list-cells{
+  display: flex;
+  margin: 0 40rpx;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #EEEEEE
+}
+.cells{
+  flex: 1;
+  font-size: 14px;
+  color:#212121;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+.cel-right{
+  text-align: right;
+}
+.cells image{
+  width: 16rpx;
+  height: 28rpx;
+}
+.list{
+  margin-top: 100rpx;
+}

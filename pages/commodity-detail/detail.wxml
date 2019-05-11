@@ -1,0 +1,21 @@
+<!--pages/commodity-detail/detail.wxml-->
+<view class='commodity-content'>
+  <view class='banner-content'>
+    <!-- banner -->
+      <!-- <view class="wrap">
+        <swiper class="swipers" autoplay="{{autoplay}}" style="height:360rpx" current="{{currentSwiper}}" bindchange="swiperChange">  
+            <block wx:for="{{banner}}" wx:key='index'>  
+                <swiper-item>  
+                    <image bindload='imageLoad' style="height:360rpx" src="{{item.pic}}" ></image>  
+                </swiper-item>  
+            </block>  
+        </swiper>  
+        <view class="dots">  
+            <block wx:for="{{banner}}" wx:key='index'>  
+                <view class="dot {{index == currentSwiper ? ' active' : ''}}"></view>  
+            </block>  
+        </view>  
+    </view> -->
+    <!-- banner结束 -->
+  </view>
+</view>

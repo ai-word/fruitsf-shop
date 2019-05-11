@@ -34,7 +34,7 @@
       <image src="/assets/index/firend.png"></image>
       <view>邀请好友</view>
     </view>
-    <view class='flex-list'>
+    <view class='flex-list' bindtap='goPing'>
         <image src="/assets/index/pingtuan.png"></image>
         <view>多人拼团</view>
     </view>

@@ -134,6 +134,12 @@ Page({
   onReady: function () {
 
   },
+  goPing() {
+    console.log(4444)
+    wx.switchTab({
+      url: '/pages/assemble/assemble'
+    })
+  },
   swiperChange: function (e) {
     this.setData({
       currentSwiper: e.detail.current

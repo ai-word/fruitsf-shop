@@ -30,12 +30,20 @@
             <view class='fruits-price'>
               <view class='price'>￥{{item.multi_price}}</view>
             </view>
-            <view class='go-assemble'>
+            <view class='go-assemble' bindtap='goDetail' data-id="{{item.id}}">
               去拼团 >
             </view>
           </view>
         </view>
 
+        <view class="weui-loadmore weui-loadmore_line" wx:if='{{hasmoreData}}'>
+          <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无更多数据</view>
+        </view>
+        <view class="weui-loadmore" wx:if="{{hiddenloading}}">
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips">正在加载</view>
+        </view>
+        
     </view>
   </view>
 </view>

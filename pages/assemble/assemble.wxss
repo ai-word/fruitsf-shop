@@ -45,9 +45,6 @@ page{
     width: 308rpx;
     height: 100%;
 }
-.weui-tab-content{
-  padding-bottom: 20rpx;
-}
 .tag-view{
   display: flex;
   justify-content: space-between;

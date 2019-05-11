@@ -57,4 +57,55 @@
       </view>
     </view>
   </view>
+
+  <view class='list'>
+    <view class='list-cells'>
+      <view class='cells'>
+        邀请好友
+      </view>
+      <view class='cells cel-right'>
+        <image src="/assets/user/right.png"></image>
+      </view>
+    </view>
+    <view class='list-cells'>
+      <view class='cells'>
+        邀请好友
+      </view>
+      <view class='cells cel-right'>
+        <image src="/assets/user/right.png"></image>
+      </view>
+    </view>
+    <view class='list-cells'>
+      <view class='cells'>
+        收货地址
+      </view>
+      <view class='cells cel-right'>
+        <image src="/assets/user/right.png"></image>
+      </view>
+    </view>
+    <view class='list-cells'>
+      <view class='cells'>
+        领券中心
+      </view>
+      <view class='cells cel-right'>
+        <image src="/assets/user/right.png"></image>
+      </view>
+    </view>
+    <view class='list-cells'>
+      <view class='cells'>
+        关于我们
+      </view>
+      <view class='cells cel-right'>
+        <image src="/assets/user/right.png"></image>
+      </view>
+    </view>
+    <view class='list-cells'>
+      <view class='cells'>
+        合作收益
+      </view>
+      <view class='cells cel-right'>
+        <image src="/assets/user/right.png"></image>
+      </view>
+    </view>
+  </view>
 </view>

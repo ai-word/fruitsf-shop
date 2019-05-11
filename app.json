@@ -6,7 +6,8 @@
     "pages/detail/detail",
     "pages/assemble/assemble",
     "pages/classification/classification",
-    "pages/shopping-cart/shopping-cart"
+    "pages/shopping-cart/shopping-cart",
+    "pages/commodity-detail/detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

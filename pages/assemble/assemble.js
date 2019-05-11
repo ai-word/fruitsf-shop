@@ -13,7 +13,12 @@ Page({
     sliderOffset: 0,
     sliderLeft: 0,
     type: 1,
-    groupList: []
+    groupList: [],
+    pageNumber: 1,
+    pageSize: 10,
+    hasmoreData: false,
+    loaderMore: true,
+    hiddenloading: false,
   },
 
   /**
@@ -47,6 +52,11 @@ Page({
   onReady: function () {
 
   },
+  goDetail(e) {
+    wx.navigateTo({
+      url: '/pages/commodity-detail/detail'
+    })
+  },
   /**
  * 获取拼团分类
  */
@@ -64,7 +74,9 @@ Page({
   getGroupList() {
     let that = this
     let params = {
-      type: that.data.type
+      type: that.data.type,
+      pageNumber: that.data.pageNumber,
+      pageSize: that.data.pageSize,
     }
     wx.showToast({
       title: '数据加载中',
@@ -73,9 +85,21 @@ Page({
     Http.HttpRequst(false, '/group/getGroups', false, '', params, 'get', false, function (res) {
       setTimeout(() => {
         wx.hideLoading()
-        that.setData({
-          groupList: res.data.list
-        })
+        if (res.data.list.length < that.data.pageSize) {
+          that.setData({
+            groupList: that.data.groupList.concat(res.data.list),
+          })
+          that.setData({
+            hasmoreData: true,
+            hiddenloading: false,
+            loaderMore: false
+          })
+        } else {
+          that.setData({
+            groupList: that.data.groupList.concat(res.data.list),
+          })
+        }
+        
       }, 1000)
 
     })
@@ -112,7 +136,20 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    console.log('触底了');
+    var that = this
+    if (that.data.loaderMore) {
+      that.setData({
+        hasmoreData: false,
+        hiddenloading: true,
+      })
+      setTimeout(function () {
+        that.setData({
+          pageNumber: parseInt(that.data.pageNumber + 1)
+        })
+        that.getGroupList()
+      }, 500)
+    }
   },
 
   /**
