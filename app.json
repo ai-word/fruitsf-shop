@@ -1,13 +1,13 @@
 {
   "pages": [
+    "pages/commodity-detail/detail",
     "pages/authorize/authorize",
     "pages/index/index",
     "pages/user/user",
     "pages/detail/detail",
     "pages/assemble/assemble",
     "pages/classification/classification",
-    "pages/shopping-cart/shopping-cart",
-    "pages/commodity-detail/detail"
+    "pages/shopping-cart/shopping-cart"
   ],
   "window": {
     "backgroundTextStyle": "light",

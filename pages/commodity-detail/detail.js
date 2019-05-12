@@ -7,7 +7,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    groupDetail: ''
+    groupDetail: '',
+    groupPics: '',
+    currentSwiper: 1,
+    autoplay: true,
+    groups: '',
+    currentUser: ''
   },
 
   /**
@@ -15,17 +20,41 @@ Page({
    */
   onLoad: function (options) {
     this.getGroupInfo()
+    this.getCurrentUsers()
   },
   getGroupInfo() { //取得拼团详情页
     let params = {
       groupId: 1
     }
+    let  that = this
     Http.HttpRequst(false, '/group/getGroupInfo', false, '', params, 'get', false, function (res) {
  
-        // that.setData({
-        //   groupDetail: that.data.goodList.concat(res.data.list),
-        // })
+        that.setData({
+          groupPics: res.data.groupPics,
+          groups: res.data.groups
+        })
+  
+    })
+  },
+  /**
+   * 取得正在拼团用户列表
+   */
+ getCurrentUsers() {
+   let params = {
+     groupId: 1
+   }
+    let  that = this
+   Http.HttpRequst(false, '/group/getCurrentGroups', false, '', params, 'get', false, function (res) {
+     console.log(res.data)
+     that.setData({
+       currentUser: res.data
+     })
 
+   })
+ },
+  swiperChange: function (e) {
+    this.setData({
+      currentSwiper: e.detail.current + 1
     })
   },
   /**

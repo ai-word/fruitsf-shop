@@ -17,8 +17,6 @@ Page({
     imgheights: [],
     //图片宽度 
     imgwidth: 750,
-    //默认  
-    currentSwiper: 0,
     pageNumber: 1,
     pageSize: 10,
     hasmoreData: false,
