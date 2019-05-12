@@ -1,13 +1,14 @@
 {
   "pages": [
-    "pages/commodity-detail/detail",
     "pages/authorize/authorize",
     "pages/index/index",
     "pages/user/user",
     "pages/detail/detail",
     "pages/assemble/assemble",
     "pages/classification/classification",
-    "pages/shopping-cart/shopping-cart"
+    "pages/shopping-cart/shopping-cart",
+    "pages/commodity-detail/detail",
+    "pages/commodity-detail/open-regiment/regiment"
   ],
   "window": {
     "backgroundTextStyle": "light",

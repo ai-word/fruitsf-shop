@@ -2,37 +2,37 @@
 <view class='commodity-content'>
   <view class='banner-content'>
     <!-- banner -->
-      <view class="wrap">
-        <swiper class="swipers" autoplay="{{autoplay}}" style="height:750rpx" bindchange="swiperChange" interval="5000">  
-            <block wx:for="{{groupPics}}" wx:key='index'>  
-                <swiper-item>  
-                    <image mode="aspectFill" bindload='imageLoad' style="height:750rpx" src="{{item.pic_url}}" ></image>  
-                </swiper-item>  
-            </block>  
-        </swiper>  
-        <view class="imageCount">{{currentSwiper}}/{{groupPics.length}}</view>
+    <view class="wrap">
+      <swiper class="swipers" autoplay="{{autoplay}}" style="height:750rpx" bindchange="swiperChange" interval="5000">
+        <block wx:for="{{groupPics}}" wx:key='index'>
+          <swiper-item>
+            <image mode="aspectFill" bindload='imageLoad' style="height:750rpx" src="{{item.pic_url}}"></image>
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class="imageCount">{{currentSwiper}}/{{groupPics.length}}</view>
     </view>
     <!-- banner结束 -->
 
     <view class='group-buying'>
-        <view class='buying left'>
-          <image src="/assets/detail/tuan.png"></image>
-          <view class='num'>3人团</view>
+      <view class='buying left'>
+        <image mode='widthFix' src="/assets/detail/tuan.png"></image>
+           <view class='num'>{{groups.attend_count}}人团</view>
+      </view>
+      <view class='buying right'>
+        <view class="group-box">
+          <view class="group-time-down"> 距结束
+            <text class="last-hour txt">0</text>
+            <text class="colon">天</text>
+            <text class="last-hour txt">10</text>
+            <text class="colon">:</text>
+            <text class="last-minute txt">30</text>
+            <text class="colon">:</text>
+            <text class="last-second txt">44</text>
+          </view>
+          <view class="secKill-time-down" wx:if="{{secKillInfo.secKillStatus==='end'}}">活动已结束</view>
         </view>
-        <view class='buying right'>
-          <view class="group-box">
-            <view class="group-time-down"> 距结束
-                <text class="last-hour txt">0</text>
-                <text class="colon">天</text>
-                <text class="last-hour txt">10</text>
-                <text class="colon">:</text>
-                <text class="last-minute txt">30</text>
-                <text class="colon">:</text>
-                <text class="last-second txt">44</text>
-            </view>
-              <view class="secKill-time-down" wx:if="{{secKillInfo.secKillStatus==='end'}}">活动已结束</view>
-        </view>
-        </view>
+      </view>
     </view>
 
     <view class='goods-info-box'>
@@ -43,75 +43,81 @@
     </view>
 
     <view class='goods-price-box'>
-        <view class='left-box'>
-          <block>
-              <text class="goods-nowPrice">
+      <view class='left-box'>
+        <block>
+          <text class="goods-nowPrice">
               <text>￥</text>{{groups.multi_price}}</text>
-              <text class="goods-oldPrice">￥{{groups.singe_price}}</text>
-          </block>
-          <view class="goods-soldNum">月售{{groups.sales_num}}</view>
-        </view>
-        
-        <view bindtap="handleClickShare" class="share-reamin"><image src="http://app-1256684088.cos.ap-beijing.myqcloud.com/wujie/iconShare.png"></image>分享</view>
+          <text class="goods-oldPrice">￥{{groups.singe_price}}</text>
+        </block>
+        <view class="goods-soldNum">月售{{groups.sales_num}}</view>
+      </view>
+
+      <view bindtap="handleClickShare" class="share-reamin">
+        <image src="http://app-1256684088.cos.ap-beijing.myqcloud.com/wujie/iconShare.png"></image>分享</view>
     </view>
-      <view class="goods-promise">
-        <view>
-            <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconQuality.png"></image>
-            <text>品质保障</text>
-        </view>
-        <view>
-            <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconRefundable.png"></image>
-            <text>坏果包退换</text>
-        </view>
-        <view>
-            <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconSun.png"></image>
-            <text>新鲜水果</text>
-        </view>
+    <view class="goods-promise">
+      <view>
+        <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconQuality.png"></image>
+        <text>{{groupInfo.sa.content}}</text>
+      </view>
+      <view>
+        <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconRefundable.png"></image>
+        <text>{{groupInfo.se.content}}</text>
+      </view>
+      <view>
+        <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconSun.png"></image>
+        <text>{{groupInfo.fr.content}}</text>
+      </view>
     </view>
   </view>
-    <view class="team-box">
-        <view class="team-title">
-            <view class='left'>
-              <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconTeamBuy.png"></image>
-              <text class=''>小伙伴们正在等你参团呢！</text>
-            </view>
-            <view class='hand-right'>
-              <text bindtap="toAllTeamList" class='hand'>立即参与</text>
-              <image src="/assets/detail/clor-right.png"></image>
-            </view>
-        </view>
-        <!-- <view class="no-data" hidden="{{teamBuyList.length>0?true:false}}">暂无正在进行中的拼团，赶快开团吧~</view> -->
+  <view class="team-box">
+    <view class="team-title">
+      <view class='left'>
+        <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconTeamBuy.png"></image>
+        <text class=''>小伙伴们正在等你参团呢！</text>
+      </view>
+      <view class='hand-right' bindtap='toList'>
+        <text bindtap="toAllTeamList" class='hand'>立即参与</text>
+        <image src="/assets/detail/clor-right.png"></image>
+      </view>
     </view>
-    <!-- 正在开团列表 -->
-    <view class='user-grouplist'>
+    <!-- <view class="no-data" hidden="{{teamBuyList.length>0?true:false}}">暂无正在进行中的拼团，赶快开团吧~</view> -->
+  </view>
+  <!-- 正在开团列表 -->
+  <view class='user-grouplist'>
     <!-- wx:for="{{currentUser}}" wx:key="index" -->
-      <view class='user-item' wx:for="{{currentUser}}" wx:key="index">
-        <view class='flex'>
-            <image src="{{item.avatarurl}}"></image>
-            <view class='user-info'>
-              <view class='mobile'>{{item.member_phone}}</view>
-              <view class='time'>剩余01:27:13</view>
-            </view>
+    <view class='user-item' wx:for="{{currentUser}}" wx:key="index">
+      <view class='flex'>
+        <image src="{{item.avatarurl}}"></image>
+        <view class='user-info'>
+          <view class='mobile'>{{item.member_phone}}</view>
+          <view class='time'>剩余01:27:13</view>
         </view>
-
-        <view class='flex'>
-            <view class='right-style'>还差<text style="color:#37D260">{{item.total_count-item.attend_count}}</text>人成团</view>
-            <view class='together'>一起拼</view>
-        </view>
-
       </view>
+
+      <view class='flex'>
+        <view class='right-style'>还差
+          <text style="color:#37D260">{{item.total_count-item.attend_count}}</text>人成团</view>
+        <view class='together'>一起拼</view>
+      </view>
+
     </view>
+  </view>
 
-    <view class='picture-details'>
-      <view class='pic-title'>
-        图文详情
-      </view>
-
-      <view class="pic-detail">
-        <view class='noda'>
-          <image src="/assets/nodata.png"></image>
-        </view>
-        <text>暂无数据!</text>
-      </view>
+  <view class='picture-details'>
+    <view class='pic-title'>
+      图文详情
     </view>
+    <view class='pic-detail' wx:if="{{picContent}}">
+      <import src="../../components/wxParse/wxParse.wxml" />
+      <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+      <!-- <image wx:for="{{productDetails}}" src="{{item.url}}" style="height:{{item.height}}rpx;width:{{item.width}}rpx;"></image> -->
+    </view>
+    <view class="pic-detail" wx:if="{{!picContent}}">
+      <view class='noda'>
+        <image src="/assets/nodata.png"></image>
+      </view>
+      <text>暂无数据!</text>
+    </view>
+  </view>
 </view>

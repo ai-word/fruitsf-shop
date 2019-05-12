@@ -1,0 +1,21 @@
+<!--pages/commodity-detail/open-regiment/regiment.wxml-->
+  <!-- 正在开团列表 -->
+  <view class='user-grouplist'>
+    <!-- wx:for="{{groups}}" wx:key="index" -->
+    <view class='user-item' wx:for="{{groups}}" wx:key="index">
+      <view class='flex'>
+        <image src="{{item.avatarurl}}"></image>
+        <view class='user-info'>
+          <view class='mobile'>{{item.member_phone}}</view>
+          <view class='time'>剩余01:27:13</view>
+        </view>
+      </view>
+
+      <view class='flex'>
+        <view class='right-style'>还差
+          <text style="color:#37D260">{{item.total_count-item.attend_count}}</text>人成团</view>
+        <view class='together'>一起拼</view>
+      </view>
+
+    </view>
+  </view>

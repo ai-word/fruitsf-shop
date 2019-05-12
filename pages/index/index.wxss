@@ -254,6 +254,8 @@
 
 .good-list .good-img {
   margin: 0 50rpx 0 0;
+  width: 180rpx;
+  height: 180rpx;
 }
 
 .good-list .good-img image {

@@ -2,6 +2,7 @@
 /* page{
   background: #f5f5f5
 } */
+@import '../../components/wxParse/wxParse.wxss';
 .wrap{
   position: relative
 }
@@ -12,18 +13,17 @@
   background: #ffffff;
 }
 .group-buying{
-  /* width: 256rpx; */
   height: 120rpx;
   background: #37D260;
   display: flex;
 }
 .group-buying image{
   width: 256rpx;
-  height: 120rpx;
+  /* height: 120rpx; */
 }
 .group-buying .left{
   width: 256rpx;
-  height: 120rpx;
+  /* height: 120rpx; */
   position: relative
 }
 .group-buying .left .num{
@@ -48,17 +48,14 @@
   border-radius:6rpx;
 }
 .group-buying .right{
-  width: 100%;
+  /* width: 494px; */
   height: 120rpx;
-  position: relative;
   font-size: 13px;
+  display: flex;
+  align-items: center;
   color: #ffffff;
-}
-.group-box{
   position: absolute;
   right: 50rpx;
-  top: 50%;
-  transform: translateX(0) translateY(-50%);
 }
 .txt{
   width:48rpx;
@@ -263,7 +260,9 @@
   text-align: center;
   padding-bottom: 60rpx;
 }
-
+.pic-detail .wxParse-p image{
+  width: 750rpx;
+}
 .noda{
   display: flex;
   justify-content: center;

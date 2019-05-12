@@ -53,8 +53,9 @@ Page({
 
   },
   goDetail(e) {
+    console.log(e)
     wx.navigateTo({
-      url: '/pages/commodity-detail/detail'
+      url: '/pages/commodity-detail/detail?id=' + e.currentTarget.dataset.id
     })
   },
   /**

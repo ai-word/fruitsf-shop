@@ -1,0 +1,45 @@
+/* pages/commodity-detail/open-regiment/regiment.wxss */
+.user-grouplist{
+  padding: 0 40rpx;
+  background:#ffffff;
+}
+.user-item{
+  height: 130rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #EEEEEE
+}
+.user-item image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+.flex{
+   display: flex;
+  align-items: center; 
+}
+.flex .user-info{
+  color: #212121;
+  font-size: 14px;
+  padding:0 0 0 32rpx;
+}
+.flex .user-info .time{
+  color: #656565;
+  font-size:12px;
+}
+.flex .right-style{
+  color: #656565;
+  font-size: 13px;
+  padding: 0 30rpx 0 0;
+}
+.together{
+  width:126rpx;
+  height:48rpx;
+  background:rgba(55,210,96,1);
+  border-radius:24px;
+  font-size: 13px;
+  color:#ffffff;
+  text-align: center;
+  line-height: 48rpx;
+}
