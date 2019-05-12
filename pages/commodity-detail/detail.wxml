@@ -46,10 +46,10 @@
         <view class='left-box'>
           <block>
               <text class="goods-nowPrice">
-              <text>￥</text>49.90</text>
-              <text class="goods-oldPrice">￥54.90</text>
+              <text>￥</text>{{groups.multi_price}}</text>
+              <text class="goods-oldPrice">￥{{groups.singe_price}}</text>
           </block>
-          <view class="goods-soldNum">月售5000</view>
+          <view class="goods-soldNum">月售{{groups.sales_num}}</view>
         </view>
         
         <view bindtap="handleClickShare" class="share-reamin"><image src="http://app-1256684088.cos.ap-beijing.myqcloud.com/wujie/iconShare.png"></image>分享</view>
