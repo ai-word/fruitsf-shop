@@ -16,6 +16,7 @@
   height: 120rpx;
   background: #37D260;
   display: flex;
+  position: relative;
 }
 .group-buying image{
   width: 256rpx;
@@ -23,14 +24,12 @@
 }
 .group-buying .left{
   width: 256rpx;
-  /* height: 120rpx; */
-  position: relative
-}
-.group-buying .left .num{
+  height: 120rpx;
   position: absolute;
-  top: 50%;
-  left:50%;
-  transform: translateX(-50%) translateY(-50%);
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 20px;
   color: #37D260
 }

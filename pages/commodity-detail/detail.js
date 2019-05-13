@@ -47,6 +47,32 @@ Page({
       WxParse.wxParse('article', 'html', res.data.groupInfo.de.content, that, 5);
     })
   },
+  onInputCancel: function () {
+    // 隐藏弹框
+    console.log(55566)
+    this.setData({
+      addingText: false
+    })
+  },
+  /**
+   * 悬赏弹框组件
+   */
+  onShowModal: function (e) {
+    // 显示弹框
+    console.log(e)
+    console.log(111111)
+    this.setData({
+      addingText: true,
+      conid: e.currentTarget.dataset.conid,
+      lecid: e.currentTarget.dataset.lecid,
+      indexVideo: e.currentTarget.dataset.index,
+      rewardNum: e.currentTarget.dataset.rewardnum
+    })
+  },
+  onInputConfirm: function (e) { //赠送金币
+    // 隐藏弹框
+    console.log(e)
+  },
   /**
    * 取得正在拼团用户列表
    */

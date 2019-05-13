@@ -15,8 +15,10 @@
     <!-- banner结束 -->
 
     <view class='group-buying'>
+      <image mode='widthFix' src="/assets/detail/tuan.png"></image>
+      <!-- <view class='num'>{{groups.attend_count}}人团</view> -->
       <view class='buying left'>
-        <image mode='widthFix' src="/assets/detail/tuan.png"></image>
+       
            <view class='num'>{{groups.attend_count}}人团</view>
       </view>
       <view class='buying right'>
@@ -98,12 +100,13 @@
       <view class='flex'>
         <view class='right-style'>还差
           <text style="color:#37D260">{{item.total_count-item.attend_count}}</text>人成团</view>
-        <view class='together'>一起拼</view>
+        <view class='together' bindtap='onShowModal'>一起拼</view>
       </view>
 
     </view>
   </view>
-
+    <!-- 弹出组件  -->
+  <modal title='给明星送金币(个)' gold="{{gold}}"  multiline='true' bindinputCancel='onInputCancel' bindinputConfirm='onInputConfirm' wx:if='{{ addingText }}'/>
   <view class='picture-details'>
     <view class='pic-title'>
       图文详情

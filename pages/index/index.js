@@ -138,6 +138,11 @@ Page({
       url: '/pages/assemble/assemble'
     })
   },
+  goCoupon() {
+    wx.navigateTo({
+      url: '/pages/coupon/coupon'
+    })
+  },
   swiperChange: function (e) {
     this.setData({
       currentSwiper: e.detail.current

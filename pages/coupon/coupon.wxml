@@ -1,0 +1,43 @@
+<!--pages/coupon/coupon.wxml-->
+<view class='coupon-content'>
+  <view class='coupon-list'>
+    <image src="/assets/coupon.png"></image>
+    <view class='content'>
+        <view class='title'>新会员专享88折</view>
+        <view class='desc'>该优惠券只针对特定商品使用</view>
+    </view>
+      <view class='time'>
+        有效期: 2019-04-22 ~2019-05-05
+      </view>
+      <view class='draw'>
+        立即领取
+      </view>
+  </view>
+  <view class='coupon-list'>
+    <image src="/assets/coupon.png"></image>
+    <view class='content'>
+        <view class='title'>新会员专享88折</view>
+        <view class='desc'>该优惠券只针对特定商品使用</view>
+    </view>
+      <view class='time'>
+        有效期: 2019-04-22 ~2019-05-05
+      </view>
+      <view class='draw'>
+        立即领取
+      </view>
+  </view>
+
+  <view class='coupon-list'>
+    <image src="/assets/coupon.png"></image>
+    <view class='content'>
+        <view class='title'>新会员专享88折</view>
+        <view class='desc'>该优惠券只针对特定商品使用</view>
+    </view>
+      <view class='time'>
+        有效期: 2019-04-22 ~2019-05-05
+      </view>
+      <view class='draw'>
+        立即领取
+      </view>
+  </view>
+</view>

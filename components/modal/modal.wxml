@@ -1,0 +1,54 @@
+<!--components/modal/modal.wxml-->
+<view class='inputBox-container' catchtap='tapCatcher'>
+  <view class='shadow' catchtap='onCancelTap' style='opacity:{{ shadowOpacity }};animation:{{ shadowAnimation }} 0.35s;' />
+  <view class='modal' style='Bottom:{{ modalBottom }}rpx;height:{{ modalHeight }}rpx;opacity:{{ modalOpacity }};animation:{{ modalAnimation }} 0.35s;'>
+
+     <view class='modal-content'>
+        <view class='title'>一起参与拼团</view>
+        <view class='desc'>仅剩余 9794 个参团名额可用，赶紧来参团吧！</view>
+        <view class='modal-pularity'>
+          <image src="/assets/huo.png"></image>
+          <text class='pularity'>火热拼团ing</text>
+          <text class='down'>01:30:22</text>
+          <text class='end'>后结束。</text>
+        </view>
+    </view>
+    <view class='user-list'>
+      <view class='user-image'>
+        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
+      </view>
+    <view class='user-image'>
+        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
+      </view>
+    <view class='user-image'>
+        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
+      </view>
+    <view class='user-image'>
+        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
+      </view>
+    <view class='user-image'>
+        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
+      </view>
+    <view class='user-image'>
+        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
+      </view>
+          <view class='user-image'>
+        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
+      </view>
+    <view class='user-image'>
+        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
+      </view>
+    </view>
+
+    <view class='modal-bottom'>
+      确认开团
+    </view>
+
+    <!-- <view class='cancel-container' catchtap='onCancelTap'>
+      <view class='cancel'>取消</view>
+    </view>
+    <view class='confirm-container' catchtap='onConfirmTap'>
+      <view class='confirm'>确定</view>
+    </view> -->
+  </view>
+</view>

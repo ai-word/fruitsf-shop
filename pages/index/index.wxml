@@ -38,7 +38,7 @@
         <image src="/assets/index/pingtuan.png"></image>
         <view>多人拼团</view>
     </view>
-    <view class='flex-list'>
+    <view class='flex-list' bindtap='goCoupon'>
         <image src="/assets/index/youhui.png"></image>
         <view>领优惠券</view>
     </view>
