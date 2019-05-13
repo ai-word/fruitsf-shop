@@ -6,6 +6,9 @@
 .wrap{
   position: relative
 }
+.detail-container{
+  padding-bottom: 120rpx;
+}
 .commodity-content{
   background: #f5f5f5;
 }
@@ -257,7 +260,7 @@
 }
 .pic-detail{
   text-align: center;
-  padding-bottom: 60rpx;
+  /* padding-bottom: 60rpx; */
 }
 .pic-detail .wxParse-p image{
   width: 750rpx;
@@ -270,4 +273,60 @@
 .pic-detail image{
   width: 252rpx;
   height: 219rpx;
+}
+
+/* 底部 */
+.detail-fotter{
+  height: 120rpx;
+  position: fixed;
+  bottom:0;
+  left: 0;
+  right:0;
+  background: #37D260;
+  display: flex;
+}
+.flex-fotter{
+  flex: 1;
+  text-align: center;
+}
+
+.flex-fotter .index image{
+  width:53rpx;
+  height: 54rpx;
+}
+.flex-fotter .shop-car image{
+  width:48rpx;
+  height: 50rpx;
+}
+.detail-fotter .left{
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-fotter .index{
+  border-right:1px solid #D2D2D2;
+}
+.detail-fotter .left .img{
+  flex: 1;
+  padding: 10rpx 0;
+}
+
+.detail-fotter .center{
+  background: #D7F6DF;
+  text-align: center;
+  color: #37D260;
+  display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.detail-fotter .right{
+  color:#ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detail-fotter .center view{
+  /* height: 60rpx; */
+  /* line-height: 60rpx; */
 }
