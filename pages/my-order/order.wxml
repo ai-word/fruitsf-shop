@@ -1,0 +1,21 @@
+<view class="class-cation">
+    <!-- tab导航栏 -->
+    <!-- scroll-left属性可以控制滚动条位置 -->
+    <!-- scroll-with-animation滚动添加动画过渡 -->
+    <view class='navbar'>
+        <scroll-view scroll-x="true" style="height:80rpx" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
+            <block wx:for="{{navData}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
+                <view class="nav-item {{currentTab == idx ?'active':''}}"  data-current="{{idx}}" bindtap="switchNav">
+                <view class="name">{{navItem.text}}</view>
+                </view>
+            </block>
+        </scroll-view>
+    </view>
+
+    <view class='shop-nodata'>
+      <view class='nodata'>
+      <image src="/assets/nodata.png"></image>
+      </view>
+      <view class='msg'>主人，购物车还是空的呢！</view>
+    </view>
+</view>

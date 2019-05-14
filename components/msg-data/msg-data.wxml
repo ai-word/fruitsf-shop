@@ -1,0 +1,9 @@
+<!--components/msg-data/msg-data.wxml-->
+<view class='msg-nodata'>
+  <view class='nodata'>
+    <view class='nodata'>
+    <image src="/assets/nodata.png"></image>
+    </view>
+    <view class='msg'>主人，购物车还是空的呢！</view>
+  </view>
+</view>

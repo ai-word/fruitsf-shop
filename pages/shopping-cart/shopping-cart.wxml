@@ -8,14 +8,6 @@
   </view>
 
   <view class="bottom-info">
-    <!-- <checkbox-group bindchange="checkboxAllChange" class="check-box">
-        <label class="checkbox" style="display:flex;" for="checkAll">
-            <checkbox checked="{{checkedAll}}" value="all"></checkbox> 全选
-    </label>
-    </checkbox-group> -->
-
-
-   
     <checkbox-group  bindchange="checkboxAllChange" class="check-box">
       <label class="checkbox" style="display:flex;" for="checkAll">
         <checkbox value="all" checked="{{checkedAll}}">全选</checkbox>

@@ -35,25 +35,25 @@
     <view class='flex-item'>
       <view class='item'>
         <image src="/assets/user/payment.png"></image>
-        <view>全部订单</view>
+        <view>待付款</view>
       </view>
     </view>
     <view class='flex-item'>
       <view class='item'>
         <image src="/assets/user/distribution.png"></image>
-        <view>全部订单</view>
+        <view>待配送</view>
       </view>
     </view>
     <view class='flex-item'>
       <view class='item'>
         <image src="/assets/user/mention.png"></image>
-        <view>全部订单</view>
+        <view>待自提</view>
       </view>
     </view>
     <view class='flex-item'>
       <view class='item'>
         <image src="/assets/user/complete.png"></image>
-        <view>全部订单</view>
+        <view>已完成</view>
       </view>
     </view>
   </view>

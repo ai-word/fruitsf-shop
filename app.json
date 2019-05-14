@@ -9,7 +9,8 @@
     "pages/shopping-cart/shopping-cart",
     "pages/commodity-detail/detail",
     "pages/commodity-detail/open-regiment/regiment",
-    "pages/coupon/coupon"
+    "pages/coupon/coupon",
+    "pages/my-order/order"
   ],
   "window": {
     "backgroundTextStyle": "light",
