@@ -10,7 +10,8 @@
     "pages/commodity-detail/detail",
     "pages/commodity-detail/open-regiment/regiment",
     "pages/coupon/coupon",
-    "pages/my-order/order"
+    "pages/my-order/order",
+    "pages/time/time"
   ],
   "window": {
     "backgroundTextStyle": "light",

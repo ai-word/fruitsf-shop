@@ -101,12 +101,12 @@
         <view class='flex'>
           <view class='right-style'>还差
             <text style="color:#37D260">{{item.total_count-item.attend_count}}</text>人成团</view>
-          <view class='together' bindtap='onShowModal'>一起拼</view>
+          <view class='together' data-groupId="{{groups.id}}" bindtap='onShowModal'>一起拼</view>
         </view>
       </view>
     </view>
       <!-- 弹出组件  -->
-    <modal title='给明星送金币(个)' gold="{{gold}}"  multiline='true' bindinputCancel='onInputCancel' bindinputConfirm='onInputConfirm' wx:if='{{ addingText }}'/>
+    <modal  groupsNum='{{groupsUser.totalCount-groupsUser.attendCount}}' userList='{{currentUserList}}' multiline='true' bindinputCancel='onInputCancel' bindinputConfirm='onInputConfirm' wx:if='{{ addingText }}'/>
     <view class='picture-details'>
       <view class='pic-title'>
         图文详情
@@ -127,7 +127,7 @@
 
   <view class='detail-fotter'>
     <view class='flex-fotter left'>
-      <view class='img index'>
+      <view class='img index' bindtap='goTabIndex'>
         <image src="/assets/weapp/index.png"></image>
       </view>
       <view class='img shop-car'>
@@ -136,13 +136,13 @@
     </view>
     <view class='flex-fotter center'>
         <view >
-          <view style="font-size:16px;">￥49.9</view>
+          <view style="font-size:16px;">￥{{groups.singe_price}}</view>
           <view style="font-size:12px;">直接购买</view>
         </view>
     </view>
     <view class='flex-fotter right'>
         <view >
-          <view style="font-size:16px;">￥39.9</view>
+          <view style="font-size:16px;">￥{{groups.multi_price}}</view>
           <view style="font-size:12px;">立即开团</view>
         </view>
     </view>

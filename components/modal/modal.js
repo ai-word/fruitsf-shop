@@ -5,9 +5,13 @@ Component({
       type: Boolean,
       value: false
     },
-    title: {
-      type: String,
+    userList: {
+      type: Array,
       value: ''
+    },
+    groupsNum: {
+      type: Number,
+      value: ''  
     },
     gold: {
       type: String,

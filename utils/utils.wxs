@@ -30,6 +30,8 @@ function getTime(start, end) {
   return  days
 }
 
+
+
 module.exports = {
   getTextByArray: getTextByArray,
   getTime: getTime

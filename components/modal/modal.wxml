@@ -5,7 +5,7 @@
 
      <view class='modal-content'>
         <view class='title'>一起参与拼团</view>
-        <view class='desc'>仅剩余 9794 个参团名额可用，赶紧来参团吧！</view>
+        <view class='desc'>仅剩余 <text style="color:#37D260;font-size:14px;">{{groupsNum}}</text> 个参团名额可用，赶紧来参团吧！</view>
         <view class='modal-pularity'>
           <image src="/assets/huo.png"></image>
           <text class='pularity'>火热拼团ing</text>
@@ -14,34 +14,23 @@
         </view>
     </view>
     <view class='user-list'>
-      <view class='user-image'>
-        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
+      <view class='user-image' wx:for="{{userList}}" wx:for-index="index" wx:key="{{index}}">
+        <image src='{{item.avatarurl}}'></image>
+        <view class='tuanzhang'>团长</view>
       </view>
-    <view class='user-image'>
-        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
+      <view class='user-image item-style'>
+        <text>?</text>
       </view>
-    <view class='user-image'>
-        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
+      <view class='user-image item-style'>
+        <text>?</text>
       </view>
-    <view class='user-image'>
-        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
-      </view>
-    <view class='user-image'>
-        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
-      </view>
-    <view class='user-image'>
-        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
-      </view>
-          <view class='user-image'>
-        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
-      </view>
-    <view class='user-image'>
-        <image src='https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoh9YcN0ZTeK3Oibq9lIgFeOFBdGPiaFdMCC5qodyjl1nDjXHSdfrIOQh7jmVXiaBJtPHzcZnbasIhw/132'></image>
-      </view>
+      <!-- <view class='user-image item-style'>
+        <text>?</text>
+      </view> -->
     </view>
 
     <view class='modal-bottom'>
-      确认开团
+      确认拼团
     </view>
 
     <!-- <view class='cancel-container' catchtap='onCancelTap'>

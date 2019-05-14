@@ -1,0 +1,10 @@
+<!--pages/time/time.wxml-->
+  <!-- 倒计时 -->
+    <view class='tui-countdown-content' wx:for="{{countDownList}}" wx:key="countDownList">
+      剩余
+      <text class='tui-conutdown-box'>{{item.day}}</text>天
+      <text class='tui-conutdown-box'>{{item.hou}}</text>时
+      <text class='tui-conutdown-box'>{{item.min}}</text>分
+      <text class='tui-conutdown-box tui-countdown-bg'>{{item.sec}}</text>秒
+    </view>
+    <!-- 倒计时 -->

@@ -1,7 +1,11 @@
 // pages/commodity-detail/detail.js
+//倒计时
+
 const Http = require('../../utils/request.js');
 var WxParse = require('../../components/wxParse/wxParse.js');
 const app = getApp();
+
+
 Page({
 
   /**
@@ -16,7 +20,10 @@ Page({
     currentUser: '',
     groupId: '',
     groupInfo: '',
-    picContent: ''
+    picContent: '',
+    currentUserList: '',
+    groupInstanId: '',
+    groupsUser: ''
   },
 
   /**
@@ -61,20 +68,40 @@ Page({
     // 显示弹框
     console.log(e)
     console.log(111111)
+    let id = e.currentTarget.dataset.groupid
     this.setData({
       addingText: true,
-      conid: e.currentTarget.dataset.conid,
-      lecid: e.currentTarget.dataset.lecid,
-      indexVideo: e.currentTarget.dataset.index,
-      rewardNum: e.currentTarget.dataset.rewardnum
+      groupInstanId: e.currentTarget.dataset.groupid
+      // conid: e.currentTarget.dataset.conid,
+      // lecid: e.currentTarget.dataset.lecid,
+      // indexVideo: e.currentTarget.dataset.index,
+      // rewardNum: e.currentTarget.dataset.rewardnum
     })
+    this.getCurrentUsersList(id)
   },
   onInputConfirm: function (e) { //赠送金币
     // 隐藏弹框
     console.log(e)
   },
-  /**
+/**
    * 取得正在拼团用户列表
+   */
+  getCurrentUsersList(id) {
+    let params = {
+      groupInstanId: id
+    }
+    let that = this
+    Http.HttpRequst(false, '/group/getCurrentUsers', false, '', params, 'get', false, function(res) {
+      console.log(res.data.groups, '5555')
+      that.setData({
+        currentUserList: res.data.groupUsers,
+        groupsUser: res.data.groups
+      })
+
+    })
+  },
+  /**
+   * 取得正在拼团列表
    */
   getCurrentUsers(id) {
     let params = {
@@ -97,6 +124,11 @@ Page({
   swiperChange: function(e) {
     this.setData({
       currentSwiper: e.detail.current + 1
+    })
+  },
+  goTabIndex() {
+    wx.switchTab({
+      url: '/pages/index/index'
     })
   },
   /**
