@@ -31,5 +31,40 @@ App({
     code: '',
     userInfo: null,
     baseUrl: 'https://xfshop.mynatapp.cc',
+    shopcarData: [{//购物车   
+      id: '1',
+      name: '折后i啊手动阀就是点击发送的金佛啊是是假的佛山折后i啊手动阀就是点击发送的金佛啊是是假的佛山',
+      price: '230',
+      num: 1,
+      types: '白色/39码',
+      check: true
+    }, {
+      id: '2',
+      name: '啊哈额和福特好热惊讶所以就如同撒打发士大夫',
+      price: '332',
+      num: 1,
+      types: '粉色/38码'
+    }, {
+      id: '3',
+      name: '啊如何呀还是大范围推广哇额饿啊日hers的说法的事发生的',
+      price: '120',
+      num: 1,
+      types: '白色/41码',
+      check: true
+    }, {
+      id: '4',
+      name: '阿桑的歌也会更好的反对犯得上的事发生的',
+      price: '320',
+      num: 1,
+      types: '黑色/37码',
+      check: true
+    }, {
+      id: '5',
+      name: '阿桑的歌微软噶士大夫啊士大夫但是飞洒地方士大夫撒',
+      price: '630',
+      num: 1,
+      types: '白色/39码',
+      check: true
+    }]
   }
 })

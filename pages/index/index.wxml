@@ -86,7 +86,7 @@
         <view class='good-price'>
           <view class='price present-price'>￥{{item.price}}</view>
           <view class='price original'>￥{{item.original_price}}</view>
-          <view class='price add'>
+          <view class='price add' bindtap='addShopCart' data-id="{{item.id}}" data-price="{{item.price}}">
             <image  src="/assets/index/add.png"></image>
           </view>
            <!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">

@@ -83,6 +83,27 @@ Page({
       }
     })
   },
+    /**
+   * 加入购物车
+   */
+  addShopCart(e) {
+    console.log(e)
+    wx.setTabBarBadge({
+      index: 3,
+      text: '1'
+    });
+    let params = {
+      productId: e.currentTarget.dataset.id, //商品id
+      productaAmount: 1, //商品数量
+      price: e.currentTarget.dataset.price //商品单价
+    }
+    Http.HttpRequst(true, '/cart/save', true, '', params, 'post', false, function (res) {
+      console.log(res, '5555')
+      that.setData({
+        indexPrd: res.data
+      })
+    })
+  },
   getIdxPrd() { 
     let that = this
     Http.HttpRequst(true, '/idx/getIdxPrd', false, '', '', 'get', false, function (res) {

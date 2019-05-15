@@ -11,7 +11,8 @@
     "pages/commodity-detail/open-regiment/regiment",
     "pages/coupon/coupon",
     "pages/my-order/order",
-    "pages/time/time"
+    "pages/time/time",
+        "pages/cart/cart"
   ],
   "window": {
     "backgroundTextStyle": "light",
