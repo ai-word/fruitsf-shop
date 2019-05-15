@@ -12,7 +12,7 @@
     "pages/coupon/coupon",
     "pages/my-order/order",
     "pages/time/time",
-        "pages/cart/cart"
+    "pages/cart/cart"
   ],
   "window": {
     "backgroundTextStyle": "light",

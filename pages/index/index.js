@@ -92,6 +92,7 @@ Page({
       index: 3,
       text: '1'
     });
+    let that = this
     let params = {
       productId: e.currentTarget.dataset.id, //商品id
       productaAmount: 1, //商品数量

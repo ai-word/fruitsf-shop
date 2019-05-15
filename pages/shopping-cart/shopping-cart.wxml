@@ -1,32 +1,68 @@
 <view class="shop-content">
   <!-- 导航栏 -->
-  <view class='shop-nodata'>
+  <!-- <view class='shop-nodata'>
     <view class='nodata'>
     <image src="/assets/nodata.png"></image>
     </view>
     <view class='msg'>主人，购物车还是空的呢！</view>
+  </view> -->
+
+
+  <view class='shop-cart-content'>
+    <view class='goodlist' wx:for='{{shopcarData}}' wx:key='this'>
+      <view class='check-box'>
+        <view class=''>
+          <image class='check_img' hidden='{{item.check}}' src='/assets/index/check.png'></image>
+          <image class='check_img' hidden='{{!item.check}}' src='/assets/index/check-active.png'></image>
+        </view>
+        <view class='good-image'>
+          <image mode="aspectFill" src="http://shopimg123.test.upcdn.net/img/pt.jpg"></image>
+        </view>
+      </view>
+
+      <view class='good-info' catchtap='navshopdetailTap'>
+        <text class='good-title'>秭归精选应季伦晚鲜橙 甜橙子 </text>
+        <text class='good-desc'>严苛品质万里挑一</text>
+        <view class='good-detail'>
+          <view class='original'>￥{{item.price}}</view>
+          <view class='shop_detail_bottom'>
+            <text class='shop_price'>￥{{item.price}}</text>
+            <view class='num_change'>
+              <image class='minus_icon' hidden='{{item.num<2}}' src='/assets/index/cut.png' data-index='{{index}}' data-types='minus' catchtap='numchangeTap'>
+              </image>
+              <image class='minus_icon' hidden='{{item.num>=2}}' src='/assets/index/cut.png'>
+              </image>
+              <text class='shop_num'>{{item.num}}</text>
+              <image class='add_icon' data-index='{{index}}' data-types='add' catchtap='numchangeTap' src='/assets/index/add.png'>
+              </image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 
+
   <view class="bottom-info">
-    <checkbox-group  bindchange="checkboxAllChange" class="check-box">
+    <checkbox-group bindchange="checkboxAllChange" class="check-box">
       <label class="checkbox" style="display:flex;" for="checkAll">
         <checkbox value="all" checked="{{checkedAll}}">全选</checkbox>
       </label>
     </checkbox-group>
 
     <view class="calc-info">
-        <view wx:if="{{discount>0}}">
-            <text>已优惠:</text>
-            <text class="total-price">￥{{discount}}</text>
-            <text>（不含运费）</text>
-        </view>
-        <view>
-            <!-- allPrice -->
-            <text>合计:</text>
-            <text class="total-price">￥{{59.80}}</text>
-            <text hidden="{{discount>0}}">（不含运费）</text>
-        </view>
+      <view wx:if="{{discount>0}}">
+        <text>已优惠:</text>
+        <text class="total-price">￥{{discount}}</text>
+        <text>（不含运费）</text>
+      </view>
+      <view>
+        <!-- allPrice -->
+        <text>合计:</text>
+        <text class="total-price">￥{{59.80}}</text>
+        <text hidden="{{discount>0}}">（不含运费）</text>
+      </view>
     </view>
     <text bindtap="toPerfectOrder" class="tocalc">去结算</text>
-</view>
+  </view>
 </view>

@@ -1,3 +1,6 @@
+const Http = require('../../utils/request.js');
+const app = getApp();
+// pages/shopping-cart/cart.js
 Page({
 
   /**
@@ -5,39 +8,73 @@ Page({
    */
   data: {
     navbarActiveIndex: 0,
-    navbarTitle: [
-      "热映",
-      "Top250",
-      "口碑榜",
-      "新片榜",
-      "Top250",
-      "口碑榜",
-      "新片榜"
-    ],
-    checkAll: [
-      { name: 'USA', value: '美国' }
-    ]
+    goodList: []
   },
-
-  /**
-   * 点击导航栏
-   */
-  onNavBarTap: function (event) {
-    // 获取点击的navbar的index
-    let navbarTapIndex = event.currentTarget.dataset.navbarIndex
-    // 设置data属性中的navbarActiveIndex为当前点击的navbar
-    this.setData({
-      navbarActiveIndex: navbarTapIndex
+  getAllCartList() {
+    let that = this
+    Http.HttpRequst(true, '/cart/getAllCarts', true, '', '', 'post', false, function (res) {
+      that.setData({
+        goodList: res.data
+      })
     })
   },
 
   /**
-   * 
+   * 生命周期函数--监听页面加载
    */
-  onBindAnimationFinish: function ({ detail }) {
-    // 设置data属性中的navbarActiveIndex为当前点击的navbar
+  onLoad: function (options) {
+    this.getAllCartList()
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    var shopcarData = app.globalData.shopcarData
     this.setData({
-      navbarActiveIndex: detail.current
-    })
+      shopcarData: shopcarData
+    });
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
   }
 })
