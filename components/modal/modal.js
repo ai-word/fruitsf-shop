@@ -38,7 +38,6 @@ Component({
 
   attached: function () {
     var res = wx.getSystemInfoSync()
-
     this.setData({
       modalBottom:250,
       // modalHeight: 189
@@ -51,6 +50,9 @@ Component({
       this.setData({
         text: e.detail.value
       })
+    },
+    onSubmitTap(){
+      this.triggerEvent('onSubmitTap')
     },
     tagClick: function (e) {
       console.log(e)

@@ -106,7 +106,7 @@
       </view>
     </view>
       <!-- 弹出组件  -->
-    <modal  groupsNum='{{groupsUser.totalCount-groupsUser.attendCount}}' userList='{{currentUserList}}' multiline='true' bindinputCancel='onInputCancel' bindinputConfirm='onInputConfirm' wx:if='{{ addingText }}'/>
+    <modal  groupsNum='{{groupsUser.totalCount-groupsUser.attendCount}}' userList='{{currentUserList}}' multiline='true' bindonSubmitTap="onSubmitTap"  bindinputCancel='onInputCancel' bindinputConfirm='onInputConfirm' wx:if='{{ addingText }}'/>
     <view class='picture-details'>
       <view class='pic-title'>
         图文详情

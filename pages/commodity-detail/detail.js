@@ -1,11 +1,7 @@
 // pages/commodity-detail/detail.js
-//倒计时
-
 const Http = require('../../utils/request.js');
 var WxParse = require('../../components/wxParse/wxParse.js');
 const app = getApp();
-
-
 Page({
 
   /**
@@ -98,6 +94,19 @@ Page({
         groupsUser: res.data.groups
       })
 
+    })
+  },
+ /**
+   * 用户参团
+   */
+  onSubmitTap() {
+    let params = {
+      groupId: this.data.groupId,
+      groupsInstanceId: this.data.groupInstanId
+    }
+    let that = this
+    Http.HttpRequst(false, '/group/startMemberGroups', false, '', params, 'post', false, function (res) {
+      console.log(res)
     })
   },
   /**

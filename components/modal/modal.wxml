@@ -29,7 +29,7 @@
       </view> -->
     </view>
 
-    <view class='modal-bottom'>
+    <view class='modal-bottom' bindtap='onSubmitTap'>
       确认拼团
     </view>
 
