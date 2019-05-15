@@ -68,6 +68,7 @@ Page({
   },
   //点击单个选择按钮  
   checkTap: function (e) {
+    console.log(5555)
     let Index = e.currentTarget.dataset.index,
       shopcar = this.data.shopcarData,
       total = this.data.total,
@@ -78,12 +79,13 @@ Page({
       selarr.push(shopcar[Index]);
     } else {
       total -= shopcar[Index].num * shopcar[Index].price;
-      for (let i = 0, len = selarr.length; i < len; i++) {
-        if (shopcar[Index].id == selarr[i].id) {
-          selarr.splice(i, 1);
-          break;
-        }
-      }
+      selarr.push(shopcar[Index]);
+      // for (let i = 0, len = selarr.length; i < len; i++) {
+      //   // if (shopcar[Index].id == selarr[i].id) {
+      //   //   selarr.splice(i, 1);
+      //   //   break;
+      //   // }
+      // }
     }
     this.setData({
       shopcarData: shopcar,

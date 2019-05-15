@@ -51,7 +51,7 @@
         "text": "购物车"
       },
       {
-        "pagePath": "pages/user/user",
+        "pagePath": "pages/cart/cart",
         "iconPath": "/assets/weapp/user.png",
         "selectedIconPath": "/assets/weapp/active-user.png",
         "text": "我的"

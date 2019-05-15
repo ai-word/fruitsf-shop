@@ -9,30 +9,30 @@
 
 
   <view class='shop-cart-content'>
-    <view class='goodlist' wx:for='{{shopcarData}}' wx:key='this'>
+    <view class='goodlist' wx:for='{{shopCartList}}' wx:for-index="index" wx:key='this'>
       <view class='check-box'>
         <view class=''>
-          <image class='check_img' hidden='{{item.check}}' src='/assets/index/check.png'></image>
-          <image class='check_img' hidden='{{!item.check}}' src='/assets/index/check-active.png'></image>
+          <image class='check_img' data-index='{{index}}' hidden='{{item.select}}' src='/assets/index/check.png' catchtap='checkTap'></image>
+          <image class='check_img' data-index='{{index}}' hidden='{{!item.select}}' src='/assets/index/check-active.png' catchtap='checkTap'></image>
         </view>
         <view class='good-image'>
-          <image mode="aspectFill" src="http://shopimg123.test.upcdn.net/img/pt.jpg"></image>
+          <image mode="aspectFill" src="{{item.pic}}"></image>
         </view>
       </view>
 
-      <view class='good-info' catchtap='navshopdetailTap'>
-        <text class='good-title'>秭归精选应季伦晚鲜橙 甜橙子 </text>
-        <text class='good-desc'>严苛品质万里挑一</text>
+      <view class='good-info'>
+        <text class='good-title'>{{item.name}}</text>
+        <text class='good-desc'>{{item.sub_title}}</text>
         <view class='good-detail'>
           <view class='original'>￥{{item.price}}</view>
           <view class='shop_detail_bottom'>
             <text class='shop_price'>￥{{item.price}}</text>
             <view class='num_change'>
-              <image class='minus_icon' hidden='{{item.num<2}}' src='/assets/index/cut.png' data-index='{{index}}' data-types='minus' catchtap='numchangeTap'>
+              <image class='minus_icon' hidden='{{item.product_amount<2}}' src='/assets/index/cut.png' data-index='{{index}}' data-types='minus' catchtap='numchangeTap'>
               </image>
-              <image class='minus_icon' hidden='{{item.num>=2}}' src='/assets/index/cut.png'>
+              <image class='minus_icon' hidden='{{item.product_amount>=2}}' src='/assets/index/cut.png'>
               </image>
-              <text class='shop_num'>{{item.num}}</text>
+              <text class='shop_num'>{{item.product_amount}}</text>
               <image class='add_icon' data-index='{{index}}' data-types='add' catchtap='numchangeTap' src='/assets/index/add.png'>
               </image>
             </view>
@@ -44,9 +44,9 @@
 
 
   <view class="bottom-info">
-    <checkbox-group bindchange="checkboxAllChange" class="check-box">
+    <checkbox-group bindtap="checkboxAllChange" class="check-box">
       <label class="checkbox" style="display:flex;" for="checkAll">
-        <checkbox value="all" checked="{{checkedAll}}">全选</checkbox>
+        <checkbox value="all" checked="{{allChecked}}">全选</checkbox>
       </label>
     </checkbox-group>
 
@@ -59,7 +59,7 @@
       <view>
         <!-- allPrice -->
         <text>合计:</text>
-        <text class="total-price">￥{{59.80}}</text>
+        <text class="total-price">￥{{totalPrice}}</text>
         <text hidden="{{discount>0}}">（不含运费）</text>
       </view>
     </view>
