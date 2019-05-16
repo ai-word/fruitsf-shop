@@ -88,10 +88,6 @@ Page({
    */
   addShopCart(e) {
     console.log(e)
-    wx.setTabBarBadge({
-      index: 3,
-      text: '1'
-    });
     let that = this
     let params = {
       productId: e.currentTarget.dataset.id, //商品id
@@ -102,6 +98,12 @@ Page({
       console.log(res, '5555')
       that.setData({
         indexPrd: res.data
+      })
+      var num = wx.getStorageSync('cartNum') 
+      wx.setStorageSync('cartNum', parseInt(1 + num)) 
+      wx.setTabBarBadge({ 
+        index: 3,
+        text: "" + parseInt(1 + num) + ""		
       })
     })
   },

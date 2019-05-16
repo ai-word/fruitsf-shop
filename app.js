@@ -31,25 +31,6 @@ App({
     code: '',
     userInfo: null,
     baseUrl: 'https://xfshop.mynatapp.cc',
-    shopcarData: [
-      {
-        "id": 2,
-        "name": "阳山水蜜桃-6两",
-        "pic": "http://shopimg123.test.upcdn.net/img/mht.jpg",
-        "price": 100,
-        "product_amount": 3,
-        "select": true,
-        "sub_title": "懒人必备，不吐皮"
-      },
-      {
-        "id": 3,
-        "name": "葡萄",
-        "pic": "http://shopimg123.test.upcdn.net/img/pt.jpg",
-        "price": 100,
-        "product_amount": 1,
-        "select": true,
-        "sub_title": "清爽可口，汁多柔嫩"
-      }
-    ]
+    cartNum: ''
   }
 })

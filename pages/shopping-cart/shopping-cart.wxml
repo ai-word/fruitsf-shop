@@ -6,7 +6,10 @@
     </view>
     <view class='msg'>主人，购物车还是空的呢！</view>
   </view> -->
-
+  <view class='header'>
+    <view>四季优选</view>
+    <view bindtap='deleteShopCar'>删除</view>
+  </view>
 
   <view class='shop-cart-content'>
     <view class='goodlist' wx:for='{{shopCartList}}' wx:for-index="index" wx:key='this'>

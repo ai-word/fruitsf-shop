@@ -13,17 +13,32 @@ Page({
     shopCartList: [],//购物车数据      
     totalPrice: 0,//总金额      
     allChecked: true,//全选      
-    allShopList: [],//选择的货物      
     hintText: '',//提示的内容      
     hintShow: false,//是否显示提示
     checkedAll: true,
-    allShopList: []
+
   },
   getAllCartList() {
     let that = this
     Http.HttpRequst(true, '/cart/getAllCarts', true, '', '', 'post', false, function (res) {
+      var totalPrice = 0
+      var  goodNum = 0
+      for (let i = 0, len = res.data.length; i < len; i++) {//这里是对选中的商品的价格进行总结 
+        if (res.data[i].select) {
+          totalPrice += res.data[i].product_amount * res.data[i].price;
+          goodNum +=res.data[i].product_amount
+        }
+      }
       that.setData({
-        shopCartList: res.data
+        shopCartList: res.data,
+        totalPrice: totalPrice,
+      });
+      that.judgmentAll();//判断是否全选
+      var num = wx.getStorageSync('cartNum')
+      wx.setStorageSync('cartNum', parseInt(goodNum))
+      wx.setTabBarBadge({
+        index: 3,
+        text: "" + parseInt(goodNum) + ""
       })
     })
   },
@@ -49,15 +64,13 @@ Page({
     for (let i = 0, len = shopcar.length; i < len; i++) {
       shopcar[i].select = allChecked;//所有商品的选中状态和allChecked值一样
       if (allChecked) {//如果为选中状态则计算商品的价格
-        totalPrice += shopcar[i].price * shopcar[i].num;
+        totalPrice += shopcar[i].price * shopcar[i].product_amount;
       }
-    }
-    this.data.allShopList = allChecked ? shopcar : [];//如果选中状态为true那么所有商品为选中状态，将物品加入选中变量，否则为空    
+    } 
     this.setData({
       allChecked: allChecked,
       shopCartList: shopcar,
-      totalPrice: totalPrice,
-      allShopList: this.data.allShopList
+      totalPrice: totalPrice
     });
   },
   /**
@@ -68,21 +81,17 @@ Page({
     console.log(this.data.allShopList, '555')
     let Index = e.currentTarget.dataset.index,
       shopcar = this.data.shopCartList,
-      totalPrice = this.data.totalPrice,
-      allShopList = this.data.allShopList;
+      totalPrice = this.data.totalPrice
     shopcar[Index].select = !shopcar[Index].select || false;
     if (shopcar[Index].select) {
       totalPrice += shopcar[Index].product_amount * shopcar[Index].price;
-      // allShopList.push(shopcar[Index]);
-      allShopList[Index].select = true
     } else {
       totalPrice -= shopcar[Index].product_amount * shopcar[Index].price;
-      allShopList[Index].select = false
     }
+    console.log(shopcar, 'shopcar')
     this.setData({
       shopCartList: shopcar,
       totalPrice: totalPrice,
-      allShopList: allShopList
     });
     this.judgmentAll();//每次按钮点击后都判断是否满足全选的条件  
   },
@@ -95,11 +104,23 @@ Page({
     switch (types) {
       case 'add':
         shopcar[Index].product_amount++;//对应商品的数量+1      
-        shopcar[Index].select && (totalPrice += parseInt(shopcar[Index].price));//如果商品为选中的，则合计价格+商品单价      
+        shopcar[Index].select && (totalPrice += parseInt(shopcar[Index].price));//如果商品为选中的，则合计价格+商品单价
+        var num = wx.getStorageSync('cartNum')
+        wx.setStorageSync('cartNum', parseInt(num + 1))
+        wx.setTabBarBadge({
+          index: 3,
+          text: "" + parseInt(num + 1) + ""
+        })      
         break;
       case 'minus':
         shopcar[Index].product_amount--;//对应商品的数量-1      
-        shopcar[Index].select && (totalPrice -= parseInt(shopcar[Index].price));//如果商品为选中的，则合计价格-商品单价      
+        shopcar[Index].select && (totalPrice -= parseInt(shopcar[Index].price));//如果商品为选中的，则合计价格-商品单价
+        var num = wx.getStorageSync('cartNum')
+        wx.setStorageSync('cartNum', parseInt(num - 1))
+        wx.setTabBarBadge({
+          index: 3,
+          text: "" + parseInt(num - 1) + ""
+        })   
         break;
     }
     this.setData({
@@ -108,21 +129,8 @@ Page({
     });
   },
   onShow: function () {
-    var shopcarData = app.globalData.shopcarData,//这里我是把购物车的数据放到app.js里的，这里取出来，开发的时候视情况加载自己的数据
-      totalPrice = 0,
-      allShopList = this.data.allShopList;
-    for (let i = 0, len = shopcarData.length; i < len; i++) {//这里是对选中的商品的价格进行总结 
-      if (shopcarData[i].select) {
-        totalPrice += shopcarData[i].product_amount * shopcarData[i].price;
-        allShopList.push(shopcarData[i]);
-      }
-    }
-    this.setData({
-      shopCartList: shopcarData,
-      totalPrice: totalPrice,
-      allShopList: allShopList
-    });
-    this.judgmentAll();//判断是否全选  
+    // var shopcarData = app.globalData.shopcarData,//这里我是把购物车的数据放到app.js里的，这里取出来，开发的时候视情况加载自己的数据
+
   },
   // 判断是否为全选  
   judgmentAll: function () {
@@ -135,6 +143,30 @@ Page({
     this.setData({
       allChecked: lenIndex == shoplen//如果购物车选中的个数和购物车里货物的总数相同，则为全选，反之为未全选    
     });
+  },
+  /**
+   * 删除购物车
+   */
+  deleteShopCar() {
+    let list = this.data.shopCartList
+    let str = ''
+    for (let i = 0; i < list.length;i++) {
+      if (list[i].select == true) {
+        str += list[i].id + ','
+      }
+    }
+    if (str.length > 0) {
+      str = str.substr(0, str.length - 1);
+    }
+    let params = {
+      ids: str
+    }
+    console.log(params)
+    // Http.HttpRequst(true, '/cart/delete', true, '', params, 'post', false, function (res) {
+    //   if(res.state == 'ok') {
+    //     this.getAllCartList()
+    //   }
+    // })
   },
   /**
    * 生命周期函数--监听页面隐藏
