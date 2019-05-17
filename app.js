@@ -5,11 +5,43 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
+    var that = this
+
+    wx.login({
+      success: res => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        that.globalData.code = res.code
+        // that.setData({
+        //   code: res.code
+        // })
+        wx.request({
+          url: 'https://xfshop.mynatapp.cc' + '/login/',
+          data: {
+            code: res.code,
+          },
+          success: function (res) {
+            console.log(res, 'resres')
+            if (res.statusCode === 200) {
+              console.log(res.data.sessionId)
+              wx.setStorageSync('sessionkey', res.data.sessionId)
+              if (that.employIdCallback) {
+                that.employIdCallback(res.data.sessionId)
+              }
+            } else {
+
+            }
+          }
+        })
+      }
+    })
     // 获取用户信息
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.switchTab({
+            url: '/pages/index/index'
+          })
           wx.getUserInfo({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
@@ -21,6 +53,10 @@ App({
                 this.userInfoReadyCallback(res)
               }
             }
+          })
+        } else{
+          wx.reLaunch({
+            url: '/pages/authorize/authorize'
           })
         }
       }

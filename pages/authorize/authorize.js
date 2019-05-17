@@ -8,53 +8,6 @@ Page({
     var that = this;
     // 查看是否授权
     // 登录
-    var that = this
-
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        app.globalData.code = res.code
-        that.setData({
-          code: res.code
-        })
-        wx.request({
-          url: 'https://xfshop.mynatapp.cc' + '/login/',
-          data: {
-            code: res.code,
-          },
-          success: function (res) {
-            console.log(res, 'resres')
-            if (res.statusCode === 200) {
-              console.log(res.data.sessionId)
-              wx.setStorageSync('sessionkey', res.data.sessionId)
-              if (that.employIdCallback) {
-                that.employIdCallback(res.data.sessionId)
-              }
-            } else {
-              // wx.showModal({
-              //   title: '提示',
-              //   content: res.data.msg,
-              // })
-            }
-          }
-        })
-      }
-    })
-
-    wx.getSetting({
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {
-              //用户已经授权过
-              wx.switchTab({
-                url: '/pages/index/index'
-              })
-            }
-          });
-        }
-      }
-    })
   },
   bindGetUserInfo: function (e) {
     console.log(e.detail, '5')

@@ -47,7 +47,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getAllCartList()
+    
   },
 
   /**
@@ -95,18 +95,35 @@ Page({
     });
     this.judgmentAll();//每次按钮点击后都判断是否满足全选的条件  
   },
+  andAndSub(productId, productaAmount, price) {
+    let params = {
+      productId: productId,
+      productaAmount: productaAmount,
+      price: price
+    }
+    Http.HttpRequst(false, '/cart/andAndSub', true, '', params, 'post', false, function (res) {
+      if (res.state == 'ok') {
+        // that.getAllCartList()
+      }
+    })
+  },
     //点击加减按钮  
   numchangeTap: function (e) {
     let Index = e.currentTarget.dataset.index,//点击的商品下标值        
       shopcar = this.data.shopCartList,
       types = e.currentTarget.dataset.types,//是加号还是减号        
-      totalPrice = this.data.totalPrice;//总计    
+      totalPrice = this.data.totalPrice;//总计
+    let shopId = e.currentTarget.dataset.id
+    let price = shopcar[Index].price
+    // let product_amount = shopcar[Index].product_amount
     switch (types) {
       case 'add':
-        shopcar[Index].product_amount++;//对应商品的数量+1      
+        shopcar[Index].product_amount++; // 对应商品的数量+1      
         shopcar[Index].select && (totalPrice += parseInt(shopcar[Index].price));//如果商品为选中的，则合计价格+商品单价
         var num = wx.getStorageSync('cartNum')
+        var product_amount = shopcar[Index].product_amount;
         wx.setStorageSync('cartNum', parseInt(num + 1))
+        this.andAndSub(shopId, product_amount, price)
         wx.setTabBarBadge({
           index: 3,
           text: "" + parseInt(num + 1) + ""
@@ -116,6 +133,8 @@ Page({
         shopcar[Index].product_amount--;//对应商品的数量-1      
         shopcar[Index].select && (totalPrice -= parseInt(shopcar[Index].price));//如果商品为选中的，则合计价格-商品单价
         var num = wx.getStorageSync('cartNum')
+        var product_amount = shopcar[Index].product_amount
+        this.andAndSub(shopId, product_amount, price)
         wx.setStorageSync('cartNum', parseInt(num - 1))
         wx.setTabBarBadge({
           index: 3,
@@ -130,7 +149,7 @@ Page({
   },
   onShow: function () {
     // var shopcarData = app.globalData.shopcarData,//这里我是把购物车的数据放到app.js里的，这里取出来，开发的时候视情况加载自己的数据
-
+    this.getAllCartList()
   },
   // 判断是否为全选  
   judgmentAll: function () {
@@ -150,9 +169,10 @@ Page({
   deleteShopCar() {
     let list = this.data.shopCartList
     let str = ''
+    let that = this
     for (let i = 0; i < list.length;i++) {
       if (list[i].select == true) {
-        str += list[i].id + ','
+        str += list[i].cartid + ','
       }
     }
     if (str.length > 0) {
@@ -162,11 +182,11 @@ Page({
       ids: str
     }
     console.log(params)
-    // Http.HttpRequst(true, '/cart/delete', true, '', params, 'post', false, function (res) {
-    //   if(res.state == 'ok') {
-    //     this.getAllCartList()
-    //   }
-    // })
+    Http.HttpRequst(false, '/cart/delete', true, '', params, 'post', false, function (res) {
+      if(res.state == 'ok') {
+        that.getAllCartList()
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面隐藏

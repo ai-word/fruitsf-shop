@@ -12,7 +12,8 @@
     "pages/coupon/coupon",
     "pages/my-order/order",
     "pages/time/time",
-    "pages/cart/cart"
+    "pages/cart/cart",
+    "pages/class/class"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -39,7 +40,7 @@
         "text": "拼团"
       },
       {
-        "pagePath": "pages/classification/classification",
+        "pagePath": "pages/class/class",
         "iconPath": "assets/weapp/class.png",
         "selectedIconPath": "assets/weapp/active-class.png",
         "text": "分类"

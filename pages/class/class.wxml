@@ -1,0 +1,43 @@
+<!--pages/class/class.wxml-->
+<view class="class-content" wx:if="{{!loading}}">
+
+    <view class="list-box">
+      <scroll-view scrollY class="category-list" style="width: 100%;height:100%;">
+        <view bindtap="clickCategory" class="category-item {{tabSelected == idx?'active':''}}" data-idx="{{idx}}" id="{{idx}}" wx:for="{{category}}" wx:for-index="idx" wx:key="index">
+          <text>{{item.menuName}}</text>
+        </view>
+      </scroll-view>
+    </view>
+  <view class='goods-body'>
+    <view class='goods-content' class="goods-content {{idx===goodsList.length-1?'goods-content-last':''}}" id="{{'the-'+idx}}" wx:if="{{idx==tabSelected}}" wx:for="{{category}}" wx:for-index="idx" wx:for-item="goodsItem" wx:key="idx">
+      <view class='goods-item' data-productId="{{item.id}}" id="products-{{item.id}}" wx:for="{{category[idx].products}}" wx:key="id">
+        <view class="goods-img-box">
+          <image lazyLoad="true" mode="aspectFit" src="{{item.imageUrl}}"></image>
+        </view>
+        <view class="goods-info">
+          <view class="goods-name">
+            {{item.name&&item.name!==undefined?item.name:''}} {{item.specifications}}
+          </view>
+          <text class="goods-desc">{{item.description?item.description:''}}</text>
+          <view class="goods-labels">
+            <view data-id="{{index}}" style="border-color:rgb({{item.color}})" wx:if="{{index<3}}" wx:for="{{item.promotions}}" wx:key="index">{{item.labelName}}</view>
+          </view>
+          <view class="goods-price" hidden="{{item.sellPrice&&item.sellPrice!==undefined?false:true}}">
+            <text class="nowPrice">￥{{item.sellPrice?item.sellPrice:''}}</text>
+                        <text class="oldPrice" wx:if="{{item.originalPrice&&item.sellPrice<item.originalPrice}}">￥{{item.originalPrice}}</text>
+          </view>
+        </view>
+      </view>
+      </view>
+    </view>
+</view>
+
+
+<!-- <view class='content'>
+  <view class='left'>
+  1
+  </view>
+    <view class='right'>
+    2
+  </view>
+</view> -->
