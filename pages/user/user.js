@@ -1,11 +1,12 @@
 // pages/user/user.js
+const app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    userInfo: ''
   },
 
   /**
@@ -26,7 +27,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    wx.getUserInfo({
+      success: res => {
+        console.log(res)
+        app.globalData.userInfo = res.userInfo
+        that.data.userInfo = res.userInfo
+      }
+    })
   },
 
   /**
@@ -67,5 +75,10 @@ Page({
     wx.navigateTo({
       url: '/pages/address/address'
     })  
+  },
+  coupon() {
+    wx.navigateTo({
+      url: '/pages/coupon/coupon'
+    })     
   }
 })

@@ -1,11 +1,17 @@
 <!--pages/address/address.wxml-->
 <view class='address-content'>
-  <view class='header'>
-    <view class='address-image'><image src="/assets/address.png"></image>收货地址</view>
-    <view class='delete' bindtap='deleteShopCar'><image src="/assets/delete.png"></image>删除</view>
+  <view class='header' wx:if="{{addressList.length>0}}">
+      <view class='address-image'><image src="/assets/address.png"></image>收货地址</view>
+      <view class='delete' bindtap='deleteShopCar'><image src="/assets/delete.png"></image>{{isDelete? '取消': '删除地址'}}</view>
   </view>
-  <view class='receiving'>
-    <view class='receiving-list' wx:for="{{addressList}}">
+    <view class='shop-nodata' wx:if="{{addressList.length == 0}}">
+    <view class='nodata'>
+    <image src="/assets/nodata.png"></image>
+    </view>
+    <view class='msg'>您还没有添加收货地址</view>
+  </view>
+  <view class='receiving' wx:if="{{addressList.length>0}}">
+    <view class='receiving-list' wx:for="{{addressList}}" wx:key="index">
       <view class='item'>
         <view class='title'>
           {{item.region}}
@@ -19,20 +25,22 @@
           <text class='mobile'>{{item.phone_number}}</text>
         </view>
       </view>
-      <view class='item right'>
+      <view class='item right' wx:if="{{!isDelete}}">
         <image src="/assets/edit.png"></image>
+      </view>
+      <view class='item right check' wx:else>
+        <image class='check_img' wx:if="{{item.select == false}}" data-index='{{index}}' data-id="{{item.id}}" src='/assets/index/check.png' catchtap='checkTap'></image>
+        <image class='check_img' wx:else data-index='index' data-id="{{item.id}}" src='/assets/index/check-active.png' catchtap='checkTap'></image>
       </view>
     </view>
   </view>
-  <!-- <view class='shop-nodata'>
-    <view class='nodata'>
-    <image src="/assets/nodata.png"></image>
-    </view>
-    <view class='msg'>您还没有添加收货地址</view>
-  </view> -->
+  <toast inner-text=""  id='toastDialog'></toast>
   <view class='footer-bottom'>
-    <view class='add-ress' bindtap='goAddress'>
+    <view class='add-ress' wx:if="{{!isDelete}}" bindtap='goAddress'>
       添加新收货地址
+    </view>
+    <view class='add-ress delete-ress' wx:else bindtap='submitDelete'>
+      删除地址
     </view>
   </view>
 </view>

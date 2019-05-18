@@ -119,7 +119,7 @@ Page({
     switch (types) {
       case 'add':
         shopcar[Index].product_amount++; // 对应商品的数量+1      
-        shopcar[Index].select && (totalPrice += parseInt(shopcar[Index].price));//如果商品为选中的，则合计价格+商品单价
+        shopcar[Index].select && (totalPrice += shopcar[Index].price);//如果商品为选中的，则合计价格+商品单价
         var num = wx.getStorageSync('cartNum')
         var product_amount = shopcar[Index].product_amount;
         wx.setStorageSync('cartNum', parseInt(num + 1))
@@ -131,7 +131,7 @@ Page({
         break;
       case 'minus':
         shopcar[Index].product_amount--;//对应商品的数量-1      
-        shopcar[Index].select && (totalPrice -= parseInt(shopcar[Index].price));//如果商品为选中的，则合计价格-商品单价
+        shopcar[Index].select && (totalPrice -= shopcar[Index].price);//如果商品为选中的，则合计价格-商品单价
         var num = wx.getStorageSync('cartNum')
         var product_amount = shopcar[Index].product_amount
         this.andAndSub(shopId, product_amount, price)

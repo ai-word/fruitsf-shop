@@ -64,10 +64,18 @@
   color: #ffffff;
 }
 
+.receiving{
+  margin-top:110rpx;
+}
 .receiving-list{
   display: flex;
-  padding: 0 40rpx;
-  margin-top:110rpx;
+  padding: 20rpx 0;
+  margin: 0 40rpx;
+  border-bottom:1rpx solid #eeeeee;
+}
+.receiving-list .check image{
+  width: 40rpx!important;
+  height: 40rpx!important;
 }
 .item{
   flex: 1;

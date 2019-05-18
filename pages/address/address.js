@@ -6,28 +6,31 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    addressList: [],
+    isDelete: false,
+    isChecked: false,
+    addRessId: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getAllAddress()
+    // this.getAllAddress()
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.toastDialog = this.selectComponent("#toastDialog");
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getAllAddress()
   },
 
   /**
@@ -36,14 +39,58 @@ Page({
   onHide: function () {
 
   },
+  checkTap(e) {
+    var data = this.data.addressList
+    let id = e.currentTarget.dataset.id
+    console.log(id)
+    for(var i= 0;i<data.length;i++) {
+      if (data[i].id == id) {
+        data[i].select = true
+      } else {
+        data[i].select = false
+      }
+    }
+    this.setData({
+      addressList: data,
+      addRessId: id
+    })
+  },
+  submitDelete() {
+    let that = this
+    if (this.data.addRessId == '') {
+      that.toastDialog.showDialog('请选择要删除的地址')
+      return false
+    }
+    let params = {
+      id: this.data.addRessId
+    }
+    Http.HttpRequst(false, '/addr/delete', false, '', params, 'get', false, function (res) {
+      if(res.state == 'ok') {
+        that.getAllAddress()
+        that.setData({
+          addRessId: ''
+        })
+        that.toastDialog.showDialog('删除成功！')
+      }
+    })
+  },
   getAllAddress() {
     let that = this
     Http.HttpRequst(false, '/addr/getAllAddress', false, '', '', 'get', false, function (res) {
-      console.log(res.data.groups, '5555')
+  
+      for(var i=0;i<res.data.length;i++) {
+        res.data[i].select = false
+      }
       that.setData({
         addressList: res.data,
       })
 
+    })
+  },
+  deleteShopCar() {
+    var isDelete = !this.data.isDelete || false
+    this.setData({
+      isDelete: isDelete
     })
   },
   /**

@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "toast": "/components/toast/toast"
+  },
   "navigationBarTitleText": "收货地址"
 }

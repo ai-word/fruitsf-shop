@@ -46,10 +46,12 @@ Page({
   },
   clickCategory: function (e) {
     this.data.goodsItem = []
+    // this.data.pageNumber = 1
     let id = e.currentTarget.dataset.id
     this.setData({
       tabSelected: e.currentTarget.dataset.idx,
-      categoryId: e.currentTarget.dataset.id
+      categoryId: e.currentTarget.dataset.id,
+      pageNumber: 1
     });
     this.getProductByCategory(id)
   },

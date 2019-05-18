@@ -3,10 +3,10 @@
   <view class='header' style='background-image: url(http://shopimg123.test.upcdn.net/img/backgroupd.png)'>
     <view class='user-content-info'>
       <view class='userimg'>
-        <image src="/assets/user/userImg.png"></image>
+        <image src="{{userInfo.avatarUrl}}"></image>
       </view>
       <view class='user-name'>
-        <view class='name'>不忘初心</view>
+        <view class='name'>{{item.nickName}}</view>
         <view class='type-user'>普通用户</view>
       </view>
       <view class='user-price'>
@@ -83,7 +83,7 @@
         <image src="/assets/user/right.png"></image>
       </view>
     </view>
-    <view class='list-cells'>
+    <view class='list-cells' bindtap='coupon'>
       <view class='cells'>
         领券中心
       </view>

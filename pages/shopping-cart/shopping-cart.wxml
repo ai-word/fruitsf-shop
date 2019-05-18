@@ -53,17 +53,16 @@
     </checkbox-group>
 
     <view class="calc-info">
-      <view wx:if="{{discount>0}}">
-        <text>已优惠:</text>
-        <text class="total-price">￥{{discount}}</text>
-        <text>（不含运费）</text>
-      </view>
       <view>
-        <!-- allPrice -->
         <text>合计:</text>
         <text class="total-price">￥{{totalPrice}}</text>
         <text hidden="{{discount>0}}">（不含运费）</text>
       </view>
+      <!-- <view wx:if="{{discount>0}}">
+        <text>已优惠:</text>
+        <text class="total-price">￥{{discount}}</text>
+        <text>（不含运费）</text>
+      </view> -->
     </view>
     <text bindtap="toPerfectOrder" class="tocalc">去结算</text>
   </view>

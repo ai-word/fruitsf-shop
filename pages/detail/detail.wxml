@@ -3,7 +3,7 @@
   <view class="detail-container {{isNull === true ? 'details-pad':''}}">
     <view class='banner-content'>
       <!-- banner -->
-      <view class="wrap" wx:if="{{prdPics.length > 0}}">
+      <view class="wrap" wx:if="{{groupPics.length > 0}}">
         <swiper class="swipers" autoplay="{{autoplay}}" style="height:750rpx" bindchange="swiperChange" interval="5000">
           <block wx:for="{{groupPics}}" wx:key='index'>
             <swiper-item>

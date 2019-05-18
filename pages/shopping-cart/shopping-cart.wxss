@@ -61,7 +61,7 @@ page{
   }
  .total-price{
    color: #FF9F06;
-   font-size: 18px!important;
+   font-size: 14px!important;
    padding: 0!important;
  }
  .tocalc{
