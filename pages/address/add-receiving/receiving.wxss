@@ -1,0 +1,131 @@
+/* pages/address/add-receiving/receiving.wxss */
+page{
+  background: #f5f5f5;
+  height: 100%
+}
+.top-info{
+  padding: 0 40rpx;
+  background: #ffffff;
+}
+.section{
+  display: flex;
+  /* align-items: center; */
+  width: 100%;
+  padding: 30rpx 0;
+  border-bottom: 1px solid #EEEEEE;
+}
+.section .right{
+  margin-left: 40rpx;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.right input{
+  color: #969696;
+  font-size: 14px;
+  width: 470rpx;
+}
+.tag-box{
+  height: 114rpx;
+  display: flex;
+  align-items: center;
+  margin-left: 150rpx;
+  border: none;
+}
+.lable-box{
+  height: 114rpx;
+  display: flex;
+  align-items: center;
+  border-bottom:1px solid #EEEEEE
+}
+.tag-content{
+  padding: 0 0 0 40rpx;
+}
+.lable-item{
+  height:54rpx;
+  font-size: 12px;
+  line-height: 54rpx;
+  margin: 0 30rpx 0 0;
+  color: #656565;
+  padding: 0 26rpx;
+  text-align: center;
+  display: inline-block;
+  background:rgba(255,255,255,1);
+  border:1rpx solid #656565;
+  border-radius:6rpx;
+}
+.active{
+  color: #37D260;
+  border:1rpx solid rgba(55,210,96,1); 
+}
+.section-title{
+  color: #656565;
+  font-size: 14px;
+}
+.contact-info{
+  margin-top: 20rpx;
+  padding: 0 40rpx;
+  background: #ffffff;
+}
+.moren{
+  display: flex;
+  align-items: center;
+}
+.choose-address{
+  background: #ffffff;
+  padding:  0 40rpx;
+}
+.right{
+  display: flex
+}
+.choose-city image{
+  width: 22rpx;
+  height: 44rpx;
+}
+.right image{
+  width: 26rpx;
+  height: 32rpx;
+  position:absolute;
+  right: 0;
+}
+.region{
+  display: flex;
+}
+.region image{
+  flex: 1
+}
+
+.choose-city{
+  display: flex;
+}
+.region{
+  flex: 1;
+  padding: 0 0 0 40rpx;
+}
+.detailed{
+  height: 100rpx
+}
+.right textarea{
+  width: 100%;
+  height: 120rpx;
+  font-size: 14px;
+  line-height: 1.2
+}
+.btn{
+  width:670rpx;
+  height:100rpx;
+  background:rgba(55,210,96,1);
+  border-radius:4rpx;
+  line-height: 100rpx;
+  color: #ffffff;
+  margin-top: 60rpx;
+}
+.address-picker{
+  width: 100%;
+  color: #212121;
+  font-size: 14px;
+}
+.default{
+  border: none;
+}

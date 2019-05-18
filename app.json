@@ -12,14 +12,20 @@
     "pages/coupon/coupon",
     "pages/my-order/order",
     "pages/time/time",
-    "pages/cart/cart",
-    "pages/class/class"
+    "pages/class/class",
+    "pages/address/address",
+    "pages/address/add-receiving/receiving"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
   },
   "tabBar": {
     "color": "#8B8B8C",

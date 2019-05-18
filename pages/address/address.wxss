@@ -1,0 +1,123 @@
+/* pages/address/address.wxss */
+.header{
+  padding: 0 40rpx;
+  display: flex;
+  position: fixed;
+  top: 0;
+  width: 670rpx;
+  height: 90rpx;
+  background: #ffffff;
+  line-height: 90rpx;
+  justify-content: space-between;
+  border-bottom: 1px solid #EEEEEE;
+  z-index: 99;
+  font-size: 14px;
+  color: #656565
+}
+.address-image,.delete{
+  display: flex;
+  align-items: center;
+}
+.address-image image{
+  width: 26rpx;
+  height: 32rpx;
+  padding:  0 10rpx 0 0;
+}
+.delete image{
+  width: 34rpx;
+  padding:  0 10rpx 0 0;
+  height: 34rpx;
+}
+.shop-nodata{
+  margin-top: 294rpx;
+}
+.nodata{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.msg{
+  color: #969696;
+  font-size: 13px;
+  text-align: center;
+  padding: 20rpx 0;
+}
+.nodata image{
+  width: 252rpx;
+  height: 219rpx;
+}
+
+.footer-bottom{
+  position: fixed;
+  bottom:30rpx;
+  left: 40rpx;
+  right: 40rpx;
+  /* padding: 0 40rpx 40rpx 40rpx; */
+}
+.add-ress{
+  /* width:670px; */
+  height:88rpx;
+  background:rgba(55,210,96,1);
+  line-height: 88rpx;
+  border-radius:6px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.receiving-list{
+  display: flex;
+  padding: 0 40rpx;
+  margin-top:110rpx;
+}
+.item{
+  flex: 1;
+}
+.title{
+  font-size: 15px;
+  color: #212121;
+}
+.detailed{
+  color: #656565;
+  font-size: 12px;
+}
+
+.tag{
+  padding: 0 20rpx;
+  height:32rpx;
+  line-height: 32rpx;
+  background:rgba(255,255,255,1);
+  border:1rpx solid rgba(55,210,96,1);
+  border-radius:6rpx;
+  font-size: 12px;
+  color: #37D260;
+  display: inline-block;
+}
+.user{
+  padding:  30rpx 0 0 0;
+  /* display: flex; */
+  font-size: 14px;
+  justify-content: space-between;
+}
+.user-name{
+  display: inline-block;
+  padding:  0 10rpx 0 0;
+    color: #656565;
+}
+.receiving-list .right{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.receiving-list .right image{
+ width: 30rpx;
+ height: 30rpx;
+}
+.mobile{
+  color: #656565;
+  font-size: 14px;
+  display: inline-block;
+  padding:  0 0 0 10rpx;
+}
+.tag-style{
+  color: #d2d2d2;
+}

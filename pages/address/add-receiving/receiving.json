@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "toast": "/components/toast/toast"
+  },
+  "navigationBarTitleText": "新增收货地址"
+}

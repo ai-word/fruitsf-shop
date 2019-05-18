@@ -1,0 +1,38 @@
+<!--pages/address/address.wxml-->
+<view class='address-content'>
+  <view class='header'>
+    <view class='address-image'><image src="/assets/address.png"></image>收货地址</view>
+    <view class='delete' bindtap='deleteShopCar'><image src="/assets/delete.png"></image>删除</view>
+  </view>
+  <view class='receiving'>
+    <view class='receiving-list' wx:for="{{addressList}}">
+      <view class='item'>
+        <view class='title'>
+          {{item.region}}
+          <text class='tag' wx:if="{{item.tag == 1}}">家</text>
+          <text class='tag' wx:else>公司</text>
+        </view>
+        <view class='detailed'>{{item.detail_address}}</view>
+        <view class='user'>
+          <text class='user-name'>{{item.name}}</text>
+          <text class='tag-style'>|</text>
+          <text class='mobile'>{{item.phone_number}}</text>
+        </view>
+      </view>
+      <view class='item right'>
+        <image src="/assets/edit.png"></image>
+      </view>
+    </view>
+  </view>
+  <!-- <view class='shop-nodata'>
+    <view class='nodata'>
+    <image src="/assets/nodata.png"></image>
+    </view>
+    <view class='msg'>您还没有添加收货地址</view>
+  </view> -->
+  <view class='footer-bottom'>
+    <view class='add-ress' bindtap='goAddress'>
+      添加新收货地址
+    </view>
+  </view>
+</view>

@@ -1,4 +1,5 @@
-// pages/user/user.js
+// pages/address/address.js
+const Http = require('../../utils/request.js');
 Page({
 
   /**
@@ -12,7 +13,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getAllAddress()
   },
 
   /**
@@ -35,7 +36,16 @@ Page({
   onHide: function () {
 
   },
+  getAllAddress() {
+    let that = this
+    Http.HttpRequst(false, '/addr/getAllAddress', false, '', '', 'get', false, function (res) {
+      console.log(res.data.groups, '5555')
+      that.setData({
+        addressList: res.data,
+      })
 
+    })
+  },
   /**
    * 生命周期函数--监听页面卸载
    */
@@ -56,16 +66,15 @@ Page({
   onReachBottom: function () {
 
   },
-
+  goAddress() {
+    wx.navigateTo({
+      url: '/pages/address/add-receiving/receiving'
+    })
+  },
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
 
-  },
-  goAddRess() {
-    wx.navigateTo({
-      url: '/pages/address/address'
-    })  
   }
 })

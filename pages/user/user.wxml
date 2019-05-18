@@ -75,7 +75,7 @@
         <image src="/assets/user/right.png"></image>
       </view>
     </view>
-    <view class='list-cells'>
+    <view class='list-cells' bindtap='goAddRess'>
       <view class='cells'>
         收货地址
       </view>

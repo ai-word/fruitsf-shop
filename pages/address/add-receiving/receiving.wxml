@@ -1,0 +1,65 @@
+<!--pages/address/add-receiving/receiving.wxml-->
+<view class='receiving-container'>
+<form bindsubmit="handleSave">
+    <view class="top-info">
+        <view class="section">
+            <view class="section-title">联 系 人</view>
+            <view class="right">
+                <input bindinput="handleName" maxlength="10" name="name" placeholder="姓名" type="text" value="{{name}}"></input>
+            </view>
+        </view>
+        <view class="lable-box tag-box">
+            <text bindtap="handleClick" class="lable-item {{userGenders == index?'active':''}}" data-id="{{item.id}}" data-index="{{index}}" data-type="gender" wx:for="{{genders}}" wx:key="index">{{item.name}}</text>
+            <text class="space"></text>
+        </view>
+    </view>
+    <view class="contact-info">
+        <view class="section">
+            <view class="section-title">电　　话</view>
+            <view class="right">
+                <input bindinput="handlePhone" name="phone" placeholder="手机号码" type="number" value="{{phone}}"></input>
+            </view>
+        </view>
+    </view>
+    <view class="choose-address">
+        <view class="section choose-city">
+            <view class="section-title">城　　市</view>
+            <picker bindchange="bindDateChange" class="region" mode="region" name="region" placeholder="选择省市区" value="{{region}}">
+                <view class="address-picker">{{region[0]}} {{region[1]}} {{region[2]}}</view>
+            </picker>
+                <image src="https://app-1256684088.cos.ap-beijing.myqcloud.com/wujieImages/iconPointRight.png"></image >
+        </view>
+        <view class="section">
+            <view class="section-title">地　　址</view>
+            <view bindtap="chooseAddress" class="right">
+                <input bindinput="handleDetails" disabled="true" name="details" placeholder="请选择地址" type="text" value="{{details}}"></input>
+                <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconPosition.png"></image>
+            </view>
+        </view>
+        <view class="section detailed">
+            <view class="section-title">详细地址</view>
+            <view class="right">
+                <textarea bindblur="handleBlur" bindfocus="handleFocus" bindinput="handleHouseNumber" id="detailed" maxlength="50" name="houseNumber" placeholder="如道路、门牌号、小区、楼栋号、单元室等" placeholderClass="placeholder"  type="text" value="{{detailAddRess}}"></textarea>
+            </view>
+        </view>
+        <view class="lable-box">
+            <view class="section-title">标　　签</view>
+            <view class='tag-content'>
+            <text bindtap="handleClick" class="lable-item {{currentLabel==index?'active':''}}" data-id="{{item.id}}" data-index="{{index}}" data-type="label" wx:for="{{labels}}" wx:key="index">{{item.name}}</text>
+            </view>
+        </view>
+        <view class="section default">
+            <view class="section-title moren">默认地址</view>
+            <view class="right">
+                <switch bindchange="handleDefault" checked="{{isDefault}}" color="{{defaultColor}}" name="isDefault" value="{{isDefault}}"></switch>
+            </view>
+        </view>
+    </view>
+    <toast inner-text=""  id='toastDialog'></toast>
+    <button class="btn" bindtap='getAddRess' formType="submit">保存并使用</button>
+    <!-- <button bindtap="doDeleteAddress" class="btn-delelte" hidden="{{pageType==='normal'}}">删除地址</button> -->
+</form>
+            <!-- <picker class="weui-btn"  mode="region" name="region" value="{{date}}" bindchange="bindDateChange">
+                <button type="default">日期选择器</button>
+            </picker> -->
+</view>
