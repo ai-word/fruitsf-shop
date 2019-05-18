@@ -28,7 +28,7 @@ page{
 }
 .list-box .category-item.active {
   background: #fff;
-  border-left: 4rpx solid #37D260;
+  border-left: 6rpx solid #37D260;
   color: #37D260;
   font-size: 15px;
   border-top: 1rpx solid #EFEFEF;
@@ -68,14 +68,30 @@ page{
 .goods-info{
   width: 330rpx;
   padding: 0 20rpx;
+  position: relative
 }
 .goods-item{
   display: flex;
   padding: 30rpx 0;
   border-bottom:1px solid #EEEEEE;
 }
+.goods-price{
+  display: flex!important;
+  justify-content: space-between;
+}
+.good-bottom{
+  position: absolute;
+  bottom:0;
+  left: 0;
+  right: 30rpx;
+  width: 100;
+}
+.add{
+  display: flex;
+  align-items: center;
+}
 .goods-name{
-  font-size:14px;
+  font-size:15px;
   color: #212121;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -88,11 +104,18 @@ page{
 }
 .nowPrice{
   color: #FF9F06;
-    font-size: 15px
+  font-size: 16px;
+  padding: 0 5rpx 0 0;
+  font-weight: bold;
 }
 .oldPrice{
   color: #969696;
-  font-size: 15px
+  font-size: 13px;
+  text-decoration:line-through;
+}
+.add image{
+  width: 40rpx;
+  height: 40rpx;
 }
 
 

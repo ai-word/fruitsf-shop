@@ -167,6 +167,12 @@ Page({
       url: '/pages/coupon/coupon'
     })
   },
+  goShopDetail(e) {
+    let id = e.currentTarget.dataset.id 
+    wx.navigateTo({
+      url: '/pages/detail/detail?id=' + id
+    })
+  },
   swiperChange: function (e) {
     this.setData({
       currentSwiper: e.detail.current

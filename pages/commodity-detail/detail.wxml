@@ -73,7 +73,7 @@
         </view>
       </view>
     </view>
-    <view class="team-box">
+    <view class="team-box"  wx:if="{{isIndex == 0}}">
       <view class="team-title">
         <view class='left'>
           <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconTeamBuy.png"></image>
@@ -107,7 +107,7 @@
     </view>
       <!-- 弹出组件  -->
     <modal  groupsNum='{{groupsUser.totalCount-groupsUser.attendCount}}' userList='{{currentUserList}}' multiline='true' bindonSubmitTap="onSubmitTap"  bindinputCancel='onInputCancel' bindinputConfirm='onInputConfirm' wx:if='{{ addingText }}'/>
-    <view class='picture-details'>
+    <view class="picture-details">
       <view class='pic-title'>
         图文详情
       </view>
