@@ -20,19 +20,23 @@ Page({
   },
   getAllCartList() {
     let that = this
+    var totalPrice = 0
     Http.HttpRequst(true, '/cart/getAllCarts', true, '', '', 'post', false, function (res) {
-      var totalPrice = 0
       var  goodNum = 0
       for (let i = 0, len = res.data.length; i < len; i++) {//这里是对选中的商品的价格进行总结 
         if (res.data[i].select) {
           totalPrice += res.data[i].product_amount * res.data[i].price;
+          console.log(res.data[i].product_amount * res.data[i].price)
+          console.log(100.24*3)
+          console.log(res.data[i].price)
           goodNum +=res.data[i].product_amount
         }
       }
       that.setData({
         shopCartList: res.data,
-        totalPrice: totalPrice,
+        totalPrice: totalPrice.toFixed(2),
       });
+      console.log(totalPrice, 'totalPrice')
       that.judgmentAll();//判断是否全选
       var num = wx.getStorageSync('cartNum')
       wx.setStorageSync('cartNum', parseInt(goodNum))
@@ -70,7 +74,7 @@ Page({
     this.setData({
       allChecked: allChecked,
       shopCartList: shopcar,
-      totalPrice: totalPrice
+      totalPrice: totalPrice.toFixed(2)
     });
   },
   /**
@@ -91,7 +95,7 @@ Page({
     console.log(shopcar, 'shopcar')
     this.setData({
       shopCartList: shopcar,
-      totalPrice: totalPrice,
+      totalPrice: totalPrice.toFixed(2),
     });
     this.judgmentAll();//每次按钮点击后都判断是否满足全选的条件  
   },
@@ -107,7 +111,7 @@ Page({
       }
     })
   },
-    //点击加减按钮  
+  //点击加减按钮  
   numchangeTap: function (e) {
     let Index = e.currentTarget.dataset.index,//点击的商品下标值        
       shopcar = this.data.shopCartList,
@@ -144,7 +148,7 @@ Page({
     }
     this.setData({
       shopCartList: shopcar,
-      totalPrice: totalPrice
+      totalPrice: totalPrice.toFixed(2)
     });
   },
   onShow: function () {
@@ -186,6 +190,11 @@ Page({
       if(res.state == 'ok') {
         that.getAllCartList()
       }
+    })
+  },
+  toPerfectOrder() {
+    wx.navigateTo({
+      url: '/pages/shopping-cart/order-detail/order-detail'
     })
   },
   /**

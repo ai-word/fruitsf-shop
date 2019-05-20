@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    couponList: '',
+    noData: false
   },
 
   /**
@@ -21,7 +22,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.toastDialog = this.selectComponent("#toastDialog");
   },
 
   /**
@@ -43,10 +44,29 @@ Page({
     let that = this
     Http.HttpRequst(false, '/coupon/getAllEnableCoupons', false, '', '', 'get', false, function (res) {
       console.log(res.data, '5555')
-      that.setData({
-        couponList: res.data,
-      })
+      if (res.data.length == 0 ) {
+        that.setData({
+          noData: true,
+        })
+      } else {
+        that.setData({
+          couponList: res.data,
+        })
+      }
 
+    })
+  },
+  getCoupon(e) {
+    let that = this
+    let id = e.currentTarget.dataset.id
+    let params = {
+      couponId: id
+    }
+    Http.HttpRequst(false, '/coupon/getCoupon', false, '', params, 'get', false, function (res) {
+      if(res.state == 'ok') {
+        that.toastDialog.showDialog('领取成功!')
+        that.getAllEnableCoupons()
+      }
     })
   },
   /**

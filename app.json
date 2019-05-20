@@ -14,7 +14,8 @@
     "pages/time/time",
     "pages/class/class",
     "pages/address/address",
-    "pages/address/add-receiving/receiving"
+    "pages/address/add-receiving/receiving",
+    "pages/shopping-cart/order-detail/order-detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

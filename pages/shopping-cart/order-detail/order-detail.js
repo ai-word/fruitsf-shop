@@ -1,12 +1,20 @@
-// pages/user/user.js
-const app = getApp();
+// pages/shopping-cart/order-detail/order-detail.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    userInfo: ''
+    items: [
+      {
+        name: '礼品装',
+        value: 0,
+      },
+      {
+        name: '家庭装',
+        value: 1
+      }
+    ]
   },
 
   /**
@@ -27,17 +35,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var that = this
-    wx.getUserInfo({
-      success: res => {
-        console.log(res)
-        app.globalData.userInfo = res.userInfo
-        // that.data.userInfo = res.userInfo
-        that.setData({
-          userInfo: res.userInfo
-        })
-      }
-    })
+
   },
 
   /**
@@ -73,15 +71,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  goAddRess() {
-    wx.navigateTo({
-      url: '/pages/address/address'
-    })  
-  },
-  coupon() {
-    wx.navigateTo({
-      url: '/pages/coupon/coupon'
-    })     
   }
 })

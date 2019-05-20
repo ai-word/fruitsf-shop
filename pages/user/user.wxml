@@ -6,7 +6,7 @@
         <image src="{{userInfo.avatarUrl}}"></image>
       </view>
       <view class='user-name'>
-        <view class='name'>{{item.nickName}}</view>
+        <view class='name'>{{userInfo.nickName}}</view>
         <view class='type-user'>普通用户</view>
       </view>
       <view class='user-price'>
@@ -59,14 +59,6 @@
   </view>
 
   <view class='list'>
-    <view class='list-cells'>
-      <view class='cells'>
-        邀请好友
-      </view>
-      <view class='cells cel-right'>
-        <image src="/assets/user/right.png"></image>
-      </view>
-    </view>
     <view class='list-cells'>
       <view class='cells'>
         邀请好友

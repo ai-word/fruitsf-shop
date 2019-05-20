@@ -12,6 +12,7 @@
 .user-content-info image{
   width: 124rpx;
   height: 124rpx;
+  border-radius: 50%;
 }
 .user-price{
   position: absolute;

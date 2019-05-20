@@ -1,0 +1,156 @@
+<!--pages/shopping-cart/order-detail/order-detail.wxml-->
+<view class='order-container'>
+  <view class='content-wrapper'>
+    <view class='header-address'>
+        <view class='address'>
+          <view class='left'>配送至</view>
+          <view class='right'>
+            <image src="/assets/address.png"></image>
+            请选择收货地址
+          </view>
+        </view>
+        <view class='address'>
+          <view class='left delivery'>配送费</view>
+          <view class='right ship'>
+            包邮
+          </view>
+        </view>
+      </view>
+
+      <view class='good-detail'>
+        <view class='good-item'>
+          <view class='good-left'>
+            <view class='shop-img'>
+              <image src="http://xianfengapptest.oss-cn-hangzhou.aliyuncs.com/newretail/20180420/156ad4f982294e9cb61ebfd0d9c368ed.jpg?x-oss-process=image/resize,h_250/quality,Q_95" mode='aspectFit'></image>
+            </view>
+            <view class='good-desc'>
+              <view class='title'>红心火龙果 3...</view>
+              <view class='desc'>红心火龙果 3...</view>
+            </view>
+          </view>
+          <view class='good-right'>
+            <view class='good-num'>
+              x6
+            </view>
+            <view class='good-price'>
+              ￥119.90
+            </view>
+          </view>
+        </view>
+        <view class='good-item'>
+          <view class='good-left'>
+            <view class='shop-img'>
+              <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190513/e0e2ef9b94e940b19c001876474a39c7.jpg?x-oss-process=image/resize,h_250/quality,Q_95" mode='aspectFit'></image>
+            </view>
+            <view class='good-desc'>
+              <view class='title'>红心火龙果 3...</view>
+              <view class='desc'>红心火龙果 3...</view>
+            </view>
+          </view>
+          <view class='good-right'>
+            <view class='good-num'>
+              x6
+            </view>
+            <view class='good-price'>
+              ￥119.90
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class='packing'>
+        <view class='order-cells'>
+          <view class='order-cell pack-item'>
+            包装选择
+          </view>
+          <view class='order-cell pack-right'>
+            <radio-group class="radio-group" bindchange="radioChange">
+              <label class="radio" wx:for="{{items}}">
+                <radio value="{{item.value}}" checked="{{item.checked}}">{{item.name}}</radio>
+              </label>
+            </radio-group>
+          </view>
+        </view>
+        <view class='order-cells last'>
+          <view class='order-cell pack-item'>
+            包装费
+          </view>
+          <view class='order-cell active-color'>
+            -￥0.00
+            <image src="/assets/user/right.png"></image>
+          </view>
+        </view>
+      </view>
+
+
+      <view class='packing'>
+        <view class='order-cells last'>
+          <view class='order-cell image-style pack-item'>
+            下单奖励
+            <image src="/assets/wenhao.png"></image>
+          </view>
+          <view class='order-cell pack-right'>
+
+          </view>
+        </view>
+      </view>
+
+      <view class='packing'>
+        <view class='order-cells last'>
+          <view class='order-cell pack-item'>
+            优惠券
+          </view>
+          <view class='order-cell active-color'>
+            -￥0.00
+            <image src="/assets/user/right.png"></image>
+          </view>
+        </view>
+      </view>
+
+      <view class='packing'>
+        <view class='order-cells last'>
+          <view class='order-cell image-style pack-item'>
+            账单明细
+            <image src="/assets/wenhao.png"></image>
+          </view>
+          <view class='order-cell active-color'>
+            <text class='total'>合计:</text> ￥24.90
+          </view>
+        </view>
+      </view>
+
+      <view class='packing'>
+        <view class='order-cells'>
+          <view class='order-cell pack-item'>
+            添加备注
+          </view>
+          <view class='order-cell add-desc'>
+            +
+          </view>
+        </view>
+        <view class='order-cells last'>
+          <view class='order-cell desc-title pack-item'>
+            口味偏好等要求
+          </view>
+          <view class='order-cell'>
+            
+          </view>
+        </view>
+      </view>
+  </view>
+  <view class='footer-content'>
+      <view class='left-content'>
+          <view class='total-price'>
+            ￥24.90
+          </view>
+          <text class='shu'>|</text>
+          <view class='youhui'>
+            优惠: 5.00
+          </view>
+      </view>
+      <view class='right-content'>
+        提交提单
+      </view>
+  </view>
+
+</view>
