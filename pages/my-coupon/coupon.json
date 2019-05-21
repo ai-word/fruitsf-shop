@@ -1,6 +1,5 @@
 {
   "usingComponents": {
     "toast": "/components/toast/toast"
-  },
-  "navigationBarTitleText": "购物车"
+  }
 }

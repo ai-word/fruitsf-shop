@@ -58,7 +58,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.toastDialog = this.selectComponent("#toastDialog");
   },
   //点击全选  
   checkboxAllChange: function () {
@@ -193,9 +193,21 @@ Page({
     })
   },
   toPerfectOrder() {
-    wx.navigateTo({
-      url: '/pages/shopping-cart/order-detail/order-detail'
-    })
+    let dataList = this.data.shopCartList
+    if (dataList.length == 0) {
+      this.toastDialog.showDialog('请选择商品!')
+    } else {
+      let str = ''
+      for (let i = 0; i < dataList.length; i++) {
+        str += dataList[i].cartid + ','
+      }
+      if (str.length > 0) {
+        str = str.substr(0, str.length - 1);
+      }
+      wx.navigateTo({
+        url: '/pages/shopping-cart/order-detail/order-detail?cartIds=' + str
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面隐藏

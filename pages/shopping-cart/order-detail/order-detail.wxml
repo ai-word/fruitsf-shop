@@ -1,4 +1,5 @@
 <!--pages/shopping-cart/order-detail/order-detail.wxml-->
+<wxs src="../../../utils/utils.wxs" module="tools"></wxs>
 <view class='order-container'>
   <view class='content-wrapper'>
     <view class='header-address'>
@@ -7,6 +8,17 @@
           <view class='right'>
             <image src="/assets/address.png"></image>
             请选择收货地址
+          </view>
+        </view>
+        <view class='rece-goods'>
+          <view class='left'>
+            <image src="/assets/address.png"></image>
+            <text class='user-name'>{{address.name}}</text>
+            <text class='shu'>|</text>
+            <text class='user-mobile'>{{address.phoneNumber}}</text>
+          </view>
+          <view class='right user-addess'>
+            {{address.city}} {{address.detailAddress}}
           </view>
         </view>
         <view class='address'>
@@ -18,41 +30,22 @@
       </view>
 
       <view class='good-detail'>
-        <view class='good-item'>
+        <view class='good-item' wx:for="{{goodList}}" wx:for-index="index" wx:key="index">
           <view class='good-left'>
             <view class='shop-img'>
-              <image src="http://xianfengapptest.oss-cn-hangzhou.aliyuncs.com/newretail/20180420/156ad4f982294e9cb61ebfd0d9c368ed.jpg?x-oss-process=image/resize,h_250/quality,Q_95" mode='aspectFit'></image>
+              <image src="{{item.pic}}" mode='aspectFit'></image>
             </view>
             <view class='good-desc'>
-              <view class='title'>红心火龙果 3...</view>
-              <view class='desc'>红心火龙果 3...</view>
+              <view class='title'>{{item.name}}</view>
+              <view class='desc'>{{item.sub_title}}</view>
             </view>
           </view>
           <view class='good-right'>
             <view class='good-num'>
-              x6
+              x{{item.product_amount}}
             </view>
             <view class='good-price'>
-              ￥119.90
-            </view>
-          </view>
-        </view>
-        <view class='good-item'>
-          <view class='good-left'>
-            <view class='shop-img'>
-              <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/newretail/20190513/e0e2ef9b94e940b19c001876474a39c7.jpg?x-oss-process=image/resize,h_250/quality,Q_95" mode='aspectFit'></image>
-            </view>
-            <view class='good-desc'>
-              <view class='title'>红心火龙果 3...</view>
-              <view class='desc'>红心火龙果 3...</view>
-            </view>
-          </view>
-          <view class='good-right'>
-            <view class='good-num'>
-              x6
-            </view>
-            <view class='good-price'>
-              ￥119.90
+             ￥ {{item.price}}
             </view>
           </view>
         </view>
@@ -65,8 +58,8 @@
           </view>
           <view class='order-cell pack-right'>
             <radio-group class="radio-group" bindchange="radioChange">
-              <label class="radio" wx:for="{{items}}">
-                <radio value="{{item.value}}" checked="{{item.checked}}">{{item.name}}</radio>
+              <label class="radio" wx:for="{{packages}}" wx:for-index="index" wx:key="index">
+                <radio value="{{item.totalamount}}" checked="{{item.checked}}">{{item.name}}</radio>
               </label>
             </radio-group>
           </view>
@@ -76,7 +69,7 @@
             包装费
           </view>
           <view class='order-cell active-color'>
-            -￥0.00
+            ￥{{packaeAmount}}
             <image src="/assets/user/right.png"></image>
           </view>
         </view>
@@ -96,7 +89,7 @@
       </view>
 
       <view class='packing'>
-        <view class='order-cells last'>
+        <view class='order-cells last' bindtap='mycoupon'>
           <view class='order-cell pack-item'>
             优惠券
           </view>
@@ -114,13 +107,13 @@
             <image src="/assets/wenhao.png"></image>
           </view>
           <view class='order-cell active-color'>
-            <text class='total'>合计:</text> ￥24.90
+            <text class='total'>合计:</text> ￥{{totalPrice}}
           </view>
         </view>
       </view>
 
       <view class='packing'>
-        <view class='order-cells'>
+        <view class='order-cells' bindtap='addRemarks'>
           <view class='order-cell pack-item'>
             添加备注
           </view>
@@ -129,8 +122,11 @@
           </view>
         </view>
         <view class='order-cells last'>
-          <view class='order-cell desc-title pack-item'>
+          <view class='order-cell desc-title pack-item' wx:if="{{remark == ''}}">
             口味偏好等要求
+          </view>
+          <view class='order-cell desc-title pack-item' wx:else>
+            {{remark}}
           </view>
           <view class='order-cell'>
             
@@ -141,16 +137,19 @@
   <view class='footer-content'>
       <view class='left-content'>
           <view class='total-price'>
-            ￥24.90
+            ￥{{totalPrice}}
           </view>
           <text class='shu'>|</text>
           <view class='youhui'>
             优惠: 5.00
           </view>
       </view>
-      <view class='right-content'>
+      <view class='right-content'  bindtap='placeOrder'>
         提交提单
       </view>
   </view>
-
+  <!-- <view class="commodity_screen" wx:if="{{chooseSize}}" bindtap='hideModal'></view>
+  <view class="commodity_attr_box" wx:if="{{chooseSize}}" animation='{{animationData}}'>
+    这里面是内容
+  </view> -->
 </view>

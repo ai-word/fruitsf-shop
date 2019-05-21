@@ -1,0 +1,5 @@
+<!--components/popup/popup.wxml-->
+  <view class='maskLayer' wx:if="{{chooseSize}}" bindtap='hideModal'></view>
+  <view class='choose' wx:if="{{chooseSize}}" animation='{{animationData}}'>
+    这里面是内容
+  </view>

@@ -66,4 +66,5 @@
     </view>
     <text bindtap="toPerfectOrder" class="tocalc">去结算</text>
   </view>
+  <toast inner-text=""  id='toastDialog'></toast>
 </view>

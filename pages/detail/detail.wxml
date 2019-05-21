@@ -1,90 +1,25 @@
-<!--pages/commodity-detail/detail.wxml-->
-<view class='commodity-content'>
-  <view class="detail-container {{isNull === true ? 'details-pad':''}}">
-    <view class='banner-content'>
-      <!-- banner -->
-      <view class="wrap" wx:if="{{groupPics.length > 0}}">
-        <swiper class="swipers" autoplay="{{autoplay}}" style="height:750rpx" bindchange="swiperChange" interval="5000">
-          <block wx:for="{{groupPics}}" wx:key='index'>
-            <swiper-item>
-              <image mode="aspectFill" bindload='imageLoad' style="height:750rpx" src="{{item.pic_url}}"></image>
-            </swiper-item>
-          </block>
-        </swiper>
-        <view class="imageCount">{{currentSwiper}}/{{groupPics.length}}</view>
-      </view>
-      <!-- banner结束 -->
-
-      <view class='goods-info-box'>
-        <view class='goods-name'>
-          <text class="goods-desc">{{groups.name}}</text>
-        </view>
-        <text class="label-item">{{groups.desc}}</text>
-      </view>
-
-      <view class='goods-price-box'>
-        <view class='left-box'>
-          <block>
-            <text class="goods-nowPrice">
-                <text>￥</text>{{groups.price}}</text>
-            <text class="goods-oldPrice">￥{{groups.original_price
-}}</text>
-          </block>
-          <view class="goods-soldNum">月售{{groups.sales_num}}</view>
-        </view>
-
-        <view bindtap="handleClickShare" class="share-reamin">
-          <image src="http://app-1256684088.cos.ap-beijing.myqcloud.com/wujie/iconShare.png"></image>分享</view>
-      </view>
-      <view class="goods-promise" wx:if="{{!isNull}}">
-        <view>
-          <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconQuality.png"></image>
-          <text>{{groupInfo.sa.content}}</text>
-        </view>
-        <view>
-          <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconRefundable.png"></image>
-          <text>{{groupInfo.se.content}}</text>
-        </view>
-        <view>
-          <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconSun.png"></image>
-          <text>{{groupInfo.fr.content}}</text>
-        </view>
-      </view>
+<!--pages/coupon/coupon.wxml-->
+<view class='coupon-content'>
+  <view class='shop-nodata' wx:if="{{noData}}">
+    <view class='nodata'>
+    <image src="/assets/nodata.png"></image>
     </view>
-
-      <!-- 弹出组件  -->
-    <modal  groupsNum='{{groupsUser.totalCount-groupsUser.attendCount}}' userList='{{currentUserList}}' multiline='true' bindonSubmitTap="onSubmitTap"  bindinputCancel='onInputCancel' bindinputConfirm='onInputConfirm' wx:if='{{ addingText }}'/>
-    <view class="picture-details">
-      <view class='pic-title'>
-        图文详情
-      </view>
-      <view class='pic-detail' wx:if="{{picContent}}">
-        <import src="../../components/wxParse/wxParse.wxml" />
-        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
-        <!-- <image wx:for="{{productDetails}}" src="{{item.url}}" style="height:{{item.height}}rpx;width:{{item.width}}rpx;"></image> -->
-      </view>
-      <view class="pic-detail" wx:if="{{!picContent}}">
-        <view class='noda'>
-          <image src="/assets/nodata.png"></image>
-        </view>
-        <text>暂无数据!</text>
-      </view>
-    </view>
+    <view class='msg'>暂无可用优惠券</view>
   </view>
-
-   <view class='footer-cart'>
-    <view class='flex-footer left'>
-      <view class='img index' bindtap='goTabIndex'>
-        <image src="/assets/weapp/index.png"></image>
+  <view wx:else>
+    <view class='coupon-list' wx:for="{{couponList}}">
+      <image src="/assets/coupon.png"></image>
+      <view class='content'>
+          <view class='title'>{{item.name}}</view>
+          <view class='desc'>{{item.note}}</view>
       </view>
-      <view class='img shop-car'>
-        <image src="/assets/weapp/shop.png"></image>
-      </view>
-    </view>
-    <view class='flex-footer right'>
-        <view >
-          加入购物车
+        <view class='time'>
+          有效期: {{item.enable_time}} ~ {{item.end_time}}
+        </view>
+        <view class='draw' data-id="{{item.id}}" bindtap='getCoupon'>
+          立即领取
         </view>
     </view>
   </view>
+  <toast inner-text=""  id='toastDialog'></toast>
 </view>

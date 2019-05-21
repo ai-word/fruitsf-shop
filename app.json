@@ -15,7 +15,10 @@
     "pages/class/class",
     "pages/address/address",
     "pages/address/add-receiving/receiving",
-    "pages/shopping-cart/order-detail/order-detail"
+    "pages/shopping-cart/order-detail/order-detail",
+    "pages/my-coupon/coupon",
+    "pages/addRemarks/addRemarks",
+    "pages/balance/balance"
   ],
   "window": {
     "backgroundTextStyle": "light",

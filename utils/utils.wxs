@@ -30,9 +30,13 @@ function getTime(start, end) {
   return  days
 }
 
-
+function getTotalPrice(price) {
+  var total = price.toFixed(2)
+  return total
+}
 
 module.exports = {
   getTextByArray: getTextByArray,
-  getTime: getTime
+  getTime: getTime,
+  getTotalPrice: getTotalPrice
 }
