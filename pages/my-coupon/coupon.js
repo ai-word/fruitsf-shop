@@ -9,20 +9,31 @@ Page({
   data: {
     couponList: '',
     noData: false,
-    activeIndex: '-1'
+    cartIds: '',
+    activeIndex: '-1',
+    finalamount: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getAllEnableCoupons()
+    console.log(options)
+    // if (options.cartIds) {
+      this.getAllEnableCoupons(options.cartIds)
+    // }
+    // this.getAllEnableCoupons()
   },
   changeCoupon: function (e) {
     var that = this
     that.setData({
       activeIndex: e.currentTarget.dataset.index,
+      finalamount: e.currentTarget.dataset.finalamount
     });
+    app.globalData.finalamount = e.currentTarget.dataset.finalamount
+    // wx.navigateBack({
+    //   delta: 1
+    // })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -44,16 +55,17 @@ Page({
 
   },
   submitOrder() {
+    app.globalData.finalamount = this.data.finalamount
     wx.navigateBack({
       delta: 1
-    });
+    })
   },
   /**
-     *根据用户列出当前系统可以被领取的优惠券
-     */
+   *查看用户，当前订单可用的优惠券列表
+  */
   getAllEnableCoupons(id) {
     let that = this
-    Http.HttpRequst(false, '/coupon/useCouponList', false, '', '', 'get', false, function (res) {
+    Http.HttpRequst(false, '/coupon/useCouponList?cartIds=' + id, false, '', '', 'get', false, function (res) {
       if (res.data.length == 0) {
         that.setData({
           noData: true,
@@ -66,19 +78,19 @@ Page({
 
     })
   },
-  getCoupon(e) {
-    let that = this
-    let id = e.currentTarget.dataset.id
-    let params = {
-      couponId: id
-    }
-    Http.HttpRequst(false, '/coupon/getCoupon', false, '', params, 'get', false, function (res) {
-      if (res.state == 'ok') {
-        that.toastDialog.showDialog('领取成功!')
-        that.getAllEnableCoupons()
-      }
-    })
-  },
+  // getCoupon(e) {
+  //   let that = this
+  //   let id = e.currentTarget.dataset.id
+  //   let params = {
+  //     couponId: id
+  //   }
+  //   Http.HttpRequst(false, '/coupon/getCoupon', false, '', params, 'get', false, function (res) {
+  //     if (res.state == 'ok') {
+  //       that.toastDialog.showDialog('领取成功!')
+  //       that.getAllEnableCoupons()
+  //     }
+  //   })
+  // },
   /**
    * 生命周期函数--监听页面卸载
    */

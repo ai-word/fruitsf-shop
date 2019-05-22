@@ -5,7 +5,7 @@
     <view class='header-address'>
         <view class='address'>
           <view class='left'>配送至</view>
-          <view class='right'>
+          <view class='right' bindtap='goAddress'>
             <image src="/assets/address.png"></image>
             请选择收货地址
           </view>
@@ -23,8 +23,11 @@
         </view>
         <view class='address'>
           <view class='left delivery'>配送费</view>
-          <view class='right ship'>
+          <view class='right ship' wx:if="{{freightAmount == 0}}">
             包邮
+          </view>
+          <view class='right ship' wx:else>
+            ￥ {{freightAmount}}
           </view>
         </view>
       </view>
@@ -93,8 +96,12 @@
           <view class='order-cell pack-item'>
             优惠券
           </view>
-          <view class='order-cell active-color'>
+          <view class='order-cell active-color' wx:if="{{finalamount==0}}">
             -￥0.00
+            <image src="/assets/user/right.png"></image>
+          </view>
+          <view class='order-cell active-color' wx:else>
+            -￥{{finalamount}}
             <image src="/assets/user/right.png"></image>
           </view>
         </view>
@@ -140,8 +147,11 @@
             ￥{{totalPrice}}
           </view>
           <text class='shu'>|</text>
-          <view class='youhui'>
-            优惠: 5.00
+          <view class='youhui' wx:if="{{finalamount ==0}}">
+            优惠: ￥ 0.00
+          </view>
+       <view class='youhui' wx:else>
+            优惠: ￥{{finalamount}}
           </view>
       </view>
       <view class='right-content'  bindtap='placeOrder'>

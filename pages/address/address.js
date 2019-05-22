@@ -1,5 +1,6 @@
 // pages/address/address.js
 const Http = require('../../utils/request.js');
+const app = getApp();
 Page({
 
   /**
@@ -116,6 +117,12 @@ Page({
   goAddress() {
     wx.navigateTo({
       url: '/pages/address/add-receiving/receiving'
+    })
+  },
+  goToShop(e) {
+    app.globalData.addressId = e.currentTarget.dataset.id
+    wx.navigateBack({
+      delta: 1
     })
   },
   /**

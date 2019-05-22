@@ -19,13 +19,15 @@ Page({
         value: 1
       }
     ],
-    packaeAmount: '',
+    packageAmount: 0,
     goodList: [],
     packages: [],
     totalPrice: '',
-    coupons: [],
     address: [],
-    remark: ''
+    remark: '',
+    cartIds: '',
+    freightAmount: '',//运费
+    finalamount: '',//优惠费用
   },
 
   /**
@@ -33,6 +35,9 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
+    this.setData({
+      cartIds: options.cartIds
+    })
     this.orderDetail(options.cartIds)
   },
 
@@ -95,6 +100,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (app.globalData.finalamount) {
+      var totalPrice = Number(this.data.totalPrice) - Number(app.globalData.finalamount)
+      this.setData({
+        finalamount: app.globalData.finalamount,
+        totalPrice: totalPrice.toFixed(2)
+      })
+    }
+    console.log(app.globalData.addressId, '55555')
+    if (app.globalData.addressId) {
+      this.setData({
+        memberAddId: app.globalData.addressId
+      })
+      this.getExpressFee() //算运费
+      this.getAddDetails(app.globalData.addressId) //id查地址
+    }
     this.setData({
       remark: wx.getStorageSync('remark')
     })
@@ -103,28 +123,32 @@ Page({
    * 普通订单详情
    */
   orderDetail(cartIds) {
-    // let params = {
-    //   cartIds: cartIds
-    // }
     let that = this
     Http.HttpRequst(false, '/order/orderDetail?cartIds=' + cartIds, false, '', '', 'post', false, function (res) {
       var totalPrice = 0
+      var totalWeight = 0
+      var totalCount = 0
       if (res.state == 'ok') {
         let packages = res.data.packages
         packages[0].checked = true
         for (var i = 0;i<res.data.prds.length;i++) {
           totalPrice += res.data.prds[i].product_amount * res.data.prds[i].price;
+          totalWeight +=res.data.prds[i].weight
+          totalCount += res.data.prds[i].product_amount
         }
-        totalPrice += packages[0].totalamount
+        totalPrice += packages[0].totalamount //计算包装费
         that.setData({
+          totalWeight: totalWeight,
+          totalCount: totalCount,
           totalPrice: totalPrice.toFixed(2),
+          memberAddId: res.data.address.id,
           address: res.data.address,
           goodList: res.data.prds,
           packages: packages,
           packaeAmount: packages[0].totalamount,
-          coupons: res.data.coupons,
           walletAmount: res.data.wallet
         })
+        that.getExpressFee()
       }
     })
   },
@@ -132,11 +156,28 @@ Page({
    * 包装费
    */
   radioChange(e) {
-    var totalPrice = this.data.totalPrice
-    totalPrice += e.detail.value
+    var totalPrice = 0
+    totalPrice = Number(this.data.totalPrice) - Number(this.data.packageAmount) + Number(e.detail.value)
+    console.log(totalPrice)
     this.setData({
-      packaeAmount: e.detail.value,
+      packageAmount: e.detail.value,
       totalPrice: totalPrice
+    })
+  },
+  /**
+   * 根据目的地算运费
+   */
+  getExpressFee() {
+    var that = this
+    Http.HttpRequst(false, '/express/getExpressFee?count=' + this.data.totalCount + '&weight=' + this.data.totalWeight + '&memberAddId=' + this.data.memberAddId + '&prdCategoryIds=' + this.data.cartIds, true, '', '', 'post', false, function (res) {
+      if (res.state == 'ok') {
+        var totalPrice = 0
+        console.log(res, '运费')
+        that.setData({
+          freightAmount: res.data,
+          totalPrice: Number(that.data.totalPrice) + res.data
+        })
+      }
     })
   },
   /**
@@ -162,7 +203,7 @@ Page({
     for (var i = 0; i < that.data.goodList.length;i++) {
       size += that.data.goodList[i].product_amount
       var item = {
-        productId: that.data.goodList[i].id,//商品id
+        productId: that.data.goodList[i].prdid,//商品id
         productPic: that.data.goodList[i].pic,//商品效果图
         productName: that.data.goodList[i].name,//商品名称
         productPrice: that.data.goodList[i].price,//销售价格
@@ -184,11 +225,8 @@ Page({
     var walletAmount = 0
     if (that.data.walletAmount >= that.data.totalPrice) {
       wxAmount = 0
-      walletAmount = that.data.walletAmount
-    } else if (that.data.walletAmount == 0) {
-      wxAmount = that.data.totalPrice
-      walletAmount = 0
-    } else if (that.data.walletAmount > 0) {
+      walletAmount = that.data.totalPrice
+    } else {
       wxAmount = that.data.totalPrice - that.data.walletAmount
       walletAmount = that.data.walletAmount
     }
@@ -197,10 +235,10 @@ Page({
       payAmount: that.data.totalPrice, // 应付金额 总额-优惠券
       wxAmount: wxAmount, // 微信支付金额
       walletAmount: walletAmount, //钱包支付金额
-      packaeAmount: that.data.packaeAmount,//包装金额
-      freightAmount: '',//运费金额
+      packageAmount: that.data.packageAmount,//包装金额
+      freightAmount: that.data.freightAmount,//运费金额
       promotionAmount: '',//促销优化金额
-      couponAmount: '',//优惠券抵用金额
+      couponAmount: that.data.finalamount,//优惠券抵用金额
       receiverName: that.data.address.name, // 收货人姓名
       receiverPhone: that.data.address.phoneNumber,// 收货人电话
       receiverPostCode: '',//收货人邮编
@@ -213,14 +251,27 @@ Page({
     }
 
     var params = {
-      order: JSON.stringify(order),
+      order: order,
       size: size,
-      oderItem: JSON.stringify(oderItem)
+      oderItem: oderItem
     }
     console.log(params, '参数')
-    Http.HttpRequst(false, '/order/order', true, '', params, 'post', false, function (res) {
+    Http.HttpRequst(false, '/order/order', true, '', JSON.stringify(params), 'post', false, function (res) {
       if (res.state == 'ok') {
-        console.log(1)
+        console.log(res)
+      }
+    })
+  },
+  getAddDetails(id) {
+    var that = this
+    let params = {
+      id: id
+    }
+    Http.HttpRequst(false, '/addr/getAdd', true, '', params, 'get', false, function (res) {
+      if (res.state == 'ok') {
+        that.setData({
+          address: res.data
+        })
       }
     })
   },
@@ -252,13 +303,20 @@ Page({
 
   }, 
   addRemarks() {
+    app.globalData.finalamount = ''
     wx.navigateTo({
       url: '/pages/addRemarks/addRemarks'
     })
   },
   mycoupon() {
+    console.log(this.data.cartIds,'this.data.cartIds')
     wx.navigateTo({
-      url: '/pages/my-coupon/coupon'
+      url: '/pages/my-coupon/coupon?cartIds=' + this.data.cartIds
     })
+  },
+  goAddress() {
+    wx.navigateTo({
+      url: '/pages/address/address'
+    }) 
   }
 })

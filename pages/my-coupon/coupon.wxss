@@ -88,8 +88,20 @@
   background-color:#37D260;
 }
 
-
+.coupon-title{
+  padding: 0 20rpx;
+}
 .active{
   border: 1px solid #37D260;
   border-radius: 4rpx;
+}
+
+.freight{
+  font-size: 14px;
+  color: #212121
+}
+.freight-detail{
+  font-size: 12px;
+  color: #909090;
+  margin-left: 20rpx;
 }

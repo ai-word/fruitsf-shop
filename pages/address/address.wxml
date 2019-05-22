@@ -11,10 +11,10 @@
     <view class='msg'>您还没有添加收货地址</view>
   </view>
   <view class='receiving' wx:if="{{addressList.length>0}}">
-    <view class='receiving-list' wx:for="{{addressList}}" wx:key="index">
+    <view class='receiving-list' wx:for="{{addressList}}" bindtap='goToShop' data-id="{{item.id}}" wx:key="index">
       <view class='item'>
         <view class='title'>
-          {{item.region}}
+          {{item.city}} - {{item.region}}
           <text class='tag' wx:if="{{item.tag == 1}}">家</text>
           <text class='tag' wx:else>公司</text>
         </view>
