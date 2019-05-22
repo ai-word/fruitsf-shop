@@ -47,55 +47,6 @@ Page({
   onReady: function () {
 
   },
-  chooseSezi: function (e) {
-    // 用that取代this，防止不必要的情况发生
-    var that = this;
-    // 创建一个动画实例
-    var animation = wx.createAnimation({
-      // 动画持续时间
-      duration: 500,
-      // 定义动画效果，当前是匀速
-      timingFunction: 'linear'
-    })
-    // 将该变量赋值给当前动画
-    that.animation = animation
-    // 先在y轴偏移，然后用step()完成一个动画
-    animation.translateY(300).step()
-    // 用setData改变当前动画
-    that.setData({
-      // 通过export()方法导出数据
-      animationData: animation.export(),
-      // 改变view里面的Wx：if
-      chooseSize: true
-    })
-    // 设置setTimeout来改变y轴偏移量，实现有感觉的滑动
-    setTimeout(function () {
-      animation.translateY(0).step()
-      that.setData({
-        animationData: animation.export()
-      })
-    }, 200)
-  },
-  hideModal: function (e) {
-    var that = this;
-    var animation = wx.createAnimation({
-      duration: 500,
-      timingFunction: 'linear'
-    })
-    that.animation = animation
-    animation.translateY(300).step()
-    that.setData({
-      animationData: animation.export()
-
-    })
-    setTimeout(function () {
-      animation.translateY(0).step()
-      that.setData({
-        animationData: animation.export(),
-        chooseSize: false
-      })
-    }, 200)
-  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -145,7 +96,7 @@ Page({
           address: res.data.address,
           goodList: res.data.prds,
           packages: packages,
-          packaeAmount: packages[0].totalamount,
+          packageAmount: packages[0].totalamount,
           walletAmount: res.data.wallet
         })
         that.getExpressFee()
@@ -157,11 +108,12 @@ Page({
    */
   radioChange(e) {
     var totalPrice = 0
+    console.log(e.detail.value)
     totalPrice = Number(this.data.totalPrice) - Number(this.data.packageAmount) + Number(e.detail.value)
     console.log(totalPrice)
     this.setData({
       packageAmount: e.detail.value,
-      totalPrice: totalPrice
+      totalPrice: totalPrice.toFixed(2)
     })
   },
   /**
@@ -172,10 +124,11 @@ Page({
     Http.HttpRequst(false, '/express/getExpressFee?count=' + this.data.totalCount + '&weight=' + this.data.totalWeight + '&memberAddId=' + this.data.memberAddId + '&prdCategoryIds=' + this.data.cartIds, true, '', '', 'post', false, function (res) {
       if (res.state == 'ok') {
         var totalPrice = 0
+        totalPrice = Number(that.data.totalPrice) + res.data
         console.log(res, '运费')
         that.setData({
           freightAmount: res.data,
-          totalPrice: Number(that.data.totalPrice) + res.data
+          totalPrice: totalPrice.toFixed(2)
         })
       }
     })
@@ -257,8 +210,18 @@ Page({
     }
     console.log(params, '参数')
     Http.HttpRequst(false, '/order/order', true, '', JSON.stringify(params), 'post', false, function (res) {
+      console.log(res.state == 'ok')
       if (res.state == 'ok') {
         console.log(res)
+        var payInfo = {
+          walletAmount: that.data.walletAmount,
+          totalPrice: that.data.totalPrice,
+          payInfo:res.data
+        }
+        app.globalData.payInfo = payInfo
+        wx.navigateTo({
+          url: '/pages/order-payment/order-payment'
+        })
       }
     })
   },

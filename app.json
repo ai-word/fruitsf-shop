@@ -18,7 +18,8 @@
     "pages/shopping-cart/order-detail/order-detail",
     "pages/my-coupon/coupon",
     "pages/addRemarks/addRemarks",
-    "pages/balance/balance"
+    "pages/balance/balance",
+    "pages/order-payment/order-payment"
   ],
   "window": {
     "backgroundTextStyle": "light",

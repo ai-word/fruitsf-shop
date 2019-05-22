@@ -72,7 +72,7 @@
             包装费
           </view>
           <view class='order-cell active-color'>
-            ￥{{packaeAmount}}
+            ￥{{packageAmount}}
             <image src="/assets/user/right.png"></image>
           </view>
         </view>
@@ -158,8 +158,4 @@
         提交提单
       </view>
   </view>
-  <!-- <view class="commodity_screen" wx:if="{{chooseSize}}" bindtap='hideModal'></view>
-  <view class="commodity_attr_box" wx:if="{{chooseSize}}" animation='{{animationData}}'>
-    这里面是内容
-  </view> -->
 </view>

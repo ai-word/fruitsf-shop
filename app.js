@@ -69,6 +69,7 @@ App({
     baseUrl: 'https://xfshop.mynatapp.cc',
     cartNum: '',
     addressId:'',
-    finalamount: null
+    finalamount: null,
+    payInfo: '',
   }
 })

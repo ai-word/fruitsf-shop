@@ -1,0 +1,30 @@
+<!--pages/order-payment/order-payment.wxml-->
+<view class='order-payment'>
+    <view class='header-title'>
+      待付款
+    </view>
+    <view class="commodity_screen" wx:if="{{chooseSize}}" bindtap='hideModal'></view>
+    <view class="commodity_attr_box" wx:if="{{chooseSize}}" animation='{{animationData}}'>
+        <view class='pay-type-text'>
+            请选择支付方式
+        </view>
+        <view class='pay-status'>待支付</view>
+        <view class='pay-price'>
+            ￥ {{wxPayInfo.totalPrice}}
+        </view>
+
+        <view class='pay-type-content'>
+            <view class='wallet'>
+                <view class='desc'>钱包余额支付</view>
+                <view class='price'>可用余额￥ {{wxPayInfo.walletAmount}}</view>
+            </view>
+            <view class='wx-pay'>
+                <view class='desc'>微信支付</view>
+                <view class='price'>还需支付￥ {{wxPayInfo.totalPrice}}</view>
+            </view>
+            <view class='requestPayment' bindtap='wxPayShop'>
+                支付
+            </view>
+        </view>
+    </view>
+</view>
