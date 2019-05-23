@@ -19,7 +19,8 @@
     "pages/my-coupon/coupon",
     "pages/addRemarks/addRemarks",
     "pages/balance/balance",
-    "pages/order-payment/order-payment"
+    "pages/order-payment/order-payment",
+    "pages/cooperation/cooperation"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -91,7 +91,7 @@
         <image src="/assets/user/right.png"></image>
       </view>
     </view>
-    <view class='list-cells'>
+    <view class='list-cells' bindtap='cooperation'>
       <view class='cells'>
         合作收益
       </view>

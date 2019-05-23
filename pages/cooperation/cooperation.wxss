@@ -1,3 +1,4 @@
+/* pages/cooperation/cooperation.wxss */
 /* pages/user/user.wxss */
 .header{
   width:100%;
@@ -14,16 +15,7 @@
   height: 124rpx;
   border-radius: 50%;
 }
-.user-price{
-  position: absolute;
-  right: 40rpx;
-  top: 51rpx;
-}
-.user-price image{
-  width:40rpx;
-  height: 40rpx;
-  border-radius: 0
-}
+
 .userimg{
   display: flex;
   align-items: center;
@@ -65,54 +57,43 @@
 .user-info{
   position: relative
 }
-.user-status{
-  width: 670rpx;
-  height: 152rpx;
-  background: #F5F5F5;
-  position: absolute;
-  top: 292rpx;
-  margin:auto;
-  left:0;
-  right:0;
-  display: flex;
-  justify-content: space-between;
-  box-shadow:0px 6rpx 20rpx 0px rgba(4,0,0,0.1);
-  border-radius:10rpx;
+
+
+.cooperation-list{
+  margin: 0 40rpx;
 }
-.flex-item{
-  text-align: center;
-  font-size: 13px;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.flex-item image{
-  width: 60rpx;
-  height: 60rpx;
+.cooperation-list .left .title{
+  color: #212121;
+  font-size: 14px;
+  padding: 0 0 20rpx 0;
 }
 
-.list-cells{
+.order,.time{
+  color: #656565;
+  font-size: 13px;
+}
+
+.list-item{
   display: flex;
-  margin: 0 40rpx;
-  justify-content: space-between;
-  align-items: center;
+  padding: 30rpx 0;
   border-bottom: 1px solid #EEEEEE
 }
-.cells{
-  flex: 1;
-  font-size: 14px;
-  color:#212121;
-  height: 88rpx;
-  line-height: 88rpx;
+
+.left{
+  flex: 1
 }
-.cel-right{
+
+.right{
+  /* display: flex; */
   text-align: right;
 }
-.cells image{
-  width: 16rpx;
-  height: 28rpx;
+
+.price{
+  color: #212121;
+  font-size: 14px;
+  padding: 0 0 20rpx 0;
 }
-.list{
-  margin-top: 100rpx;
+.username{
+  color: #656565;
+  font-size: 13px
 }

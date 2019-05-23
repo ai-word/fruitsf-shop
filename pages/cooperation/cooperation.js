@@ -73,20 +73,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  goAddRess() {
-    wx.navigateTo({
-      url: '/pages/address/address'
-    })
-  },
-  cooperation() {
-    wx.navigateTo({
-      url: '/pages/cooperation/cooperation'
-    })
-  },
-  coupon() {
-    wx.navigateTo({
-      url: '/pages/coupon/coupon'
-    })
   }
 })
