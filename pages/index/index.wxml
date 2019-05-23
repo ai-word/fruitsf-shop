@@ -46,13 +46,13 @@
 
   <view class='advertisement'>
     <view class='left-ment'>
-      <image mode='widthFix' src="{{indexPrd.pic}}"></image>
+      <image mode='aspectFill' src="{{indexPrd.pic}}"></image>
     </view>
     <view class='right-ment'>
       <view class='item first' wx:for="{{activityList}}">
           <view class='ban'>
           </view>
-          <image mode='widthFix' src="{{item.pic}}"></image>
+          <image mode='aspectFill' src="{{item.pic}}"></image>
       </view>
       <!-- <view class='item'>
           <view class='ban'>
@@ -76,7 +76,7 @@
   <view class='good-content'>
     <view class='good-list' wx:for="{{goodList}}" data-id="{{item.id}}" bindtap='goShopDetail' wx:key="index">
       <view class='good-img'>
-        <image mode='widthFix' src="{{item.pic}}"></image>
+        <image mode='aspectFill' src="{{item.pic}}"></image>
       </view>
       <view class='good-desc'>
         <view class='desc'>

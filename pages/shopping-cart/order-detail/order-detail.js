@@ -20,13 +20,14 @@ Page({
       }
     ],
     packageAmount: 0,
+    categoreyIds: '',
     goodList: [],
     packages: [],
     totalPrice: '',
     address: [],
     remark: '',
     cartIds: '',
-    freightAmount: '',//运费
+    freightAmount: 0,//运费
     finalamount: '',//优惠费用
   },
 
@@ -81,14 +82,28 @@ Page({
       var totalCount = 0
       if (res.state == 'ok') {
         let packages = res.data.packages
-        packages[0].checked = true
-        for (var i = 0;i<res.data.prds.length;i++) {
+
+        let categoreyId = '';
+        for (var i = 0; i < res.data.prds.length; i++) {
+          categoreyId = categoreyId + res.data.prds[i].product_category_id;
+          if (i < res.data.prds.length - 1) {
+            categoreyId = categoreyId + ',';
+          }
           totalPrice += res.data.prds[i].product_amount * res.data.prds[i].price;
-          totalWeight +=res.data.prds[i].weight
+          totalWeight += res.data.prds[i].weight
           totalCount += res.data.prds[i].product_amount
         }
-        totalPrice += packages[0].totalamount //计算包装费
+        let totalamount = 0
+        if (packages.length!=0) {
+          packages[0].checked = true
+          totalPrice += packages[0].totalamount //计算包装费
+          totalamount = packages[0].totalamount
+        } else {
+
+        }
+
         that.setData({
+          categoreyIds: categoreyId,
           totalWeight: totalWeight,
           totalCount: totalCount,
           totalPrice: totalPrice.toFixed(2),
@@ -96,7 +111,7 @@ Page({
           address: res.data.address,
           goodList: res.data.prds,
           packages: packages,
-          packageAmount: packages[0].totalamount,
+          packageAmount: totalamount,
           walletAmount: res.data.wallet
         })
         that.getExpressFee()
@@ -121,10 +136,10 @@ Page({
    */
   getExpressFee() {
     var that = this
-    Http.HttpRequst(false, '/express/getExpressFee?count=' + this.data.totalCount + '&weight=' + this.data.totalWeight + '&memberAddId=' + this.data.memberAddId + '&prdCategoryIds=' + this.data.cartIds, true, '', '', 'post', false, function (res) {
+    Http.HttpRequst(false, '/express/getExpressFee?count=' + this.data.totalCount + '&weight=' + this.data.totalWeight + '&memberAddId=' + this.data.memberAddId + '&prdCategoryIds=' + this.data.categoreyIds, true, '', '', 'post', false, function (res) {
       if (res.state == 'ok') {
         var totalPrice = 0
-        totalPrice = Number(that.data.totalPrice) + res.data
+        totalPrice = Number(that.data.totalPrice - that.data.freightAmount) + res.data
         console.log(res, '运费')
         that.setData({
           freightAmount: res.data,
@@ -153,7 +168,7 @@ Page({
       productWeight: '',//总重量
       productCategotyId: ''//分类id
     }
-    for (var i = 0; i < that.data.goodList.length;i++) {
+    for (var i = 0; i < that.data.goodList.length; i++) {
       size += that.data.goodList[i].product_amount
       var item = {
         productId: that.data.goodList[i].prdid,//商品id
@@ -200,7 +215,7 @@ Page({
       receiverRegion: that.data.address.region,//区
       receiverDetailAddress: that.data.address.region,//详细地址
       note: that.data.remark,//备注
-      couponCode:'',// 优惠券码
+      couponCode: '',// 优惠券码
     }
 
     var params = {
@@ -216,7 +231,7 @@ Page({
         var payInfo = {
           walletAmount: that.data.walletAmount,
           totalPrice: that.data.totalPrice,
-          payInfo:res.data
+          payInfo: res.data
         }
         app.globalData.payInfo = payInfo
         wx.navigateTo({
@@ -264,7 +279,7 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }, 
+  },
   addRemarks() {
     app.globalData.finalamount = ''
     wx.navigateTo({
@@ -272,7 +287,7 @@ Page({
     })
   },
   mycoupon() {
-    console.log(this.data.cartIds,'this.data.cartIds')
+    console.log(this.data.cartIds, 'this.data.cartIds')
     wx.navigateTo({
       url: '/pages/my-coupon/coupon?cartIds=' + this.data.cartIds
     })
@@ -280,6 +295,6 @@ Page({
   goAddress() {
     wx.navigateTo({
       url: '/pages/address/address'
-    }) 
+    })
   }
 })

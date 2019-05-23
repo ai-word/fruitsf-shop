@@ -1,30 +1,148 @@
 <!--pages/order-payment/order-payment.wxml-->
 <view class='order-payment'>
+  <view class='nav'>
     <view class='header-title'>
-      待付款
+      <view class='left-text'>
+        待付款
+        <image src="/assets/right.png"></image>
+      </view>
+      <view class='right-text'>
+        2019-05-01 15:59:41
+      </view>
     </view>
-    <view class="commodity_screen" wx:if="{{chooseSize}}" bindtap='hideModal'></view>
-    <view class="commodity_attr_box" wx:if="{{chooseSize}}" animation='{{animationData}}'>
-        <view class='pay-type-text'>
-            请选择支付方式
-        </view>
-        <view class='pay-status'>待支付</view>
-        <view class='pay-price'>
-            ￥ {{wxPayInfo.totalPrice}}
-        </view>
+  </view>
 
-        <view class='pay-type-content'>
-            <view class='wallet'>
-                <view class='desc'>钱包余额支付</view>
-                <view class='price'>可用余额￥ {{wxPayInfo.walletAmount}}</view>
-            </view>
-            <view class='wx-pay'>
-                <view class='desc'>微信支付</view>
-                <view class='price'>还需支付￥ {{wxPayInfo.totalPrice}}</view>
-            </view>
-            <view class='requestPayment' bindtap='wxPayShop'>
-                支付
-            </view>
-        </view>
+  <view class='order-info'>
+    <view class='order-title'>订单已完成</view>
+    <view class='order-type'>提货方式：配送</view>
+
+    <view class='purchase'>
+      <view class='again'>再次购买</view>
     </view>
+  </view>
+
+
+  <view class='rece-goods'>
+    <view class='left'>
+      <image src="/assets/address.png"></image>
+      <text class='user-name'>杨幂</text>
+      <text class='shu'>|</text>
+      <text class='user-mobile'>13712345678</text>
+    </view>
+    <view class='right user-addess'>
+      上海市普陀区清涧路187弄
+    </view>
+  </view>
+
+
+  <view class='good-detail'>
+    <view class='good-item'>
+      <view class='good-left'>
+        <view class='shop-img'>
+          <image src="http://shopimg123.test.upcdn.net/img/mht.jpg" mode='aspectFill'></image>
+        </view>
+        <view class='good-desc'>
+          <view class='title'>红心火龙果 3...</view>
+          <view class='desc'>高颜值惹人爱</view>
+        </view>
+      </view>
+      <view class='good-right'>
+        <view class='good-num'>
+          x5
+        </view>
+        <view class='good-price'>
+          ￥29.90
+        </view>
+      </view>
+    </view>
+
+    <view class='good-item'>
+      <view class='good-left'>
+        <view class='shop-img'>
+          <image src="http://shopimg123.test.upcdn.net/img/mht.jpg" mode='aspectFill'></image>
+        </view>
+        <view class='good-desc'>
+          <view class='title'>红心火龙果 3...</view>
+          <view class='desc'>高颜值惹人爱</view>
+        </view>
+      </view>
+      <view class='good-right'>
+        <view class='good-num'>
+          x5
+        </view>
+        <view class='good-price'>
+          ￥29.90
+        </view>
+      </view>
+    </view>
+
+    <view class='good-costs first'>
+      <view class='distribution'>
+        配送费
+      </view>
+      <view class='dis-price'>
+        ￥6.00
+      </view>
+    </view>
+
+    <view class='good-costs'>
+      <view class='distribution'>
+        包装费
+      </view>
+      <view class='dis-price'>
+        ￥6.00
+      </view>
+    </view>
+
+  </view>
+
+  <view class='order-details'>
+    <view class='order-item bold'>订单信息</view>
+    <view class='order-item'>订 单 号：
+      <text class='color'>1122855493517455362</text>
+    </view>
+    <view class='order-item'>支付方式：
+      <text class='color'>在线支付</text>
+    </view>
+    <view class='order-item'>下单时间：
+      <text class='color'>2019-04-30 21:29:46</text>
+    </view>
+    <view class='order-item'>订单备注：
+      <text class='color'>无</text>
+    </view>
+  </view>
+
+
+
+
+  <view class="commodity_screen" wx:if="{{chooseSize}}" bindtap='hideModal'></view>
+  <view class="commodity_attr_box" wx:if="{{chooseSize}}" animation='{{animationData}}'>
+    <view class='pay-type-text'>
+      <view class='close' style='overflow:hidden'>
+        <image src=""></image>
+      </view>
+      <view class='pay-type'>请选择支付方式</view>
+      <view class='close'>
+        <image src="/assets/close.png"></image>
+      </view>
+    </view>
+    <view class='pay-status'>待支付</view>
+    <view class='pay-price'>
+      ￥ {{wxPayInfo.totalPrice}}
+    </view>
+
+    <view class='pay-type-content'>
+      <view class='wallet wallet-border'>
+        <view class='desc'>钱包余额支付</view>
+        <view class='price'>可用余额￥ {{wxPayInfo.walletAmount}}</view>
+      </view>
+      <view class='wallet wx-pay'>
+        <view class='desc'>微信支付</view>
+        <view class='price'>还需支付￥ {{wxPayInfo.totalPrice}}</view>
+      </view>
+      <view class='requestPayment' bindtap='wxPayShop'>
+        支付
+      </view>
+    </view>
+  </view>
 </view>
