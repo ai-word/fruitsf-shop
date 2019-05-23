@@ -47,6 +47,11 @@ Page({
     })
 
   },
+  searchClick() {
+    wx.navigateTo({
+      url: '/pages/search/search'
+    })
+  },
   getBanner() {
     let that = this
     console.log('5555')
