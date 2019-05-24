@@ -13,21 +13,60 @@
     </view> -->
       <view class="navbar weui-navbar">
           <block wx:for="{{tabs}}" wx:key="*this">
-              <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
-                  <view class="weui-navbar__title">{{item}}</view>
+              <view id="{{index}}" data-status="{{item.status}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+                  <view class="weui-navbar__title">{{item.name}}</view>
               </view>
           </block>
           <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
       </view>
-    <view class='order-content'>
-      <!-- <view class="weui-tab__content" hidden="{{activeIndex != 0}}">选项一的内容</view>
-      <view class="weui-tab__content" hidden="{{activeIndex != 1}}">选项二的内容</view>
-      <view class="weui-tab__content" hidden="{{activeIndex != 2}}">选项三的内容</view> -->
 
-        <view class='order-list'>
+    <view class='shop-nodata' wx:if="{{orderList.length == 0}}">
+      <view class='nodata'>
+      <image src="/assets/nodata.png"></image>
+      </view>
+      <view class='msg'>您还没有相关订单！</view>
+    </view>
+
+    <view class='order-content' wx:else>
+        <view class='order-list' wx:for="{{orderList}}" wx:for-index="index" wx:key="index">
+          <view class='order-code'>
+              <view class='order-number'>订单编号: {{item.order_sn}}</view>
+              <view class='order-number payment' wx:if="{{item.status == 0}}">待付款</view>
+              <view class='order-number payment' wx:if="{{item.status == 1}}">待发货</view>
+              <view class='order-number payment' wx:if="{{item.status == 2}}">已发货</view>
+              <view class='order-number completed' wx:if="{{item.status == 3}}">已完成</view>
+              <view class='order-number payment' wx:if="{{item.status == 4}}">已关闭</view>
+              <view class='order-number payment' wx:if="{{item.status == 5}}">无效订单</view>
+          </view>
+          <view class='good-list' wx:for="{{item.items}}" wx:for-item="items" wx:key="index">
+              <view class='good-pic'>
+                <image  mode='aspectFill' src="{{items.productPic}}"></image>
+              </view>
+              <view class='good-desc'>
+                {{items.productName}}
+              </view>
+              <view class='good-num'>
+                <view>￥{{items.productPrice}}</view>
+                <view>x{{items.productQuantity}}</view>
+              </view>
+          </view>
+          <view class='good-total'>
+              共{{item.total}}个商品 合计: <text class='price'>￥{{item.total_amount}}</text> (含运费:￥ {{item.freight_amount}})
+          </view>
+
+          <view class='order-button' wx:if="{{item.status != 4}}">
+          <button class="cancel" type="cancel" plain="true" data-orderid="{{item.id}}" bindtap='cancelOrder' wx:if="{{item.status == 0}}">取消订单</button>
+          <button class="wxpayment" type="wxpayment" bindtap='immediatePay' plain="true" wx:if="{{item.status == 0}}">立即支付</button>
+          <!-- <button class="again" type="again" plain="true" wx:if="{{item.status == 4}}">提醒发货</button> -->
+          <button class="again" type="again" plain="true" wx:if="{{item.status == 2}}">查看物流</button>
+           <button class="again" type="again" plain="true" wx:if="{{item.status == 5}}">再次购买</button>
+          </view>
+        </view>
+
+        <!-- <view class='order-list'>
           <view class='order-code'>
               <view class='order-number'>订单编号:1122855493517455360</view>
-              <view class='order-number payment'>待付款</view>
+              <view class='order-number completed'>已完成</view>
           </view>
           <view class='good-list'>
               <view class='good-pic'>
@@ -44,14 +83,20 @@
           <view class='good-total'>
               共1个商品 合计: ￥119.90 (含运费)
           </view>
-        </view>
-    </view>
 
-
-    <view class='shop-nodata'>
-      <view class='nodata'>
-      <image src="/assets/nodata.png"></image>
+          <view class='order-button'>
+              <button class="again" type="again" plain="true">再次购买</button>
+          </view>
+        </view> -->
+      <view class="weui-loadmore weui-loadmore_line" wx:if='{{hasmoreData}}'>
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无更多数据</view>
       </view>
-      <view class='msg'>您还没有相关订单！</view>
+      <view class="weui-loadmore" wx:if="{{hiddenloading}}">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">正在加载</view>
+      </view>
     </view>
+
+
+
 </view>

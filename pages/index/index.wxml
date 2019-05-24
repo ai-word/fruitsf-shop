@@ -5,7 +5,7 @@
       <view class='search-box'>
           <view class="search-box-bar" bindtap='searchClick'>
               <icon type='search' size="16"></icon>
-              <input class="search-view-input" placeholder='搜索'/>
+              <view class="search-view-input">搜索</view>
           </view>
           <view class='activity-add' ><image bindtap='addhandle' src='/assets/index/erweima.png'></image></view>
       </view>
