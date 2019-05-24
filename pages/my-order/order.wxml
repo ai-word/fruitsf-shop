@@ -2,7 +2,7 @@
     <!-- tab导航栏 -->
     <!-- scroll-left属性可以控制滚动条位置 -->
     <!-- scroll-with-animation滚动添加动画过渡 -->
-    <view class='navbar'>
+    <!-- <view class='navbar'>
         <scroll-view scroll-x="true" style="height:80rpx" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
             <block wx:for="{{navData}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
                 <view class="nav-item {{currentTab == idx ?'active':''}}"  data-current="{{idx}}" bindtap="switchNav">
@@ -10,12 +10,48 @@
                 </view>
             </block>
         </scroll-view>
+    </view> -->
+      <view class="navbar weui-navbar">
+          <block wx:for="{{tabs}}" wx:key="*this">
+              <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+                  <view class="weui-navbar__title">{{item}}</view>
+              </view>
+          </block>
+          <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+    <view class='order-content'>
+      <!-- <view class="weui-tab__content" hidden="{{activeIndex != 0}}">选项一的内容</view>
+      <view class="weui-tab__content" hidden="{{activeIndex != 1}}">选项二的内容</view>
+      <view class="weui-tab__content" hidden="{{activeIndex != 2}}">选项三的内容</view> -->
+
+        <view class='order-list'>
+          <view class='order-code'>
+              <view class='order-number'>订单编号:1122855493517455360</view>
+              <view class='order-number payment'>待付款</view>
+          </view>
+          <view class='good-list'>
+              <view class='good-pic'>
+                <image src="http://shopimg123.test.upcdn.net/img/19052120154200001.jpg"></image>
+              </view>
+              <view class='good-desc'>
+                秭归精选应季伦晚鲜橙 甜橙子 约3kg装 铂金果 单果约160-190g 
+              </view>
+              <view class='good-num'>
+                <view>￥119.90</view>
+                <view>x1</view>
+              </view>
+          </view>
+          <view class='good-total'>
+              共1个商品 合计: ￥119.90 (含运费)
+          </view>
+        </view>
     </view>
+
 
     <view class='shop-nodata'>
       <view class='nodata'>
       <image src="/assets/nodata.png"></image>
       </view>
-      <view class='msg'>主人，购物车还是空的呢！</view>
+      <view class='msg'>您还没有相关订单！</view>
     </view>
 </view>

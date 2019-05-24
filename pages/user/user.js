@@ -88,5 +88,10 @@ Page({
     wx.navigateTo({
       url: '/pages/coupon/coupon'
     })
+  },
+  allOrder() {
+    wx.navigateTo({
+      url: '/pages/my-order/order'
+    })
   }
 })

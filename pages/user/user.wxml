@@ -26,7 +26,7 @@
   </view>
 
   <view class='user-status'>
-    <view class='flex-item'>
+    <view class='flex-item' bindtap='allOrder'>
       <view class='item'>
         <image src="/assets/user/delete.png"></image>
         <view>全部订单</view>
