@@ -153,6 +153,7 @@ Page({
   },
   onShow: function () {
     // var shopcarData = app.globalData.shopcarData,//这里我是把购物车的数据放到app.js里的，这里取出来，开发的时候视情况加载自己的数据
+    wx.setStorageSync('remark', '')
     this.getAllCartList()
   },
   // 判断是否为全选  

@@ -1,0 +1,39 @@
+<!--pages/my-coupon/couponList/couponList.wxml-->
+<view class="class-cation">
+  <view class="navbar weui-navbar">
+    <block wx:for="{{tabs}}" wx:key="*this">
+      <view id="{{index}}" data-status="{{item.status}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+        <view class="weui-navbar__title">{{item.name}}</view>
+      </view>
+    </block>
+    <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+  </view>
+
+  <view class='shop-nodata' wx:if="{{noData}}">
+    <view class='nodata'>
+      <image src="/assets/nodata.png"></image>
+    </view>
+    <view class='msg'>暂无可用的优惠券</view>
+  </view>
+
+  <view class='coupon-content'>
+    <view class="coupon-list" wx:for-index="idx" bindtap='changeCoupon' data-code="{{item.coupon_code}}" wx:for="{{couponList}}" data-finalamount="{{item.finalamount}}" wx:key="idx" data-index="{{idx}}">
+      <image src="/assets/coupon.png"></image>
+      <view class='content'>
+        <view class='title'>{{item.name}}</view>
+        <view class='desc'>{{item.note}}</view>
+      </view>
+      <view class='time'>
+        有效期: {{item.start_time}} ~ {{item.end_time}}
+      </view>
+    </view>
+  </view>
+
+  <view class="weui-loadmore weui-loadmore_line" wx:if='{{hasmoreData}}'>
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无更多数据</view>
+  </view>
+  <view class="weui-loadmore" wx:if="{{hiddenloading}}">
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在加载</view>
+  </view>
+</view>

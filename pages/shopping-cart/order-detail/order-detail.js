@@ -29,6 +29,7 @@ Page({
     cartIds: '',
     freightAmount: 0,//运费
     finalamount: 0,//优惠费用
+    couponCode: ''
   },
 
   /**
@@ -56,7 +57,8 @@ Page({
       var totalPrice = Number(this.data.totalPrice) - Number(app.globalData.finalamount)
       this.setData({
         finalamount: app.globalData.finalamount,
-        totalPrice: totalPrice.toFixed(2)
+        totalPrice: totalPrice.toFixed(2),
+        couponCode: app.globalData.couponCode
       })
     }
     console.log(app.globalData.addressId, '55555')
@@ -215,7 +217,7 @@ Page({
       receiverRegion: that.data.address.region,//区
       receiverDetailAddress: that.data.address.detailAddress,//详细地址
       note: that.data.remark,//备注
-      couponCode: '',// 优惠券码
+      couponCode: that.data.couponCode,// 优惠券码
     }
 
     var params = {
@@ -238,11 +240,14 @@ Page({
         var payInfo = {
           walletAmount: that.data.walletAmount,
           totalPrice: that.data.totalPrice,
-          payInfo: res.data
+          payInfo: res.data,
+          
         }
         app.globalData.payInfo = payInfo
+        wx.setStorageSync('remark', '')
+        wx.setStorageSync('cartNum', 0)
         wx.navigateTo({
-          url: '/pages/order-payment/order-payment'
+          url: '/pages/order-payment/order-payment?ordersn=' + res.data.orderSn
         })
       }
     })
@@ -296,7 +301,7 @@ Page({
   mycoupon() {
     console.log(this.data.cartIds, 'this.data.cartIds')
     wx.navigateTo({
-      url: '/pages/my-coupon/coupon?cartIds=' + this.data.cartIds
+      url: '/pages/my-coupon/coupon/coupon?cartIds=' + this.data.cartIds
     })
   },
   goAddress() {

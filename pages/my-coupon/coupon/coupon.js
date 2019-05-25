@@ -1,5 +1,5 @@
 // pages/coupon/coupon.js
-const Http = require('../../utils/request.js');
+const Http = require('../../../utils/request.js');
 const app = getApp();
 Page({
 
@@ -28,9 +28,11 @@ Page({
     var that = this
     that.setData({
       activeIndex: e.currentTarget.dataset.index,
-      finalamount: e.currentTarget.dataset.finalamount
+      finalamount: e.currentTarget.dataset.finalamount,
+      couponCode: e.currentTarget.dataset.code
     });
     app.globalData.finalamount = e.currentTarget.dataset.finalamount
+    app.globalData.couponCode = e.currentTarget.dataset.code
     // wx.navigateBack({
     //   delta: 1
     // })
@@ -55,7 +57,8 @@ Page({
 
   },
   submitOrder() {
-    app.globalData.finalamount = this.data.finalamount
+    app.globalData.finalamount = this.data.finalamount,
+      app.globalData.couponCode = this.data.couponCode
     wx.navigateBack({
       delta: 1
     })
@@ -75,7 +78,6 @@ Page({
           couponList: res.data,
         })
       }
-
     })
   },
   // getCoupon(e) {

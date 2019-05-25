@@ -49,7 +49,7 @@
       <image mode='aspectFill' src="{{indexPrd.pic}}"></image>
     </view>
     <view class='right-ment'>
-      <view class='item first' wx:for="{{activityList}}">
+      <view class='item first' wx:for="{{activityList}}" wx:for-index="index" wx:key="index">
           <view class='ban'>
           </view>
           <image mode='aspectFill' src="{{item.pic}}"></image>

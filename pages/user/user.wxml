@@ -14,13 +14,17 @@
       </view>
     </view>
     <view class='coupon-content'>
-        <view class='coupon'>
-            <view>2</view>
+        <view class='coupon' bindtap='myCoupon'>
+            <view>{{couponNum}}</view>
             <view class='coupon-color'>优惠券</view>
         </view>
         <view class='coupon'>
-            <view>￥100.50</view>
-            <view class='balance'>余额</view>
+            <view>￥{{available}}</view>
+            <view class='balance'>可用额</view>
+        </view>
+        <view class='coupon'>
+            <view>￥{{frozen}}</view>
+            <view class='balance'>冻结额</view>
         </view>
     </view>
   </view>

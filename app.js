@@ -71,5 +71,6 @@ App({
     addressId:'',
     finalamount: null,
     payInfo: '',
+    couponCode: ''
   }
 })

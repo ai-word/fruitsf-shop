@@ -1,16 +1,4 @@
 <view class="class-cation">
-    <!-- tab导航栏 -->
-    <!-- scroll-left属性可以控制滚动条位置 -->
-    <!-- scroll-with-animation滚动添加动画过渡 -->
-    <!-- <view class='navbar'>
-        <scroll-view scroll-x="true" style="height:80rpx" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
-            <block wx:for="{{navData}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
-                <view class="nav-item {{currentTab == idx ?'active':''}}"  data-current="{{idx}}" bindtap="switchNav">
-                <view class="name">{{navItem.text}}</view>
-                </view>
-            </block>
-        </scroll-view>
-    </view> -->
       <view class="navbar weui-navbar">
           <block wx:for="{{tabs}}" wx:key="*this">
               <view id="{{index}}" data-status="{{item.status}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
@@ -56,7 +44,7 @@
 
           <view class='order-button' wx:if="{{item.status != 4}}">
           <button class="cancel" type="cancel" plain="true" data-orderid="{{item.id}}" bindtap='cancelOrder' wx:if="{{item.status == 0}}">取消订单</button>
-          <button class="wxpayment" type="wxpayment" data-ordersn="{{item.order_sn}}" bindtap='immediatePay' plain="true" wx:if="{{item.status == 0}}">立即支付</button>
+          <button class="wxpayment" type="wxpayment" data-orderid="{{item.id}}" data-ordersn="{{item.order_sn}}" bindtap='immediatePay' plain="true" wx:if="{{item.status == 0}}">立即支付</button>
           <!-- <button class="again" type="again" plain="true" wx:if="{{item.status == 4}}">提醒发货</button> -->
           <button class="again" type="again" plain="true" wx:if="{{item.status == 2}}">查看物流</button>
            <button class="again" type="again" plain="true" wx:if="{{item.status == 5}}">再次购买</button>

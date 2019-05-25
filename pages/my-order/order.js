@@ -15,7 +15,10 @@ Page({
       }, {
       name: '待自提',
         status: 999,
-    }],
+      }, {
+        name: '已完成',
+        status: 3,
+      }],
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
@@ -116,6 +119,7 @@ Page({
     }
     Http.HttpRequst(false, '/order/cancelOrder', true, '', params, 'post', false, function (res) {
       if (res.state == 'ok') {
+        that.data.orderList = []
         that.getOrderList()
       }
     })
@@ -124,7 +128,7 @@ Page({
   immediatePay(e) {
     console.log(e)
     wx.navigateTo({
-      url: '/pages/order-payment/order-payment?ordersn=' + e.currentTarget.dataset.ordersn
+      url: '/pages/order-payment/order-payment?ordersn=' + e.currentTarget.dataset.ordersn + '&orderid=' + e.currentTarget.dataset.orderid
     })
   },
   /**

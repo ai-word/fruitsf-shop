@@ -16,12 +16,13 @@
     "pages/address/address",
     "pages/address/add-receiving/receiving",
     "pages/shopping-cart/order-detail/order-detail",
-    "pages/my-coupon/coupon",
+    "pages/my-coupon/coupon/coupon",
     "pages/addRemarks/addRemarks",
     "pages/balance/balance",
     "pages/order-payment/order-payment",
     "pages/cooperation/cooperation",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/my-coupon/couponList/couponList"
   ],
   "window": {
     "backgroundTextStyle": "light",

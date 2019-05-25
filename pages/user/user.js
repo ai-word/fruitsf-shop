@@ -1,4 +1,5 @@
 // pages/user/user.js
+const Http = require('../../utils/request.js');
 const app = getApp();
 Page({
 
@@ -6,14 +7,18 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: ''
+    userInfo: '',
+    couponNum: 0,
+    available:0,
+    frozen: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getWalletInfo()
+    this.getCouponNum()
   },
 
   /**
@@ -46,7 +51,34 @@ Page({
   onHide: function () {
 
   },
-
+  //获取优惠券数量
+  getCouponNum() {
+    var that = this
+    Http.HttpRequst(false, '/coupon/countCouponsNum', true, '', '', 'get', false, function (res) {
+      if (res.state == 'ok') {
+        that.setData({
+          couponNum: res.data.num
+        })
+      }
+    })
+  },
+  myCoupon() {
+    wx.navigateTo({
+      url: '/pages/my-coupon/couponList/couponList'
+    })
+  },
+  //获取余额
+  getWalletInfo() {
+    var that = this
+    Http.HttpRequst(false, '/wallet/getWalletInfo', true, '', '', 'get', false, function (res) {
+      if (res.state == 'ok') {
+        that.setData({
+          available: res.data.money,
+          frozen: res.data.freezeMoney,
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面卸载
    */

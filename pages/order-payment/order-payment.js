@@ -13,7 +13,8 @@ Page({
     ordersn: '',
     goodDetail: '',
     showModal: false,
-    commodity: 0
+    commodity: 0,
+    orderId: '',
   },
 
   /**
@@ -21,10 +22,8 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
-    this.setData({
-      ordersn: options.ordersn
-    })
-    this.getOrderDetail()
+    this.getOrderDetail(options.ordersn)
+    this.wxOrderPay(options.ordersn)
   },
   chooseSezi: function (e) {
     // 用that取代this，防止不必要的情况发生
@@ -112,7 +111,7 @@ Page({
     }
     Http.HttpRequst(false, '/order/cancelOrder', true, '', params, 'post', false, function (res) {
       if (res.state == 'ok') {
-        that.getOrderList()
+        that.getOrderDetail()
       }
     })
   },
@@ -126,17 +125,37 @@ Page({
       showModal: false
     })
   },
+  //订单支付
+  wxOrderPay(orderSn) {
+    let that = this
+    Http.HttpRequst(false, '/pay/orderPay?orderSn=' + orderSn, false, '', '', 'post', false, function (res) {
+      if (res.state == 'ok') {
+        that.setData({
+          payInfo: res.data
+        })
+      }
+    })
+  },
   wxPayShop() {
     //支付方法
-    console.log(this.data.wxPayInfo.payInfo)
     wx.requestPayment({
-      timeStamp: this.data.wxPayInfo.payInfo.timeStamp,
-      nonceStr: this.data.wxPayInfo.payInfo.nonceStr,
-      package: this.data.wxPayInfo.payInfo.package,
+      timeStamp: this.data.payInfo.timeStamp,
+      nonceStr: this.data.payInfo.nonceStr,
+      package: this.data.payInfo.package,
       signType: 'MD5',
-      paySign: this.data.wxPayInfo.payInfo.paySign,
+      paySign: this.data.payInfo.paySign,
       success(res) { 
         console.log('支付成功')
+        wx:wx.showToast({
+          title: '支付成功!',
+          icon: 'nonw',
+          duration: 1500,
+        })
+        setTimeout(()=>{
+          wx.navigateTo({
+            url: '/pages/my-order/order'
+          })
+        },1500)
       },
       fail(res) { }
     })
@@ -145,14 +164,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      wxPayInfo: app.globalData.payInfo
-    })
+    // this.setData({
+    //   wxPayInfo: app.globalData.payInfo,
+    //   ordersn: app.globalData.payInfo.ordersn
+    // })
   },
 // 根据订单SN，查询商品订单详情
-  getOrderDetail() {
+  getOrderDetail(orderSn) {
     let that = this
-    Http.HttpRequst(false, '/order/getOrderInfo?orderSn=' + this.data.ordersn, false, '', '', 'post', false, function (res) {
+    Http.HttpRequst(false, '/order/getOrderInfo?orderSn=' + orderSn, false, '', '', 'post', false, function (res) {
       if (res.state == 'ok') {
         var params = {
           totalPrice: res.data.order.totalAmount,
@@ -161,10 +181,11 @@ Page({
         }
         var commodity = 0
         commodity = Number(res.data.order.totalAmount) - Number(res.data.order.freightAmount) - Number(res.data.order.packageAmount)
+        console.log(params)
         that.setData({
           goodDetail: res.data,
           wxPayInfo: params,
-          commodity: commodity
+          commodity: commodity.toFixed(2)
         })
       }
     })

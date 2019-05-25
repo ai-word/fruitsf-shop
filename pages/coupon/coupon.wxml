@@ -16,6 +16,9 @@
         <view class='time'>
           有效期: {{item.enable_time}} ~ {{item.end_time}}
         </view>
+        <view class='draw' bindtap='getCoupon' data-id="{{item.id}}">
+          立即领取
+        </view>
     </view>
   </view>
   <toast inner-text=""  id='toastDialog'></toast>
