@@ -2,76 +2,79 @@
 <view class='order-payment'>
   <view class='nav'>
     <view class='header-title'>
-      <view class='left-text'>
-        待付款
-        <image src="/assets/right.png"></image>
+      <view class='left-text' wx:if="{{goodDetail.order.status == 0}}">
+        待付款<image src="/assets/right.png"></image>
+      </view>
+      <view class='left-text' wx:if="{{goodDetail.order.status == 1}}">
+        待发货<image src="/assets/right.png"></image>
+      </view>
+      <view class='left-text' wx:if="{{goodDetail.order.status == 2}}">
+        已发货<image src="/assets/right.png"></image>
+      </view>
+      <view class='left-text' wx:if="{{goodDetail.order.status == 3}}">
+        已完成<image src="/assets/right.png"></image>
+      </view>
+      <view class='left-text' wx:if="{{goodDetail.order.status == 4}}">
+        已关闭<image src="/assets/right.png"></image>
+      </view>
+      <view class='left-text' wx:if="{{goodDetail.order.status == 5}}">
+        无效订单<image src="/assets/right.png"></image>
       </view>
       <view class='right-text'>
-        2019-05-01 15:59:41
+        {{goodDetail.order.createTime}}
       </view>
     </view>
   </view>
 
   <view class='order-info'>
-    <view class='order-title'>订单已完成</view>
+    <view class='order-title' wx:if="{{goodDetail.order.status == 0}}">请尽快支付订单</view>
+      <view class='order-title' wx:if="{{goodDetail.order.status == 3}}">订单已完成</view>
     <view class='order-type'>提货方式：配送</view>
 
-    <view class='purchase'>
+    <view class='purchase' wx:if="{{goodDetail.order.status == 3}}">
       <view class='again'>再次购买</view>
     </view>
+      <view class='order-button' wx:if="{{goodDetail.order.status != 4}}">
+      <button class="cancel" type="cancel" plain="true" data-orderid="{{item.id}}" bindtap='cancelOrder' wx:if="{{goodDetail.order.status == 0}}">取消订单</button>
+      <button class="wxpayment" type="wxpayment" data-ordersn="{{item.order_sn}}" bindtap='immediatePay' plain="true" wx:if="{{goodDetail.order.status == 0}}">去支付</button>
+      <!-- <button class="again" type="again" plain="true" wx:if="{{item.status == 4}}">提醒发货</button> -->
+      <button class="again" type="again" plain="true" wx:if="{{goodDetail.order.status == 2}}">查看物流</button>
+        <button class="again" type="again" plain="true" wx:if="{{goodDetail.order.status == 5}}">再次购买</button>
+      </view>
   </view>
 
 
   <view class='rece-goods'>
     <view class='left'>
       <image src="/assets/address.png"></image>
-      <text class='user-name'>杨幂</text>
+      <text class='user-name'>{{goodDetail.order.receiverName}}</text>
       <text class='shu'>|</text>
-      <text class='user-mobile'>13712345678</text>
+      <text class='user-mobile'>{{goodDetail.order.receiverPhone}}</text>
     </view>
     <view class='right user-addess'>
-      上海市普陀区清涧路187弄
+      {{goodDetail.order.receiverProvince}}{{goodDetail.order.receiverCity}}{{goodDetail.order.receiverRegion}}
+      {{goodDetail.order.receiverDetailAddress}}
     </view>
   </view>
 
 
   <view class='good-detail'>
-    <view class='good-item'>
+    <view class='good-item' wx:for="{{goodDetail.items}}" wx:for-index="index" wx:key="index">
       <view class='good-left'>
         <view class='shop-img'>
-          <image src="http://shopimg123.test.upcdn.net/img/mht.jpg" mode='aspectFill'></image>
+          <image src="{{item.productPic}}" mode='aspectFill'></image>
         </view>
         <view class='good-desc'>
-          <view class='title'>红心火龙果 3...</view>
-          <view class='desc'>高颜值惹人爱</view>
+          <view class='title'>{{item.productName}}</view>
+          <!-- <view class='desc'>高颜值惹人爱</view> -->
         </view>
       </view>
       <view class='good-right'>
         <view class='good-num'>
-          x5
+          x{{item.productQuantity}}
         </view>
         <view class='good-price'>
-          ￥29.90
-        </view>
-      </view>
-    </view>
-
-    <view class='good-item'>
-      <view class='good-left'>
-        <view class='shop-img'>
-          <image src="http://shopimg123.test.upcdn.net/img/mht.jpg" mode='aspectFill'></image>
-        </view>
-        <view class='good-desc'>
-          <view class='title'>红心火龙果 3...</view>
-          <view class='desc'>高颜值惹人爱</view>
-        </view>
-      </view>
-      <view class='good-right'>
-        <view class='good-num'>
-          x5
-        </view>
-        <view class='good-price'>
-          ￥29.90
+          ￥{{item.productPrice}}
         </view>
       </view>
     </view>
@@ -81,7 +84,7 @@
         配送费
       </view>
       <view class='dis-price'>
-        ￥6.00
+        ￥{{goodDetail.order.freightAmount}}
       </view>
     </view>
 
@@ -90,29 +93,69 @@
         包装费
       </view>
       <view class='dis-price'>
-        ￥6.00
+        ￥{{goodDetail.order.packageAmount}}
       </view>
     </view>
 
   </view>
 
+    <view class='packing'>
+      <view class='order-cells last'>
+        <view class='order-cell image-style pack-item' bindtap='showPayModal'>
+          账单明细
+          <image src="/assets/wenhao.png"></image>
+        </view>
+        <view class='order-cell active-color'>
+          <text class='total'>合计:</text> <text class='price-total'>￥{{wxPayInfo.totalPrice}}</text>
+        </view>
+      </view>
+    </view>
+
   <view class='order-details'>
     <view class='order-item bold'>订单信息</view>
     <view class='order-item'>订 单 号：
-      <text class='color'>1122855493517455362</text>
+      <text class='color'>{{goodDetail.order.orderSn}}</text>
     </view>
     <view class='order-item'>支付方式：
       <text class='color'>在线支付</text>
     </view>
     <view class='order-item'>下单时间：
-      <text class='color'>2019-04-30 21:29:46</text>
+      <text class='color'>{{goodDetail.order.createTime}}</text>
     </view>
     <view class='order-item'>订单备注：
-      <text class='color'>无</text>
+      <text class='color'>{{goodDetail.order.note}}</text>
     </view>
   </view>
 
-
+  <pay-toast show="{{showModal}}" bindcancel="modalCancel" bindconfirm='modalConfirm'>
+    <view class='pay-price-content'>
+        <view class='pay-title'>
+          账单明细
+        </view>
+        <view class='pay-item'>
+          <text class='pay-left'>商品金额</text>
+          <text class='pay-right'>￥{{commodity}}</text>
+        </view>
+        <view class='pay-item'>
+          <text class='pay-left'>配送费</text>
+          <text class='pay-right'>￥{{goodDetail.order.freightAmount}}</text>
+        </view>
+        <view class='pay-item'>
+          <text class='pay-left'>包装费</text>
+          <text class='pay-right'>￥{{goodDetail.order.packageAmount}}</text>
+        </view>
+        <view class='pay-item'>
+          <text class='pay-left'>优惠券</text>
+          <text class='pay-right'>￥{{goodDetail.order.discountAmount}}</text>
+        </view>
+    </view>
+      <view class='pay-total'>
+        <text class='pay-left'>实付款:<text class='Pay'>￥{{goodDetail.order.totalAmount}}</text></text>
+      </view>
+      <view class='pay-submit' bindtap='hidePayToast'>
+        确定
+      </view>
+  </pay-toast>
 
 
   <view class="commodity_screen" wx:if="{{chooseSize}}" bindtap='hideModal'></view>
@@ -138,7 +181,7 @@
       </view>
       <view class='wallet wx-pay'>
         <view class='desc'>微信支付</view>
-        <view class='price'>还需支付￥ {{wxPayInfo.totalPrice}}</view>
+        <view class='price'>还需支付￥ {{wxPayInfo.wxAmount}}</view>
       </view>
       <view class='requestPayment' bindtap='wxPayShop'>
         支付

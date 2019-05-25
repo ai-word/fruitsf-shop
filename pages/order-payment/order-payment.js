@@ -1,4 +1,5 @@
 // pages/order-payment/order-payment.js
+const Http = require('../../utils/request.js');
 const app = getApp();
 Page({
 
@@ -8,14 +9,22 @@ Page({
   data: {
     chooseSize: true,
     animationData: {},
-    wxPayInfo: ''
+    wxPayInfo: '',
+    ordersn: '',
+    goodDetail: '',
+    showModal: false,
+    commodity: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(options)
+    this.setData({
+      ordersn: options.ordersn
+    })
+    this.getOrderDetail()
   },
   chooseSezi: function (e) {
     // 用that取代this，防止不必要的情况发生
@@ -30,7 +39,7 @@ Page({
     // 将该变量赋值给当前动画
     that.animation = animation
     // 先在y轴偏移，然后用step()完成一个动画
-    animation.translateY(300).step()
+    animation.translateY(400).step()
     // 用setData改变当前动画
     that.setData({
       // 通过export()方法导出数据
@@ -66,11 +75,56 @@ Page({
       })
     }, 200)
   },
+  immediatePay() {
+    this.chooseSezi()
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
 
+  },
+  //取消订单
+  cancelOrder(e) {
+    var that = this
+    var orderId = e.currentTarget.dataset.orderid
+    wx.showModal({
+      title: '提示',
+      content: '确认要取消该订单？',
+      confirmText: "确认",
+      cancelText: "取消",
+      success: function (res) {
+        console.log(res);
+        if (res.confirm) {
+          console.log('用户点击主操作')
+          that.getCanelOrder(orderId)
+        } else {
+          console.log('用户点击辅助操作')
+        }
+      }
+    })
+  },
+  //取消订单
+  getCanelOrder(orderId) {
+    var that = this
+    let params = {
+      orderId: orderId
+    }
+    Http.HttpRequst(false, '/order/cancelOrder', true, '', params, 'post', false, function (res) {
+      if (res.state == 'ok') {
+        that.getOrderList()
+      }
+    })
+  },
+  showPayModal() {
+    this.setData({
+      showModal: true
+    })
+  },
+  hidePayToast() {
+    this.setData({
+      showModal: false
+    })
   },
   wxPayShop() {
     //支付方法
@@ -95,7 +149,26 @@ Page({
       wxPayInfo: app.globalData.payInfo
     })
   },
-
+// 根据订单SN，查询商品订单详情
+  getOrderDetail() {
+    let that = this
+    Http.HttpRequst(false, '/order/getOrderInfo?orderSn=' + this.data.ordersn, false, '', '', 'post', false, function (res) {
+      if (res.state == 'ok') {
+        var params = {
+          totalPrice: res.data.order.totalAmount,
+          walletAmount: res.data.order.walletAmount,
+          wxAmount: res.data.order.wxAmount
+        }
+        var commodity = 0
+        commodity = Number(res.data.order.totalAmount) - Number(res.data.order.freightAmount) - Number(res.data.order.packageAmount)
+        that.setData({
+          goodDetail: res.data,
+          wxPayInfo: params,
+          commodity: commodity
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

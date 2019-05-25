@@ -1,0 +1,6 @@
+<!--components/payToast/payTost.wxml-->
+<view class='pay-content' wx:if='{{show}}' bindtap='clickMask' catchtouchmove="true">
+  <view class='modal-content'>
+    <slot></slot>
+  </view>
+</view>

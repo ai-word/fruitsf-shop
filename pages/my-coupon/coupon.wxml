@@ -6,7 +6,7 @@
     <view class='nodata'>
     <image src="/assets/nodata.png"></image>
     </view>
-    <view class='msg'>暂无领取的优惠券</view>
+    <view class='msg'>暂无可用的优惠券</view>
   </view>
   <view wx:else>
      <view class="coupon-title">

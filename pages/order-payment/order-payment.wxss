@@ -202,8 +202,8 @@ page{
   padding: 0 0 0 20rpx
 }
 .good-left image{
-  width: 160rpx;
-  height: 160rpx;
+  width: 80rpx;
+  height: 80rpx;
 }
 .good-right{
   display: flex;
@@ -281,8 +281,33 @@ page{
 .color{
   color: #212121!important;
 }
-
-
+.packing{
+  margin-top: 20rpx;
+  background: #ffffff;
+}
+.image-style image{
+  width:30rpx!important;
+  height: 30rpx!important;
+  padding:  0 0 0 10rpx!important;
+}
+.price-total{
+  color: #FF9F06;
+  font-size: 14px;
+}
+.order-cells{
+  display: flex;
+  margin: 0 40rpx;
+  /* padding: 30rpx 0; */
+  height: 86rpx;
+  line-height: 86rpx;
+  justify-content: space-between;
+  background: #ffffff;
+  border-bottom: 1px solid #EEEEEE;
+}
+.total{
+  font-size: 14px;
+  color: #212121;
+}
 /* 支付弹框 */
 
 .wallet,.wx-pay{
@@ -301,4 +326,81 @@ page{
 .wallet .price{
   font-size: 12px;
   color: #656565;
+}
+
+.order-button{
+  display: flex;
+  justify-content: flex-start;
+  padding: 20rpx 30rpx 20rpx 0;
+  border-top: 1rpx solid #EEEEEE;
+}
+
+.cancel,.wxpayment,.again{
+  width: 156rpx;
+  height: 56rpx;
+  padding: 0;
+  line-height: 56rpx;
+  margin: 0;
+  font-size: 14px;
+  color: #656565;
+}
+.cancel{
+  margin:  0 20rpx 0 0;
+  border: 1rpx solid rgba(101,101,101,1);
+}
+/* .wxpayment{
+  color: #F16650;
+  border: 1px solid rgba(241,102,80,1)
+} */
+button[type=wxpayment]{
+    color: #37D260;
+  border: 1px solid #37D260
+}
+
+button[type=again]{
+  border: 1rpx solid rgba(101,101,101,1);
+}
+
+.completed{
+  color: #37D260
+}
+/*
+账单明细*/
+.pay-title,.pay-item{
+  height: 90rpx;
+  text-align: center;
+  line-height: 90rpx;
+  color: #000000;
+  font-size: 16px;
+  border-bottom:1rpx solid #E5E5E5;
+}
+
+.pay-title{
+  font-weight: bold;
+}
+.pay-item{
+  display: flex;
+  padding: 0 30rpx;
+  justify-content: space-between;
+}
+.pay-submit{
+  height:82rpx;
+  line-height: 82rpx;
+  color: #ffffff;
+  text-align: center;
+  background:rgba(55,210,96,1);
+  border-radius:0px 0px 4px 4px;
+}
+
+.pay-total{
+  display: flex;
+  padding: 0 30rpx;
+  justify-content: flex-end;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 14px;
+}
+
+.pay-right,.Pay{
+  color: #F16650
 }

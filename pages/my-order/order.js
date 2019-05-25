@@ -121,8 +121,11 @@ Page({
     })
   },
   //立即支付
-  immediatePay() {
-
+  immediatePay(e) {
+    console.log(e)
+    wx.navigateTo({
+      url: '/pages/order-payment/order-payment?ordersn=' + e.currentTarget.dataset.ordersn
+    })
   },
   /**
    * 页面上拉触底事件的处理函数

@@ -24,11 +24,11 @@ Page({
     goodList: [],
     packages: [],
     totalPrice: '',
-    address: [],
+    address: '',
     remark: '',
     cartIds: '',
     freightAmount: 0,//运费
-    finalamount: '',//优惠费用
+    finalamount: 0,//优惠费用
   },
 
   /**
@@ -64,7 +64,7 @@ Page({
       this.setData({
         memberAddId: app.globalData.addressId
       })
-      this.getExpressFee() //算运费
+      // this.getExpressFee() //算运费
       this.getAddDetails(app.globalData.addressId) //id查地址
     }
     this.setData({
@@ -213,17 +213,24 @@ Page({
       receiverProvince: that.data.address.province,//省份
       receiverCity: that.data.address.city,//城市
       receiverRegion: that.data.address.region,//区
-      receiverDetailAddress: that.data.address.region,//详细地址
+      receiverDetailAddress: that.data.address.detailAddress,//详细地址
       note: that.data.remark,//备注
       couponCode: '',// 优惠券码
     }
 
     var params = {
       order: order,
-      size: size,
       oderItem: oderItem
     }
-    console.log(params, '参数')
+    if (that.data.address == '') {
+      wx:wx.showToast({
+        title: '请选择收货地址',
+        icon: 'none',
+        duration: 1500,
+      })
+      return false
+    }
+    console.log(params, 'paramsparamsparamsparams')
     Http.HttpRequst(false, '/order/order', true, '', JSON.stringify(params), 'post', false, function (res) {
       console.log(res.state == 'ok')
       if (res.state == 'ok') {
