@@ -3,7 +3,24 @@
   position: relative;
   margin: 0 40rpx;
 }
-
+.nodata image{
+  width: 252rpx;
+  height: 219rpx;
+}
+.shop-nodata{
+  margin-top: 294rpx;
+}
+.nodata{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.msg{
+  color: #969696;
+  font-size: 13px;
+  text-align: center;
+  padding: 20rpx 0;
+}
 /*搜索 开始*/
 
 .search-box {

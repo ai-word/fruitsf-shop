@@ -20,7 +20,8 @@
     "pages/addRemarks/addRemarks",
     "pages/balance/balance",
     "pages/order-payment/order-payment",
-    "pages/cooperation/cooperation"
+    "pages/cooperation/cooperation",
+    "pages/search/search"
   ],
   "window": {
     "backgroundTextStyle": "light",

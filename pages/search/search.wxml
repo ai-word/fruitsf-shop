@@ -3,16 +3,22 @@
   <view class='search-bar'>
     <!-- 搜索框开始 -->
       <view class='search-box'>
-          <view class="search-box-bar" bindtap='searchClick'>
-              <!-- <icon type='search' size="16"></icon> -->
-              <input class="search-view-input" placeholder=''/>
+          <view class="search-box-bar">
+              <icon type='search' size="16"></icon>
+              <input class="search-view-input" bindinput='getValue' placeholder='请输入搜索内容'/>
           </view>
-          <view class='activity-add'>搜索</view>
+          <view class='activity-add' bindtap='getSearchGoods'>搜索</view>
       </view>
     </view>
 
+  <view class='shop-nodata' wx:if="{{isData === true}}">
+    <view class='nodata'>
+    <image src="/assets/nodata.png"></image>
+    </view>
+    <view class='msg'>亲,没有搜索到该商品哦！</view>
+  </view>
   <!-- 商品列表 -->
-  <view class='good-content'>
+  <view class='good-content' wx:else>
     <view class='good-list' wx:for="{{goodList}}" data-id="{{item.id}}" bindtap='goShopDetail' wx:key="index">
       <view class='good-img'>
         <image mode='aspectFill' src="{{item.pic}}"></image>
@@ -28,10 +34,6 @@
           <view class='price add' catchtap='addShopCart' data-id="{{item.id}}" data-price="{{item.price}}">
             <image  src="/assets/index/add.png"></image>
           </view>
-           <!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
-                        <image src="/assets/index/add.png"></image>
-                        <image src="/assets/index/add.png"></image>
-            </button> -->
         </view>
       </view>
     </view>

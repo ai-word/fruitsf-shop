@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "toast": "/components/toast/toast"
+  },
+  "navigationBarTitleText": "搜索"
 }

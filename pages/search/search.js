@@ -13,6 +13,8 @@ Page({
     pageNumber: 1,
     pageSize: 10,
     hasmoreData: false,
+    key: '',
+    isData: false,
     loaderMore: true,
     hiddenloading: false,
   },
@@ -21,7 +23,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.recommandPruduct()
+
   },
 
   /**
@@ -72,29 +74,28 @@ Page({
   onShareAppMessage: function () {
 
   },
-  /**
- * 首页商品列表
- */
-  recommandPruduct() {
+  getValue(e){
+    console.log(e)
+    this.setData({
+      key: e.detail.value
+    })
+  },
+  getSearchGoods() {
     let that = this
-    let params = {
-      pageNumber: that.data.pageNumber,
-      pageSize: that.data.pageSize,
-    }
-    Http.HttpRequst(false, '/idx/recommandPruduct', false, '', params, 'get', false, function (res) {
-      if (res.data.list.length < that.data.pageSize) {
-        that.setData({
-          goodList: that.data.goodList.concat(res.data.list),
-        })
-        that.setData({
-          hasmoreData: true,
-          hiddenloading: false,
-          loaderMore: false
-        })
-      } else {
-        that.setData({
-          goodList: that.data.goodList.concat(res.data.list),
-        })
+    Http.HttpRequst(false, '/idx/searchProduct?key=' + that.data.key, false, '', '', 'get', false, function (res) {
+      console.log(res.data)
+      if(res.state == 'ok') {
+        if (res.data.length == 0) {
+          that.setData({
+            isData: true
+          })
+        } else{
+          that.setData({
+            isData: false,
+            goodList: res.data
+          })
+        }
+
       }
     })
   },
@@ -109,17 +110,24 @@ Page({
       productaAmount: 1, //商品数量
       price: e.currentTarget.dataset.price //商品单价
     }
-    Http.HttpRequst(true, '/cart/save', true, '', params, 'post', false, function (res) {
+    Http.HttpRequst(false, '/cart/save', true, '', params, 'post', false, function (res) {
       console.log(res, '5555')
-      that.setData({
-        indexPrd: res.data
-      })
-      var num = wx.getStorageSync('cartNum')
-      wx.setStorageSync('cartNum', parseInt(1 + num))
-      wx.setTabBarBadge({
-        index: 3,
-        text: "" + parseInt(1 + num) + ""
-      })
+      if(res.state == 'ok') {
+        wx.showToast({
+          title: '添加购物车成功！',
+          icon: 'none',
+          duration: 2000,
+        })
+        that.setData({
+          indexPrd: res.data
+        })
+        var num = wx.getStorageSync('cartNum')
+        wx.setStorageSync('cartNum', parseInt(1 + num))
+        wx.setTabBarBadge({
+          index: 3,
+          text: "" + parseInt(1 + num) + ""
+        })
+      }
     })
   }
 })
