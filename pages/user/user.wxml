@@ -89,7 +89,7 @@
     </view>
     <view class='list-cells'>
       <view class='cells'>
-        关于我们
+        分享收益
       </view>
       <view class='cells cel-right'>
         <image src="/assets/user/right.png"></image>

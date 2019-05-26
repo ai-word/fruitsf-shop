@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "pay-toast": "/components/payToast/payToast"
+  },
+  "navigationBarTitleText": "订单详情"
+}

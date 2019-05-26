@@ -68,10 +68,6 @@ Page({
     this.setData({
       addingText: true,
       groupInstanId: e.currentTarget.dataset.groupid
-      // conid: e.currentTarget.dataset.conid,
-      // lecid: e.currentTarget.dataset.lecid,
-      // indexVideo: e.currentTarget.dataset.index,
-      // rewardNum: e.currentTarget.dataset.rewardnum
     })
     this.getCurrentUsersList(id)
   },
@@ -110,6 +106,14 @@ Page({
     })
   },
   /**
+   * 立即开团
+   */
+  openOrder(e) {
+    wx.navigateTo({
+      url: '/pages/commodity-detail/open-regiment/open-regiment?groupId=' + e.currentTarget.dataset.id
+    })
+  },
+  /**
    * 取得正在拼团列表
    */
   getCurrentUsers(id) {
@@ -127,7 +131,7 @@ Page({
   },
   toList() {
     wx.navigateTo({
-      url: '/pages/commodity-detail/open-regiment/regiment?groupId=' + this.data.groupId
+      url: '/pages/commodity-detail/open-list/open-list?groupId=' + this.data.groupId
     })
   },
   swiperChange: function(e) {

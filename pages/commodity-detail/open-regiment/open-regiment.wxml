@@ -1,0 +1,186 @@
+<!--pages/commodity-detail/open-regiment/open-regiment.wxml-->
+<view class='order-payment'>
+  <view class='order-info'>
+    <view class='order-flex'>
+      <view class='order-cells left'>
+        <image src="/assets/open/time.png"></image>
+        自提时间
+      </view>
+      <view class='order-cells color right'>
+        04月23日 19:21-22:00
+        <image src="/assets/open/right.png"></image>
+      </view>
+    </view>
+    <view class='order-flex'>
+      <view class='order-cells left'>
+        <image src="/assets/open/time.png"></image>
+        提货地址
+      </view>
+      <view class='order-cells right'>
+        上海市普陀区梅川路1480号
+      </view>
+    </view>
+    <view class='order-flex'>
+      <view class='order-cells tuan left'>
+        <image src="/assets/open/mobile.png"></image>
+        联系团长
+      </view>
+      <view class='order-cells color right'>
+
+      </view>
+    </view>
+  </view>
+
+  <view class='good-detail'>
+    <!-- wx:for="{{goodDetail.items}}" wx:for-index="index" wx:key="index" -->
+    <view class='good-item'>
+      <view class='good-left'>
+        <view class='shop-img'>
+          <image src="http://shopimg123.test.upcdn.net/img/pt.jpg" mode='aspectFill'></image>
+        </view>
+        <view class='good-desc'>
+          <view class='title'>高颜值惹人爱</view>
+          <!-- <view class='desc'>高颜值惹人爱</view> -->
+        </view>
+      </view>
+      <view class='good-right'>
+        <view class='good-num'>
+          x6
+        </view>
+        <view class='good-price price'>
+          ￥100
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class='packing'>
+    <view class='order-flex'>
+      <view class='order-cell pack-item'>
+        包装选择
+      </view>
+      <view class='order-cell pack-right'>
+        <radio-group class="radio-group" bindchange="radioChange">
+          <label class="radio" wx:for="{{items}}" wx:for-index="index" wx:key="index">
+            <radio value="{{item.totalamount}}" checked="{{item.checked}}">{{item.name}}</radio>
+          </label>
+        </radio-group>
+      </view>
+    </view>
+    <view class='order-flex bordernone'>
+      <view class='order-cells'>
+        包装费
+      </view>
+      <view class='order-cells price'>
+        ￥ 0.00
+      </view>
+    </view>
+  </view>
+
+
+  <view class='cell-list '>
+    <view class='order-flex bordernone'>
+      <view class='order-cells'>
+        奖励信息
+      </view>
+      <view class='order-cells'>
+        分享好友的惊喜
+      </view>
+    </view>
+  </view>
+
+
+  <view class='cell-list'>
+    <view class='order-flex bordernone'>
+      <view class='order-cells'>
+        优惠券
+      </view>
+      <view class='order-cells black price'>
+        -￥0.00
+        <image src="/assets/user/right.png"></image>
+      </view>
+    </view>
+  </view>
+
+  <view class='cell-list'>
+    <view class='order-flex bordernone'>
+      <view class='order-cells'>
+        账单明细
+        <image src="/assets/wenhao.png"></image>
+      </view>
+      <view class='order-cells black'>
+        <text class='total'>合计:</text>
+        <text class='price'>￥24.90</text>
+      </view>
+    </view>
+  </view>
+
+
+  <view class='cell-list'>
+    <view class='order-flex' bindtap='addRemarks'>
+      <view class='order-cell pack-item'>
+        添加备注
+      </view>
+      <view class='order-cell add-desc'>
+        +
+      </view>
+    </view>
+    <view class='order-flex last bordernone'>
+      <view class='order-cell desc-title pack-item' wx:if="{{remark == ''}}">
+        口味偏好等要求
+      </view>
+      <view class='order-cell desc-title pack-item' wx:else>
+        {{remark}}
+      </view>
+      <view class='order-cell'>
+
+      </view>
+    </view>
+  </view>
+  <view class='footer-content'>
+      <view class='left-content'>
+          <view class='total-price'>
+            ￥{{totalPrice}}
+          </view>
+          <text class='shu'>|</text>
+          <view class='youhui' wx:if="{{finalamount ==0}}">
+            优惠: ￥ 0.00
+          </view>
+       <view class='youhui' wx:else>
+            优惠: ￥{{finalamount}}
+          </view>
+      </view>
+      <view class='right-content'  bindtap='placeOrder'>
+        提交提单
+      </view>
+  </view>
+  <pay-toast show="{{showModal}}" bindcancel="modalCancel" bindconfirm='modalConfirm'>
+    <view class='pay-price-content'>
+      <view class='pay-title'>
+        账单明细
+      </view>
+      <view class='pay-item'>
+        <text class='pay-left'>商品金额</text>
+        <text class='pay-right'>￥{{commodity}}</text>
+      </view>
+      <view class='pay-item'>
+        <text class='pay-left'>配送费</text>
+        <text class='pay-right'>￥{{goodDetail.order.freightAmount}}</text>
+      </view>
+      <view class='pay-item'>
+        <text class='pay-left'>包装费</text>
+        <text class='pay-right'>￥{{goodDetail.order.packageAmount}}</text>
+      </view>
+      <view class='pay-item'>
+        <text class='pay-left'>优惠券</text>
+        <text class='pay-right'>￥{{goodDetail.order.discountAmount}}</text>
+      </view>
+    </view>
+    <view class='pay-total'>
+      <text class='pay-left'>实付款:<text class='Pay'>￥{{goodDetail.order.totalAmount}}</text></text>
+    </view>
+    <view class='pay-submit' bindtap='hidePayToast'>
+      确定
+    </view>
+  </pay-toast>
+</view>

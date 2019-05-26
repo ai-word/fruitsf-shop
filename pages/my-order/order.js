@@ -127,6 +127,7 @@ Page({
   //立即支付
   immediatePay(e) {
     console.log(e)
+    app.globalData.payInfo = ''
     wx.navigateTo({
       url: '/pages/order-payment/order-payment?ordersn=' + e.currentTarget.dataset.ordersn + '&orderid=' + e.currentTarget.dataset.orderid
     })

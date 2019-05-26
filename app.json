@@ -8,7 +8,7 @@
     "pages/classification/classification",
     "pages/shopping-cart/shopping-cart",
     "pages/commodity-detail/detail",
-    "pages/commodity-detail/open-regiment/regiment",
+    "pages/commodity-detail/open-list/open-list",
     "pages/coupon/coupon",
     "pages/my-order/order",
     "pages/time/time",
@@ -22,7 +22,8 @@
     "pages/order-payment/order-payment",
     "pages/cooperation/cooperation",
     "pages/search/search",
-    "pages/my-coupon/couponList/couponList"
+    "pages/my-coupon/couponList/couponList",
+    "pages/commodity-detail/open-regiment/open-regiment"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -48,7 +49,7 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/assemble/assemble",
+        "pagePath": "pages/commodity-detail/open-regiment/open-regiment",
         "iconPath": "assets/weapp/assemble.png",
         "selectedIconPath": "assets/weapp/active-assemble.png",
         "text": "拼团"

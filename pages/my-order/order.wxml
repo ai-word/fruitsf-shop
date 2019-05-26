@@ -43,7 +43,7 @@
           </view>
 
           <view class='order-button' wx:if="{{item.status != 4}}">
-          <button class="cancel" type="cancel" plain="true" data-orderid="{{item.id}}" bindtap='cancelOrder' wx:if="{{item.status == 0}}">取消订单</button>
+          <button class="cancel" type="cancel" plain="true" data-orderid="{{item.id}}" bindtap='cancelOrder' wx:if="{{item.status == 0 }}">取消订单</button>
           <button class="wxpayment" type="wxpayment" data-orderid="{{item.id}}" data-ordersn="{{item.order_sn}}" bindtap='immediatePay' plain="true" wx:if="{{item.status == 0}}">立即支付</button>
           <!-- <button class="again" type="again" plain="true" wx:if="{{item.status == 4}}">提醒发货</button> -->
           <button class="again" type="again" plain="true" wx:if="{{item.status == 2}}">查看物流</button>

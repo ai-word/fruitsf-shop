@@ -9,7 +9,7 @@ Page({
   data: {
     chooseSize: true,
     animationData: {},
-    wxPayInfo: '',
+    payInfo: '',
     ordersn: '',
     goodDetail: '',
     showModal: false,
@@ -23,7 +23,12 @@ Page({
   onLoad: function (options) {
     console.log(options)
     this.getOrderDetail(options.ordersn)
-    this.wxOrderPay(options.ordersn)
+    console.log(this.data.payInfo)
+    if (app.globalData.payInfo == '') {
+      this.wxOrderPay(options.ordersn)
+    } else {
+
+    }
   },
   chooseSezi: function (e) {
     // 用that取代this，防止不必要的情况发生
@@ -164,10 +169,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // this.setData({
-    //   wxPayInfo: app.globalData.payInfo,
-    //   ordersn: app.globalData.payInfo.ordersn
-    // })
+    console.log(app.globalData.payInfo)
+    this.setData({
+      payInfo: app.globalData.payInfo
+    })
   },
 // 根据订单SN，查询商品订单详情
   getOrderDetail(orderSn) {

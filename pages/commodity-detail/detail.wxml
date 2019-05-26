@@ -73,7 +73,7 @@
         </view>
       </view>
     </view>
-    <view class="team-box"  wx:if="{{isIndex == 0}}">
+    <view class="team-box">
       <view class="team-title">
         <view class='left'>
           <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconTeamBuy.png"></image>
@@ -127,20 +127,20 @@
 
   <view class='detail-fotter'>
     <view class='flex-fotter left'>
-      <view class='img index' bindtap='goTabIndex'>
+      <!-- <view class='img index' bindtap='goTabIndex'>
         <image src="/assets/weapp/index.png"></image>
-      </view>
+      </view> -->
       <view class='img shop-car'>
         <image src="/assets/weapp/shop.png"></image>
       </view>
     </view>
-    <view class='flex-fotter center'>
+    <!-- <view class='flex-fotter center'>
         <view >
           <view style="font-size:16px;">￥{{groups.singe_price}}</view>
           <view style="font-size:12px;">直接购买</view>
         </view>
-    </view>
-    <view class='flex-fotter right'>
+    </view> -->
+    <view class='flex-fotter right'  bindtap='openOrder' data-id="{{groups.id}}">
         <view >
           <view style="font-size:16px;">￥{{groups.multi_price}}</view>
           <view style="font-size:12px;">立即开团</view>

@@ -225,7 +225,7 @@ Page({
       oderItem: oderItem
     }
     if (that.data.address == '') {
-      wx:wx.showToast({
+      wx.showToast({
         title: '请选择收货地址',
         icon: 'none',
         duration: 1500,
@@ -237,18 +237,30 @@ Page({
       console.log(res.state == 'ok')
       if (res.state == 'ok') {
         console.log(res)
-        var payInfo = {
-          walletAmount: that.data.walletAmount,
-          totalPrice: that.data.totalPrice,
-          payInfo: res.data,
-          
-        }
-        app.globalData.payInfo = payInfo
         wx.setStorageSync('remark', '')
         wx.setStorageSync('cartNum', 0)
-        wx.navigateTo({
-          url: '/pages/order-payment/order-payment?ordersn=' + res.data.orderSn
-        })
+        if (res.data.pay == 'SUCCESS') {
+          wx.showToast({
+            title: '下单成功！',
+            icon: 'nonew',
+            duration: 1500,
+          })
+          setTimeout(() =>{
+            wx.navigateTo({
+              url: '/pages/my-order/order'
+            })
+          },2000)
+        } else {
+          var payInfo = {
+            walletAmount: that.data.walletAmount,
+            totalPrice: that.data.totalPrice,
+            payInfo: res.data,
+          }
+          app.globalData.payInfo = payInfo
+          wx.navigateTo({
+            url: '/pages/order-payment/order-payment?ordersn=' + res.data.orderSn
+          })
+        }
       }
     })
   },
