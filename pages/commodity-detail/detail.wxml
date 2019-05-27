@@ -1,4 +1,5 @@
 <!--pages/commodity-detail/detail.wxml-->
+<wxs src="../../utils/utils.wxs" module="tools"></wxs>
 <view class='commodity-content'>
   <view class='detail-container'>
     <view class='banner-content'>
@@ -25,13 +26,13 @@
         <view class='buying right'>
           <view class="group-box">
             <view class="group-time-down"> 距结束
-              <text class="last-hour txt">0</text>
+              <text class="last-hour txt">{{countDown[0].day}}</text>
               <text class="colon">天</text>
-              <text class="last-hour txt">10</text>
+              <text class="last-hour txt">{{countDown[0].hou}}</text>
               <text class="colon">:</text>
-              <text class="last-minute txt">30</text>
+              <text class="last-minute txt">{{countDown[0].min}}</text>
               <text class="colon">:</text>
-              <text class="last-second txt">44</text>
+              <text class="last-second txt">{{countDown[0].sec}}</text>
             </view>
             <view class="secKill-time-down" wx:if="{{secKillInfo.secKillStatus==='end'}}">活动已结束</view>
           </view>
@@ -94,7 +95,7 @@
           <image src="{{item.avatarurl}}"></image>
           <view class='user-info'>
             <view class='mobile'>{{item.member_phone}}</view>
-            <view class='time'>剩余01:27:13</view>
+            <view class='time'>剩余{{tools.countDown(item.get_endtime)}}</view>
           </view>
         </view>
 

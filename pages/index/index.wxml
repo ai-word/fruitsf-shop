@@ -46,7 +46,7 @@
 
   <view class='advertisement'>
     <view class='left-ment'>
-      <image mode='aspectFill' src="{{indexPrd.pic}}"></image>
+      <image mode='aspectFill' src="{{indexPrd[0].pic}}"></image>
     </view>
     <view class='right-ment'>
       <view class='item first' wx:for="{{activityList}}" wx:for-index="index" wx:key="index">

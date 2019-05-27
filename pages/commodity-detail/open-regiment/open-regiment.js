@@ -258,12 +258,12 @@ Page({
             })
           }, 2000)
         } else {
-          var payInfo = {
-            walletAmount: that.data.walletAmount,
-            totalPrice: that.data.totalPrice,
-            payInfo: res.data,
-          }
-          app.globalData.payInfo = payInfo
+          // var payInfo = {
+          //   walletAmount: that.data.walletAmount,
+          //   totalPrice: that.data.totalPrice,
+          //   payInfo: res.data,
+          // }
+          app.globalData.payInfo = res.data
           wx.navigateTo({
             url: '/pages/commodity-detail/self-mention/self-mention?ordersn=' + res.data.orderSn
           })

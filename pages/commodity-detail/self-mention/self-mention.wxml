@@ -125,7 +125,7 @@
         </view>
         <view class='pay-item'>
           <text class='pay-left'>优惠券</text>
-          <text class='pay-right'>￥{{goodDetail.order.discountAmount}}</text>
+          <text class='pay-right'>￥0.00</text>
         </view>
     </view>
       <view class='pay-total'>

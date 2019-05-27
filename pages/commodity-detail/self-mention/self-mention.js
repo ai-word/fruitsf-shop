@@ -142,6 +142,7 @@ Page({
   },
   wxPayShop() {
     //支付方法
+    console.log(this.data.payInfo)
     wx.requestPayment({
       timeStamp: this.data.payInfo.timeStamp,
       nonceStr: this.data.payInfo.nonceStr,
