@@ -23,7 +23,8 @@
     "pages/cooperation/cooperation",
     "pages/search/search",
     "pages/my-coupon/couponList/couponList",
-    "pages/commodity-detail/open-regiment/open-regiment"
+    "pages/commodity-detail/open-regiment/open-regiment",
+    "pages/commodity-detail/self-mention/self-mention"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -49,7 +50,7 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/commodity-detail/open-regiment/open-regiment",
+        "pagePath": "pages/assemble/assemble",
         "iconPath": "assets/weapp/assemble.png",
         "selectedIconPath": "assets/weapp/active-assemble.png",
         "text": "拼团"
