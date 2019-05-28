@@ -41,7 +41,7 @@ Page({
     this.setData({
       sliderOffset: e.currentTarget.offsetLeft,
       activeIndex: e.currentTarget.id,
-      type: e.currentTarget.dataset.type,
+      type: e.currentTarget.dataset.type, //拼团类型
       groupList: []
     });
     this.getGroupType()
@@ -55,7 +55,7 @@ Page({
   goDetail(e) {
     console.log(e)
     wx.navigateTo({
-      url: '/pages/commodity-detail/detail?id=' + e.currentTarget.dataset.id
+      url: '/pages/commodity-detail/detail?id=' + e.currentTarget.dataset.id+'&type=' + this.data.type
     })
   },
   /**

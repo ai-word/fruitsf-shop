@@ -28,6 +28,7 @@ Page({
     groupInstanId: '',
     groupsUser: '',
     endTime: '',
+    groupType: 1,
     countdownTime: ''
   },
 
@@ -38,7 +39,8 @@ Page({
     console.log(options)
     let id = options.id
     this.setData({
-      groupId: id
+      groupId: id,
+      groupType: options.type
     })
     this.getGroupInfo(id)
     this.getCurrentUsers(id)
@@ -129,9 +131,16 @@ Page({
    * 立即开团
    */
   openOrder(e) {
-    wx.navigateTo({
-      url: '/pages/commodity-detail/open-regiment/open-regiment?groupId=' + e.currentTarget.dataset.id
-    })
+    if (this.data.groupType == 1) {
+      wx.navigateTo({
+        url: '/pages/commodity-detail/open-regiment/open-regiment?groupId=' + e.currentTarget.dataset.id
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/logistics-groups/logistics?groupId=' + e.currentTarget.dataset.id
+      })  
+    }
+
   },
   /**
    * 取得正在拼团列表

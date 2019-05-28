@@ -8,7 +8,7 @@
         <swiper class="swipers" autoplay="{{autoplay}}" style="height:750rpx" bindchange="swiperChange" interval="5000">
           <block wx:for="{{groupPics}}" wx:key='index'>
             <swiper-item>
-              <image mode="aspectFill" bindload='imageLoad' style="height:750rpx" src="{{item.pic_url}}"></image>
+              <image mode="widthFix" bindload='imageLoad' style="width:750rpx;height:750rpx" src="{{item.pic_url}}"></image>
             </swiper-item>
           </block>
         </swiper>
@@ -121,14 +121,14 @@
       <view class='user-list'>
         <view class='user-image' wx:for="{{currentUserList}}" wx:for-index="index" wx:key="{{index}}">
           <image src='{{item.avatarurl}}'></image>
-          <view class='tuanzhang'>团长</view>
+          <view class='tuanzhang' wx:if="{{index == 0}}">团长</view>
         </view>
-        <view class='user-image item-style'>
+        <view class='user-image item-style' wx:for="{{3-currentUserList.length}}" >
           <text>?</text>
         </view>
-        <view class='user-image item-style'>
+        <!-- <view class='user-image item-style'>
           <text>?</text>
-        </view>
+        </view> -->
       </view>
 
       <view class='modal-bottom' bindtap='onSubmitTap'>

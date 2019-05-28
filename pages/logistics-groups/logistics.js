@@ -1,5 +1,5 @@
 // pages/order-payment/order-payment.js
-const Http = require('../../../utils/request.js');
+const Http = require('../../utils/request.js');
 const app = getApp();
 Page({
 
@@ -17,7 +17,7 @@ Page({
     packs: '',
     remark: '',
     isPartner: false,
-    groupsInstanceId:''
+    groupsInstanceId: ''
   },
   addRemarks() {
     app.globalData.finalamount = ''
@@ -30,10 +30,9 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      groupId: options.groupId,
-      groupsInstanceId: options.groupsInstanceId,
+      groupId: options.groupId
     })
-    this.getStartGrops(options.groupId, options.groupsInstanceId)
+    this.getStartGrops(options.groupId)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -43,11 +42,11 @@ Page({
   },
 
   //团长开团
-  getStartGrops(groupId, groupsInstanceId) {
-    // let that = this
+  //团长开团
+  getStartGrops(groupId) {
     let that = this
-    Http.HttpRequst(false, '/group/startMemberGroups?groupId=' + groupId + '&groupsInstanceId=' + groupsInstanceId, false, '', '', 'post', false, function (res) {
-      console.log(res)
+    Http.HttpRequst(false, '/group/startGroups?groupId=' + groupId, false, '', '', 'get', false, function (res) {
+      console.log(res, '5555')
       if (res.state == 'ok') {
         var packs = res.data.packs
         packs[0].checked = true
@@ -62,7 +61,8 @@ Page({
           totalPrice: totalPrice.toFixed(2),
           packageAmount: packageAmount,
           address: res.data.address,
-          walletAmount: res.data.wallet
+          walletAmount: res.data.wallet,
+          isPartner: res.data.isPartner
         })
       }
     })
