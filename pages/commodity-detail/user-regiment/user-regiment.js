@@ -17,6 +17,7 @@ Page({
     packs: '',
     remark: '',
     isPartner: false,
+    groupsInstanceId:''
   },
   addRemarks() {
     app.globalData.finalamount = ''
@@ -29,9 +30,10 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      groupId: options.groupId
+      groupId: options.groupId,
+      groupsInstanceId: options.groupsInstanceId,
     })
-    this.getStartGrops(options.groupId)
+    this.getStartGrops(options.groupId, options.groupsInstanceId)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -39,12 +41,14 @@ Page({
   onReady: function () {
 
   },
-   //团长开团
-  getStartGrops(groupId) {
+
+  //团长开团
+  getStartGrops(groupId, groupsInstanceId) {
+    // let that = this
     let that = this
-    Http.HttpRequst(false, '/group/startGroups?groupId=' + groupId, false, '', '', 'get', false, function (res) {
-      console.log(res, '5555')
-      if(res.state =='ok') {
+    Http.HttpRequst(false, '/group/startMemberGroups?groupId=' + groupId + '&groupsInstanceId=' + groupsInstanceId, false, '', '', 'post', false, function (res) {
+      console.log(res)
+      if (res.state == 'ok') {
         var packs = res.data.packs
         packs[0].checked = true
         var packageAmount = 0
@@ -58,9 +62,8 @@ Page({
           totalPrice: totalPrice.toFixed(2),
           packageAmount: packageAmount,
           address: res.data.address,
-          walletAmount: res.data.wallet,
-          isPartner: res.data.isPartner
-       })
+          walletAmount: res.data.wallet
+        })
       }
     })
   },
@@ -82,20 +85,20 @@ Page({
     })
   },
   //点击加减按钮  
-  numchangeTap: function (e) {      
-     var shopcar = this.data.openDetail
+  numchangeTap: function (e) {
+    var shopcar = this.data.openDetail
     console.log(shopcar)
     var types = e.currentTarget.dataset.types//是加号还是减号        
     var totalPrice = Number(this.data.totalPrice)//总计
     switch (types) {
       case 'add':
         shopcar.product.num++; // 对应商品的数量+1
-        totalPrice+=shopcar.product.price
+        totalPrice += shopcar.product.price
         console.log(totalPrice)
         break;
       case 'minus':
-        if (shopcar.product.num == 1){
-          
+        if (shopcar.product.num == 1) {
+
         } else {
           shopcar.product.num--;//对应商品的数量-1
           totalPrice -= shopcar.product.price
@@ -129,11 +132,6 @@ Page({
       packageAmount: e.detail.value,
     })
   },
-  goAddress() {
-    wx.navigateTo({
-      url: '/pages/address/address'
-    })
-  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -142,29 +140,6 @@ Page({
     this.setData({
       payInfo: app.globalData.payInfo,
       remark: wx.getStorageSync('remark')
-    })
-
-    console.log(app.globalData.addressId, '55555')
-    if (app.globalData.addressId) {
-      this.setData({
-        memberAddId: app.globalData.addressId
-      })
-      // this.getExpressFee() //算运费
-      this.getAddDetails(app.globalData.addressId) //id查地址
-    }
-  },
-  //查地址
-  getAddDetails(id) {
-    var that = this
-    let params = {
-      id: id
-    }
-    Http.HttpRequst(false, '/addr/getAdd', true, '', params, 'get', false, function (res) {
-      if (res.state == 'ok') {
-        that.setData({
-          address: res.data
-        })
-      }
     })
   },
   /**
@@ -202,24 +177,24 @@ Page({
 
   },
   /**
-   * 团长下单
+   * 团员下单
    */
-  placeOrder() {
+  orderMemberGroups() {
     var oderItem = []
     var that = this
     var product = that.data.openDetail.product
     // for (var i = 0; i < product.length; i++) {
-      var item = {
-        productId: product.id,//商品id
-        productPic: product.pic,//商品效果图
-        productName: product.name,//商品名称
-        productPrice: product.salesprice * product.num,//销售价格
-        groupsPrice: product.price * product.num,//拼团价格
-        productQuantity: product.num,//购买数量
-        productWeight: product.weight * product.num,//总重量
-        productCategotyId: product.categoryid//分类id
-      }
-      oderItem.push(item)
+    var item = {
+      productId: product.id,//商品id
+      productPic: product.pic,//商品效果图
+      productName: product.name,//商品名称
+      productPrice: product.salesprice * product.num,//销售价格
+      groupsPrice: product.price * product.num,//拼团价格
+      productQuantity: product.num,//购买数量
+      productWeight: product.weight * product.num,//总重量
+      productCategotyId: product.categoryid//分类id
+    }
+    oderItem.push(item)
     // }
     console.log(oderItem)
 
@@ -240,7 +215,7 @@ Page({
     var order = {
       groupsId: that.data.groupId,//拼团id
       productId: product.id,//商品id
-      isExpress: 0, //是否自提0是1物流
+      isExpress: 1, //是否自提0是1物流
       totalAmount: Number(that.data.totalPrice), //订单总金额 商品数量*单价 +包装金额 +运费总额
       payAmount: Number(that.data.totalPrice), // 应付金额 总额-优惠券
       wxAmount: wxAmount, // 微信支付金额
@@ -250,14 +225,15 @@ Page({
       couponAmount: 0,//优惠券抵用金额
       receiverName: that.data.address.name, // 收货人姓名
       receiverPhone: that.data.address.phoneNumber,// 收货人电话
-      receiverProvince: that.data.address.province,//省份
-      receiverCity: that.data.address.city,//城市
-      receiverRegion: that.data.address.region,//区
-      receiverDetailAddress: that.data.address.detailAddress,//详细地址
+      // receiverProvince: that.data.address.province,//省份
+      // receiverCity: that.data.address.city,//城市
+      // receiverRegion: that.data.address.region,//区
+      // receiverDetailAddress: that.data.address.detailAddress,//详细地址
       note: that.data.remark,//备注
     }
 
     var params = {
+      groupsInstanceId: that.data.groupsInstanceId,
       order: order,
       oderItem: oderItem
     }
@@ -270,7 +246,7 @@ Page({
     //   return false
     // }
     console.log(params, 'paramsparamsparamsparams')
-    Http.HttpRequst(false, '/order/orderCaptGroups', true, '', JSON.stringify(params), 'post', false, function (res) {
+    Http.HttpRequst(false, '/order/orderMemberGroups', true, '', JSON.stringify(params), 'post', false, function (res) {
       console.log(res.state == 'ok')
       if (res.state == 'ok') {
         wx.setStorageSync('remark', '')

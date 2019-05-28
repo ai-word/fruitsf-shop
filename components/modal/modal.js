@@ -9,6 +9,10 @@ Component({
       type: Array,
       value: ''
     },
+    countDown: {
+      type: String,
+      value: ''
+    },
     groupsNum: {
       type: Number,
       value: ''  

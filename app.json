@@ -24,7 +24,8 @@
     "pages/search/search",
     "pages/my-coupon/couponList/couponList",
     "pages/commodity-detail/open-regiment/open-regiment",
-    "pages/commodity-detail/self-mention/self-mention"
+    "pages/commodity-detail/self-mention/self-mention",
+    "pages/commodity-detail/user-regiment/user-regiment"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -46,27 +46,74 @@
 
   <view class='advertisement'>
     <view class='left-ment'>
-      <image mode='aspectFill' src="{{indexPrd[0].pic}}"></image>
+      <view class='left-ment-text'>
+        <view class='banner-title'>新品上市</view>
+        <view  class='banner-desc'>超值尝鲜</view>
+        <view class=''>
+          <image  mode='aspectFill' src='/assets/index/xiangyou.png'></image>
+        </view>
+      </view>
+      <image src="{{indexPrd[0].pic}}"></image>
     </view>
     <view class='right-ment'>
       <view class='item first' wx:for="{{activityList}}" wx:for-index="index" wx:key="index">
           <view class='ban'>
+              <text class='ban-title'>{{item.name}}</text>
+              <view class='ban-desc'>{{item.note}}</view>
+              <view class='image'>
+                <image src='/assets/index/xiangyou.png'></image>
+              </view>
           </view>
-          <image mode='aspectFill' src="{{item.pic}}"></image>
+          <image src="{{item.pic}}"></image>
       </view>
       <!-- <view class='item'>
           <view class='ban'>
-              <view class='ban-title'>拼购</view>
-              <view class='banner-desc'>享超值开团价</view>
+              <view class='ban-title'>邀请合作</view>
+              <view class='banner-desc'>共同分享收益</view>
               <view class='image'>
                 <image src='/assets/index/xiangyou.png'></image>
               </view>
           </view>
           <image src="{{activityList[1].pic}}"></image>
-        </view>
       </view> -->
     </view>
   </view>
+
+
+ <!-- <view class='advertisement'>
+    <view class='left-ment'>
+      <view class='left-ment-text'>
+        <view class='banner-title'>限时秒杀</view>
+        <view  class='banner-desc'>精细打算组合</view>
+        <view class='image'>
+          <image  mode='aspectFill' src='{{indexPrd[0].pic}}'></image>
+        </view>
+      </view>
+      <image src="/assets/index/yintao.png"></image>
+    </view>
+    <view class='right-ment'>
+      <view class='item first'  wx:for="{{activityList}}" wx:for-index="index" wx:key="index">
+          <view class='ban'>
+              <text class='ban-title'>限时秒杀</text>
+              <view class='ban-desc'>精细打算组合</view>
+              <view class='image'>
+                <image src='{{activityList[0]}}'></image>
+              </view>
+          </view>
+          <image src="/assets/index/pinggou.png"></image>
+      </view>
+      <view class='item'>
+          <view class='ban'>
+              <view class='ban-title'>限时秒杀</view>
+              <view class='banner-desc'>精细打算组合</view>
+              <view class='image'>
+                <image src='/assets/index/xiangyou.png'></image>
+              </view>
+          </view>
+          <image src="/assets/index/haoyou.png"></image>
+      </view>
+    </view>
+  </view> -->
 
   <view class='good-quality'>
     <image mode='widthFix' src="/assets/index/haohuo.png"></image>

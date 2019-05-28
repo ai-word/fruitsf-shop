@@ -16,7 +16,7 @@
   <view class="weui-tab-content">
 
       <view class='self mention'>
-        <view class='mention-list' wx:for="{{groupList}}" wx:for-item="item">
+        <view class='mention-list' wx:for="{{groupList}}" wx:key="index" wx:for-item="item">
           <view class='commodity-img'>
             <image mode='aspectFill' src="{{item.img}}"></image>
           </view>

@@ -4,8 +4,7 @@
   <view class='nav'>
     <image src="/assets/user/pt.png"></image>
   </view>
-
-    <view class='header-address'>
+    <view class='order-info'>
       <view class='order-flex'>
         <view class='order-cells left'>
           <image src="/assets/open/time.png"></image>
@@ -16,25 +15,26 @@
           <image src="/assets/open/right.png"></image>
         </view>
       </view>
-        <view class='address'>
-          <view class='left'>提货地址</view>
-          <view class='add-right' bindtap='goAddress'>
-            <image src="/assets/address.png"></image>
-            请选择收货地址
-          </view>
+      <view class='order-flex'>
+        <view class='order-cells left'>
+          <image src="/assets/open/address.png"></image>
+          提货地址
         </view>
-        <view class='rece-goods'>
-          <view class='left'>
-            <image src="/assets/address.png"></image>
-            <text class='user-name'>{{address.name}}</text>
-            <text class='shu'>|</text>
-            <text class='user-mobile'>{{address.phoneNumber}}</text>
-          </view>
-          <view class='right user-addess'>
-            {{address.detailAddress}}
-          </view>
+        <view class='order-cells right'>
+          {{address}}
         </view>
       </view>
+      <view class='order-flex'>
+        <view class='order-cells tuan left'>
+          <image src="/assets/open/mobile.png"></image>
+          联系团长
+        </view>
+        <view class='order-cells color right'>
+        </view>
+      </view>
+    </view>
+
+
 
     <view class='good-detail'>
     <!-- wx:for="{{openDetail.product}}" wx:for-index="index" wx:key="index" -->
@@ -91,19 +91,13 @@
       </view>
     </view>
 
-
-    <view class='cell-list ' wx:if="{{isPartner}}">
+    <view class='cell-list'>
       <view class='order-flex bordernone'>
-        <view class='order-cells order-detail'>
-          团长奖励
-          <image src="/assets/wenhao.png"></image>
+        <view class='order-cells' bindtap='showPayModal'>
+          奖励信息
         </view>
         <view class='order-cells'>
-          <radio-group class="radio-group" bindchange="radioChange">
-            <label class="radio">
-              <radio value="0" checked="{{isPartner}}">仅建团不购买</radio>
-            </label>
-          </radio-group>
+          <text class='total'>分享好友的惊喜</text>
         </view>
       </view>
     </view>
@@ -157,7 +151,7 @@
             优惠: ￥0.00
           </view>
       </view>
-      <view class='right-content'  bindtap='placeOrder'>
+      <view class='right-content'  bindtap='orderMemberGroups'>
         提交提单
       </view>
   </view>

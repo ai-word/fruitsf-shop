@@ -30,7 +30,7 @@ page{
   padding-bottom: 140rpx;
 }
 .address{
-  margin: 0 30rpx;
+  margin: 0 40rpx;
   display: flex;
   padding: 32rpx 0;
   color:#969696;
@@ -38,12 +38,11 @@ page{
   justify-content: space-between;
   border-bottom:1rpx solid #eeeeee;
 }
-.address .right,.add-right{
+.address .right{
   display: flex;
   align-items: center;
 }
-
-.address .right image,.add-right image{
+.address .right image{
   width: 26rpx;
   height: 32rpx;
   padding: 0 13rpx 0 0;

@@ -70,7 +70,7 @@ function countDown(endTime) { //倒计时函数
       sec: '00'
     }
   }
-  console.log(obj.day + '天' + obj.hou + ':' + obj.min + ':' + obj.sec, '8888888888888888888888888888888888888888888888888')
+  // console.log(obj.day + '天' + obj.hou + ':' + obj.min + ':' + obj.sec, '8888888888888888888888888888888888888888888888888')
   // countDownArr.push(obj);
   // 渲染，然后每隔一秒执行一次倒计时函数
   // this.setData({ countDown: countDownArr })

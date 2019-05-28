@@ -102,12 +102,40 @@
         <view class='flex'>
           <view class='right-style'>还差
             <text style="color:#37D260">{{item.total_count-item.attend_count}}</text>人成团</view>
-          <view class='together' data-groupId="{{groups.id}}" bindtap='onShowModal'>一起拼</view>
+          <view class='together' data-groupId="{{item.id}}" data-time="{{tools.countDown(item.get_endtime)}}" bindtap='onShowModal'>一起拼</view>
         </view>
       </view>
     </view>
       <!-- 弹出组件  -->
-    <modal  groupsNum='{{groupsUser.totalCount-groupsUser.attendCount}}' userList='{{currentUserList}}' multiline='true' bindonSubmitTap="onSubmitTap"  bindinputCancel='onInputCancel' bindinputConfirm='onInputConfirm' wx:if='{{ addingText }}'/>
+    <modal  gropuId="{{groupsUser.groupsId}}" multiline='true' bindonSubmitTap="onSubmitTap"  bindinputCancel='onInputCancel' bindinputConfirm='onInputConfirm' wx:if='{{ addingText }}'>
+      <view class='modal-content'>
+          <view class='title'>一起参与拼团</view>
+          <view class='desc'>仅剩余 <text style="color:#37D260;font-size:14px;">{{groupsUser.totalCount-groupsUser.attendCount}}</text> 个参团名额可用，赶紧来参团吧！</view>
+          <view class='modal-pularity'>
+            <image src="/assets/huo.png"></image>
+            <text class='pularity'>火热拼团ing</text>
+            <text class='down'>{{tools.countDown(groupsUser.getEndtime)}}</text>
+            <text class='end'>后结束。</text>
+          </view>
+      </view>
+      <view class='user-list'>
+        <view class='user-image' wx:for="{{currentUserList}}" wx:for-index="index" wx:key="{{index}}">
+          <image src='{{item.avatarurl}}'></image>
+          <view class='tuanzhang'>团长</view>
+        </view>
+        <view class='user-image item-style'>
+          <text>?</text>
+        </view>
+        <view class='user-image item-style'>
+          <text>?</text>
+        </view>
+      </view>
+
+      <view class='modal-bottom' bindtap='onSubmitTap'>
+        确认拼团
+      </view>
+    </modal>
+
     <view class="picture-details">
       <view class='pic-title'>
         图文详情

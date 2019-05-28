@@ -1,4 +1,5 @@
 // pages/user/user.js
+const Http = require('../../utils/request.js');
 const app = getApp();
 Page({
 
@@ -6,14 +7,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: ''
+    userInfo: '',
+    pageNumber: 1,
+    pageSize: 10,
+    profitDetail: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getMemberTotalDetail()
   },
 
   /**
@@ -46,7 +50,21 @@ Page({
   onHide: function () {
 
   },
-
+  getMemberTotalDetail(){
+    let that = this
+    let params = {
+      pageNumber: 1,
+      pageSize: 10,
+    }
+    Http.HttpRequst(false, '/wallet/getMemberTotalAwardDetails', false, '', params, 'get', false, function (res) {
+      console.log(res.data, '5555')
+      if(res.state == 'ok') {
+        that.setData({
+          profitDetail: res.data
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面卸载
    */

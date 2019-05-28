@@ -61,7 +61,7 @@
           提货地址
         </view>
         <view class='order-items right'>
-          {{goodDetail.order.detailAddress}}
+          {{goodDetail.order.receiverDetailAddress}}
         </view>
       </view>
     </view>

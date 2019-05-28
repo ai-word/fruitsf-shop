@@ -27,8 +27,8 @@ Page({
     currentUserList: '',
     groupInstanId: '',
     groupsUser: '',
-    startTime: '2019-5-26 10:00:43',
-    endTime: '2019-5-30 10:00:43'
+    endTime: '',
+    countdownTime: ''
   },
 
   /**
@@ -65,7 +65,7 @@ Page({
         groupInfo: res.data.groupInfo,
         picContent: res.data.groupInfo.de.content,
         // startTime: res.data.groups.get_starttime,
-        // endTime: res.data.groups.get_endtime
+        endTime: res.data.groups.get_endtime
       })
       WxParse.wxParse('article', 'html', res.data.groupInfo.de.content, that, 5);
     })
@@ -87,6 +87,7 @@ Page({
     let id = e.currentTarget.dataset.groupid
     this.setData({
       addingText: true,
+      countdownTime: e.currentTarget.dataset.time,
       groupInstanId: e.currentTarget.dataset.groupid
     })
     this.getCurrentUsersList(id)
@@ -114,14 +115,14 @@ Page({
  /**
    * 用户参团
    */
-  onSubmitTap() {
-    let params = {
-      groupId: this.data.groupId,
-      groupsInstanceId: this.data.groupInstanId
-    }
-    let that = this
-    Http.HttpRequst(false, '/group/startMemberGroups', false, '', params, 'post', false, function (res) {
-      console.log(res)
+  onSubmitTap(e) {
+    // let params = {
+    //   groupId: this.data.groupId,
+    //   groupsInstanceId: this.data.groupInstanId
+    // }
+    var that =this
+    wx.navigateTo({
+      url: '/pages/commodity-detail/user-regiment/user-regiment?groupId=' + that.data.groupId + '&groupsInstanceId=' + that.data.groupInstanId
     })
   },
   /**
