@@ -91,18 +91,13 @@
       </view>
     </view>
 
-    <view class='cell-list ' wx:if="{{isPartner}}">
+   <view class='cell-list'>
       <view class='order-flex bordernone'>
-        <view class='order-cells order-detail'>
-          团长奖励
-          <image src="/assets/wenhao.png"></image>
+        <view class='order-cells' bindtap='showPayModal'>
+          奖励信息
         </view>
         <view class='order-cells'>
-          <radio-group class="radio-group" bindchange="radioChange">
-            <label class="radio">
-              <radio value="0" checked="{{isPartner}}">仅建团不购买</radio>
-            </label>
-          </radio-group>
+          <text class='total'>分享好友的惊喜</text>
         </view>
       </view>
     </view>

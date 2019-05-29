@@ -42,7 +42,7 @@ Page({
 
   },
 
-  //团长开团
+  //用户
   getStartGrops(groupId, groupsInstanceId) {
     // let that = this
     let that = this
@@ -243,7 +243,7 @@ Page({
     //     icon: 'none',
     //     duration: 1500,
     //   })
-    //   return false
+    //   return false0
     // }
     console.log(params, 'paramsparamsparamsparams')
     Http.HttpRequst(false, '/order/orderMemberGroups', true, '', JSON.stringify(params), 'post', false, function (res) {

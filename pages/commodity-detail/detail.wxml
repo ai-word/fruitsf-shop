@@ -131,8 +131,11 @@
         </view> -->
       </view>
 
-      <view class='modal-bottom' bindtap='onSubmitTap'>
+      <view class='modal-bottom' bindtap='onSubmitTap' wx:if="{{groupType == 1}}">
         确认拼团
+      </view>
+      <view class='modal-bottom' bindtap='logSumbitTap' wx:else>
+         物流确认拼团
       </view>
     </modal>
 

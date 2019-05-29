@@ -9,16 +9,6 @@ Page({
   data: {
     chooseSize: false,
     animationData: {},
-    items: [
-      {
-        name: '礼品装',
-        value: 0,
-      },
-      {
-        name: '家庭装',
-        value: 1
-      }
-    ],
     packageAmount: 0,
     categoreyIds: '',
     goodList: [],
@@ -274,6 +264,7 @@ Page({
         that.setData({
           address: res.data
         })
+        that.getExpressFee()
       }
     })
   },

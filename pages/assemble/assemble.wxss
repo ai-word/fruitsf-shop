@@ -44,6 +44,7 @@ page{
 .commodity-img image{
     width: 308rpx;
     height: 100%;
+    border-radius:10rpx 0 0 10rpx;
 }
 .tag-view{
   display: flex;

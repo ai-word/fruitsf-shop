@@ -124,7 +124,14 @@ Page({
     // }
     var that =this
     wx.navigateTo({
-      url: '/pages/commodity-detail/user-regiment/user-regiment?groupId=' + that.data.groupId + '&groupsInstanceId=' + that.data.groupInstanId
+      url: '/pages/commodity-detail/user-regiment/user-regiment?groupId=' + that.data.groupId + '&groupsInstanceId=' + that.data.groupInstanId +'&isType=' +1
+    })
+  },
+  //物流用户参团
+  logSumbitTap(e) {
+    var that = this
+    wx.navigateTo({
+      url: '/pages/logistics-groups/user-gropus/user?groupId=' + that.data.groupId + '&groupsInstanceId=' + that.data.groupInstanId
     })
   },
   /**
