@@ -7,9 +7,9 @@
 
 # 本项目部分截图预览
 
-![image](https://github.com/yjx-passion/fruitsf-shop/tree/master/images/1.png)
-![image](https://github.com/yjx-passion/fruitsf-shop/tree/master/images/2.png)
-![image](https://github.com/yjx-passion/fruitsf-shop/tree/master/images/3.png)
-![image](https://github.com/yjx-passion/fruitsf-shop/tree/master/images/4.png)
-![image](https://github.com/yjx-passion/fruitsf-shop/tree/master/images/5.png)
-![image](https://github.com/yjx-passion/fruitsf-shop/tree/master/images/6.png)
+![image](https://github.com/yjx-passion/fruitsf-shop/tree/master/images/1.jpg)
+![image](https://github.com/yjx-passion/fruitsf-shop/tree/master/images/2.jpg)
+![image](https://github.com/yjx-passion/fruitsf-shop/tree/master/images/3.jpg)
+![image](https://github.com/yjx-passion/fruitsf-shop/tree/master/images/4.jpg)
+![image](https://github.com/yjx-passion/fruitsf-shop/tree/master/images/5.jpg)
+![image](https://github.com/yjx-passion/fruitsf-shop/tree/master/images/6.jpg)
