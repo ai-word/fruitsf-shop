@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "toast": "/components/toast/toast"
+  },
+  "navigationBarTitleText": "选择优惠券"
+}

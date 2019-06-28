@@ -1,35 +1,48 @@
 <!--pages/commodity-detail/self-mention/self-mention.wxml-->
-<!--pages/order-payment/order-payment.wxml-->
+<wxs src="../../../utils/utils.wxs" module="tools"></wxs>
 <view class='order-payment'>
   <view class='nav'>
     <view class='header-title'>
-      <view class='left-text' wx:if="{{goodDetail.order.status == 0}}">
+      <view class='left-text' wx:if="{{goodDetail.status == 0}}">
         待付款<image src="/assets/right.png"></image>
       </view>
-      <view class='left-text' wx:if="{{goodDetail.order.status == 1}}">
-        待发货<image src="/assets/right.png"></image>
+      <view class='left-text' wx:if="{{goodDetail.status == 1}}">
+        待发货中<image src="/assets/right.png"></image>
       </view>
-      <view class='left-text' wx:if="{{goodDetail.order.status == 2}}">
+      <view class='left-text' wx:if="{{goodDetail.status == 2}}">
         已发货<image src="/assets/right.png"></image>
       </view>
-      <view class='left-text' wx:if="{{goodDetail.order.status == 3}}">
+      <view class='left-text' wx:if="{{goodDetail.status == 3}}">
         已完成<image src="/assets/right.png"></image>
       </view>
-      <view class='left-text' wx:if="{{goodDetail.order.status == 4}}">
+      <view class='left-text' wx:if="{{goodDetail.status == 4}}">
         已关闭<image src="/assets/right.png"></image>
       </view>
-      <view class='left-text' wx:if="{{goodDetail.order.status == 5}}">
-        无效订单<image src="/assets/right.png"></image>
+      <view class='left-text' wx:if="{{goodDetail.status === 999}}">
+        待自提<image src="/assets/right.png"></image>
       </view>
-      <view class='right-text'>
-        {{goodDetail.order.createTime}}
+      <view class='right-text' wx:if="{{goodDetail.status == 0}}">
+        {{tools.countDown(goodDetail.cutDown)}}
+      </view>
+      <view class='right-text' wx:if="{{goodDetail.status == 2}}">
+        {{goodDetail.order.orderSn}}
+      </view>
+      <view class='right-text' wx:if="{{goodDetail.status == 3}}">
+        {{goodDetail.order.orderSn}}
+      </view>
+      <view class='right-text' wx:if="{{goodDetail.status == 999}}">
+        {{goodDetail.endTime}}
       </view>
     </view>
   </view>
 
   <view class='order-info'>
-    <view class='order-title' wx:if="{{goodDetail.order.status == 0}}">请尽快支付订单</view>
-      <view class='order-title' wx:if="{{goodDetail.order.status == 3}}">订单已完成</view>
+    <view class='order-title' wx:if="{{goodDetail.status == 0}}">请尽快支付订单</view>
+    <view class='order-title' wx:if="{{goodDetail.status == 1}}">待发货中</view>
+    <view class='order-title' wx:if="{{goodDetail.status == 1}}">已发货</view>
+    <view class='order-title' wx:if="{{goodDetail.status == 3}}">已完成</view>
+    <view class='order-title' wx:if="{{goodDetail.status == 4}}">已关闭</view>
+    <view class='order-title' wx:if="{{goodDetail.status == 999}}">待自提</view>
     <view class='order-type'>提货方式：自提</view>
 
     <view class='purchase' wx:if="{{goodDetail.order.status == 3}}">
@@ -52,10 +65,9 @@
         </view>
         <view class='order-items color right'>
           {{goodDetail.order.startTime}}
-          <image src="/assets/open/right.png"></image>
         </view>
       </view>
-      <view class='order-cells'>
+      <!-- <view class='order-cells'>
         <view class='order-items left'>
           <image src="/assets/open/address.png"></image>
           提货地址
@@ -63,10 +75,53 @@
         <view class='order-items right'>
           {{goodDetail.order.receiverDetailAddress}}
         </view>
-      </view>
+      </view> -->
+         <view class='rece-goods' wx:if="{{address!=''}}">
+          <view class='left'>
+            <image src="/assets/address.png"></image>
+            <text class='user-name'>{{goodDetail.order.receiverName}}</text>
+            <text class='shu'>|</text>
+            <text class='user-mobile'>{{goodDetail.order.receiverPhone}}</text>
+          </view>
+          <view class='right user-addess'>
+            {{goodDetail.order.receiverDetailAddress}}
+          </view>
+        </view>
     </view>
 
   <view class='good-detail'>
+    <view class='good-item' wx:for="{{goodDetail.items}}" wx:for-index="index" wx:key="index">
+      <view class='good-left'>
+        <view class='shop-img'>
+          <image src="{{item.productPic}}" mode='aspectFill'></image>
+        </view>
+        <view class='good-desc'>
+          <view class='title'>{{item.productName}}</view>
+          <!-- <view class='desc'>高颜值惹人爱</view> -->
+        </view>
+      </view>
+      <view class='good-right'>
+        <view class='good-num'>
+          x{{item.productQuantity}}
+        </view>
+        <view class='good-price' wx:if="{{goodDetail.order.orderType == 0}}">
+          ￥{{item.productPrice}}
+        </view>
+        <view class='good-price' wx:else>
+          ￥{{item.groupsPrice}}
+        </view>
+      </view>
+    </view>
+
+    <view class='good-costs first'>
+      <view class='distribution'>
+        配送费
+      </view>
+      <view class='dis-price'>
+        ￥{{goodDetail.order.freightAmount}}
+      </view>
+    </view>
+
     <view class='good-costs'>
       <view class='distribution'>
         包装费
@@ -77,6 +132,18 @@
     </view>
 
   </view>
+
+  <!-- <view class='good-detail'>
+    <view class='good-costs'>
+      <view class='distribution'>
+        包装费
+      </view>
+      <view class='dis-price'>
+        ￥{{goodDetail.order.packageAmount}}
+      </view>
+    </view>
+
+  </view> -->
 
     <view class='packing'>
       <view class='order-cells last'>

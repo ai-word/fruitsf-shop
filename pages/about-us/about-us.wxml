@@ -1,0 +1,21 @@
+<!--pages/about-us/about-us.wxml-->
+<view class='ablout-content'>
+  <image src="http://pic.myhuanji.com/about/backgroud.png"></image>
+  <view class='logo'>
+    <image src="http://pic.myhuanji.com/about/logo.png"></image>
+  </view>
+  <view class='title'>挑新鲜水果，上优品四季</view>
+  <view class='wx-desc'>  优品四季是一家以四季优质水果专卖的电子商务公司, 有自己的种植基地和线上线下的销售渠道！产地直销、去除中间商差价！欢迎大客户订购，量大价优，顺丰冷链直达！
+  </view>
+  <view class='wx-desc'></view>
+  <contact-button 
+  type="default-light" 
+  size="20"
+  session-from="weapp"
+>
+</contact-button>
+  <view class='phone-btn'>
+    <button class='phone' open-type="contact">联系客服</button>
+  </view>
+  <view class='fotter-bottom'>客服电话：18118011633 <image src="http://pic.myhuanji.com/about/right.png"></image></view>
+</view>

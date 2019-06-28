@@ -10,7 +10,7 @@
     </view>
   <view class='goods-body'>
     <view class='goods-content' class="goods-content {{idx===goodsList.length-1?'goods-content-last':''}}">
-      <view class='goods-item' data-productId="{{item.id}}" id="products-{{item.id}}" wx:for="{{goodsItem}}" wx:key="id">
+      <view class='goods-item' data-productId="{{item.id}}" bindtap='goShopDetail' id="products-{{item.id}}" wx:for="{{goodsItem}}" wx:key="id">
         <view class="goods-img-box">
           <image lazyLoad="true" mode="aspectFit" src="{{item.pic}}"></image>
         </view>
@@ -28,7 +28,7 @@
                 <text class="nowPrice">￥{{item.price?item.price:''}}</text>
                 <text class="oldPrice">￥{{item.original_price}}</text>
               </view>
-              <view class='add'>
+              <view class='add' catchtap='addShopCart' data-id="{{item.id}}" data-price="{{item.price}}">
                 <image src="/assets/index/add.png"></image>
               </view>
             </view>
@@ -45,7 +45,9 @@
       </view>
     </view>
 </view>
-
+<view class="good_box" hidden="{{hide_good_box}}" style="left: {{bus_x}}px; top: {{bus_y}}px;">
+     <image src="/assets/red_point.png"></image>
+</view>
 
 <!-- <view class='content'>
   <view class='left'>

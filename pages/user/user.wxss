@@ -58,9 +58,20 @@
   text-align: center;
   color:#ffffff;
   font-size: 16px;
+  /* display: flex;
+  align-items: center */
+}
+.coupon image{
+  width: 24rpx;
+  height: 26rpx;
 }
 .coupon-color,.balance{
   font-size:13px;
+}
+.balance,.coupon-color{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .user-info{
   position: relative
@@ -115,4 +126,36 @@
 }
 .list{
   margin-top: 100rpx;
+}
+
+.share-btn{
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  text-align: left;
+}
+.share-btn::after,.share-right::after{
+  border: none;
+}
+.share-right{
+   margin: 0;
+  padding: 0;
+  background: #ffffff;
+  text-align: right;
+}
+
+.reddot{
+  position: absolute;
+  background: red;
+  padding: 0 10rpx;
+  left: 50rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  color: #ffffff;
+  font-size: 12px;
+  top: 5rpx;
+  border-radius: 30rpx;
+}
+.cartNum{
+  position: relative;
 }

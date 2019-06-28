@@ -36,3 +36,90 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
    transform:translate(-50%, -50%) scale(1);
    -webkit-transform:translate(-50%, -50%) scale(1);
 }
+
+
+/*模态框*/
+.modals{position:fixed; z-index: 999; top:0; left: 0; right:0; bottom: 0;}
+.modals-cancel{position:absolute; z-index:1000; top:0; left: 0; right:0; bottom: 0; background-color: rgba(0,0,0,.5);}
+.bottom-dialog-body{position:absolute; z-index:10001; bottom:0; left:0; right:0; padding:30rpx; height:400rpx; background-color: #fff;}
+/*动画前初始位置*/
+.bottom-pos{-webkit-transform:translateY(100%);transform:translateY(100%);}
+/* .bottom-pos{
+  position: relative;
+} */
+.share-title{
+  text-align: center;
+  position: relative;
+}
+.share-title image{
+  width: 30rpx;
+  height: 30rpx;
+  position: absolute;
+  right: 20rpx;
+  top: 20rpx;
+}
+.share-type{
+  display: flex;
+  position: absolute;
+  bottom: 80rpx;
+  left: 30rpx;
+  right: 30rpx;
+  justify-content: space-between;
+}
+ .share-type-item{
+   flex: 1;
+   text-align: center;
+   /* display: flex;
+   justify-content: center; */
+ }
+ .share-module::after {
+  border: none;
+}
+.share-module{
+  background-color: #ffffff;
+  line-height: 1;
+  padding: 0
+}
+.share-type-item image{
+  width: 100rpx;
+  height: 100rpx;
+  display: inline-block;
+}
+
+
+/* 分享 */
+.share-friend{
+  position:fixed; z-index: 999; top:0; left: 0; right:0; bottom: 0;
+}
+.share-cancel{
+  position:absolute; z-index:1000; top:0; left: 0; right:0; bottom: 0;  background-color: rgba(0,0,0,.5);
+}
+.share-image {
+  width: 500rpx;
+  height: 886rpx;
+  /* margin: 0 65rpx; */
+  border-radius: 10rpx;
+}
+.share-dialog-body{
+  position:absolute;
+  z-index:10001; 
+  top:0; left: 0; right:0; bottom: 0;
+  padding:60rpx 125rpx 0 125rpx; 
+}
+/* .share-dialog-body image{
+  height: 750rpx;
+} */
+.bottom-btn{
+  display: flex;
+  margin-top: 20rpx;
+  justify-content: center;
+}
+.preserve{
+  border:1px solid #ffffff;
+  color: #ffffff;
+  width: 200rpx;
+  text-align: center;
+  border-radius: 50rpx;
+  font-size: 16px;
+  padding:  15rpx 40rpx;
+}

@@ -118,6 +118,10 @@ page{
   display: flex;
   color: #656565;
   align-items: center;
+  line-height: 30rpx
+}
+.addredd{
+  width: 260rpx;
 }
 .left image{
   padding: 0 20rpx 0 0;
@@ -339,7 +343,8 @@ page{
   justify-content: space-between;
 }
 .price{
-  color: #FF9F06
+  color: #FF9F06;
+  /* padding: 0 20rpx 0 0; */
 }
 
 
@@ -364,6 +369,7 @@ page{
 }
 .right-content{
   flex: 1;
+  background: #37D260;
   height: 120rpx;
   color: #ffffff;
   font-size: 16px;
@@ -411,6 +417,11 @@ page{
   font-size: 12px;
   padding: 0 40rpx;
 }
+.content-parse{
+  padding:40rpx 20rpx;
+  color: #656565;
+  font-size: 14px;
+}
 
 
 
@@ -437,4 +448,10 @@ page{
   z-index: 2000;
   background: #fff;
   padding-top: 20rpx;
+}
+.last{
+  padding: 20rpx 0;
+}
+.desc-title{
+  line-height: 32rpx;
 }

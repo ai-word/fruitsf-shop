@@ -36,6 +36,10 @@ Page({
     });
   },
   cancel() {
+    wx.setStorageSync('remark', '')
+    wx.navigateBack({
+      delta: 1
+    });
     this.setData({
       remark: '',
       wordCount: 0

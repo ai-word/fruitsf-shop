@@ -1,13 +1,20 @@
 /* pages/index/index.wxss */
 
 /* 商品首页 */
-
+@import "../../style/cart_point.wxss";
 .search-bar {
   position: relative;
 }
 
 /*搜索 开始*/
-
+.getPhone{
+  background: #ffffff;
+  display: flex;
+  align-items: center
+}
+.getPhone::after{
+  border: none;
+}
 .search-box {
   background: #fff;
   height: 60rpx;
@@ -82,7 +89,7 @@
   flex-direction: row;
   position: absolute;
   left: 335rpx;
-  bottom: 20rpx;
+  bottom: 10rpx;
 }
 
 /*未选中时的小圆点样式 */
@@ -100,7 +107,7 @@
 .active {
   width: 40rpx;
   height: 12rpx;
-  box-shadow: 0px 1rpx 2rpx 0px rgba(4, 0, 0, 0.2);
+  box-shadow: 0px 1rpx 2rpx 0px rgba(4, 0, 0, 0.8);
   border-radius: 6rpx;
   background-color: #37d260;
 }
@@ -131,7 +138,17 @@
   font-size: 12px;
   color: #656565;
 }
-
+.share-btn{
+  background: #ffffff;
+  padding: 0;
+  margin: 0
+}
+.share-btn::after{
+  border: none;
+}
+.share-title{
+  line-height: 15rpx;
+}
 .flex-list image {
   width: 78rpx;
   height: 78rpx;
@@ -174,7 +191,7 @@
 
 .advertisement .right-ment .item .image image {
   width: 45rpx;
-  height: 36rpx;
+  height: 30rpx;
   /* margin-top: 59rpx; */
 }
 
@@ -216,13 +233,14 @@
   font-weight: bold;
   position: absolute;
   left: 19rpx;
-  bottom: 0;
+  bottom: 10rpx;
   font-size: 15px;
 }
 
 .ban-desc {
   font-size: 11px;
   color: #656565;
+  line-height: 20rpx;
 }
 
 .advertisement .right-ment .item image {
@@ -315,8 +333,8 @@
 }
 
 .add image {
-  width: 40rpx;
-  height: 40rpx;
+  width: 45rpx;
+  height: 45rpx;
   display: inline-block;
 }
 
@@ -360,4 +378,38 @@
 
 .authorizeShadow .authorize_main .main {
   margin-top: 20rpx;
+}
+
+
+.video-content{
+  width: 670rpx;
+  height: 480rpx;
+}
+.video-box{
+   width: 670rpx;
+  height: 480rpx; 
+}
+.coversrc{
+   position: relative;
+  width: 100%;
+  height: 100%;
+
+}
+.playbtn .playimg{
+  width: 100rpx;
+  height: 100rpx;
+}
+.playbtn{
+  position: absolute;
+  top:50%;
+  left:50%;
+  width: 3rem;
+  height:3rem;
+  margin-top:-1.5rem;
+  margin-left: -1.5rem;
+}
+
+.modal-content{
+  background: #ffffff;
+  height: 480rpx
 }

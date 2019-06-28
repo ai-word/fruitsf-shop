@@ -2,12 +2,12 @@ const app = getApp();
 Page({
   data: {
     //判断小程序的API，回调，参数，组件等是否在当前版本可用。
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    shareId: ''
   },
   onLoad: function () {
     var that = this;
     // 查看是否授权
-    // 登录
   },
   bindGetUserInfo: function (e) {
     console.log(e.detail, '5')
@@ -15,8 +15,8 @@ Page({
       //用户按了允许授权按钮
       var that = this;
       //插入登录的用户的相关信息到数据库
-      console.log(wx.getStorageSync('sessionkey'))
       app.globalData.userInfo = e.detail
+      wx.setStorageSync('userInfo', e.detail)
       wx.request({
         url: app.globalData.baseUrl + '/login/info',
         data: {
@@ -24,13 +24,15 @@ Page({
           signature: e.detail.signature,
           encryptedData: e.detail.encryptedData,
           iv: e.detail.iv,
+          uid: app.globalData.shareId
         },
         header: {
           'content-type': 'application/json',
           'wxa-sessionid': wx.getStorageSync('sessionkey')
         },
         success: function (res) {
-          console.log(res)
+          wx.setStorageSync('uid', res.data.data.uid)
+          app.globalData.uid = res.data.data.uid
         }
       });
       //授权成功后，跳转进入小程序首页

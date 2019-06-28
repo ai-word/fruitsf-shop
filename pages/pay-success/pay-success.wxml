@@ -1,0 +1,90 @@
+<!--pages/pay-success/pay-success.wxml-->
+<wxs src="../../utils/utils.wxs" module="tools"></wxs>
+<view class='pay-success-content'>
+    <view class='top'>
+      <view class='good-detail'>
+        <view class='good-image'>
+          <image mode='widthFix' src="{{product.img}}"></image>
+        </view>
+        <view class='shop-detail'>
+          <view class='title'>{{product.name}}</view>
+          <view class='desc'>提货时间：{{product.starttime}} - {{product.endtime}}</view>
+          <view class='desc'>{{product.attend_count}}人团</view>
+          <view class='good-price'>
+            <view class='new'>￥{{product.multi_price}}</view>
+            <view class='old'>￥{{product.singe_price}}</view>
+          </view>
+        </view>
+      </view>
+      <view class='user-list'>
+        <view class='user-image' wx:for="{{users}}" wx:for-index="index" wx:key="index">
+          <image src='{{item.avatarurl}}'></image>
+          <view class='tuanzhang' wx:if="{{index == 0}}">团长</view>
+        </view>
+        <view class='user-image item-style' wx:for="{{3-users.length}}" wx:key="inex">
+          <text>?</text>
+        </view>
+      </view>
+      <view class='invitation-btn'>
+        <button class='friend' bindtap='showModal'>邀请好友拼单 {{tools.countDown(product.countdown)}} 后结束</button>
+      </view>
+      <view class='share-title'>分享到3个群，有95%的机会在5分钟内成团</view>
+    </view>
+    <view class="recom-title">更多推荐</view>
+
+
+    <view class='share-friend' hidden="{{hideShareModal}}">
+      <view class="share-cancel"></view>
+      <view class='share-dialog-body' bindtap="hideShareModal">
+        <image src="{{shareImage}}" mode='aspectFill' class="share-image"></image>
+      <poster id="poster" hide-loading="{{true}}" preload="{{false}}" config="{{posterConfig}}" bind:success="onPosterSuccess" bind:fail="onPosterFail">
+    </poster>
+        <view class='bottom-btn'>
+          <view catchtap="eventSave" class='preserve'>保存图片</view>
+        </view>
+      </view>
+    </view>
+
+
+  <view class="modals modals-bottom-dialog" hidden="{{hideModal}}">
+      <view class="modals-cancel" bindtap="hideModal"></view>
+      <view class="bottom-dialog-body bottom-pos" animation="{{animationData}}">
+        <view class='share-title' bindtap="hideModal">
+          <text class='share-txt'>分享至</text>
+          <image src="/assets/guanbi.png"></image>
+        </view>
+        <view class='share-type'>
+          <view class='share-type-item'>
+          <button class='share-module' id="shareBtn" open-type="share" hover-class="other-button-hover">
+              <image src="/assets/wx.png"></image>
+            </button>
+            <view>分享给好友</view>
+          </view>
+          <view class='share-type-item'>
+            <button class='share-module' id="shareBtn" hover-class="other-button-hover" bindtap='showShareModal'>
+              <image src="/assets/friend.png"></image>
+            </button>
+            <view>生成分享图</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class='recommend'>
+      <view class='recommend-list' wx:for="{{recommandList}}" wx:for-index="index" wx:key="index" data-id="{{item.id}}" data-type="{{item.type}}" bindtap='goDetail'>
+        <view class='num-total'>{{item.attend_count}}人团</view>
+        <image src="http://pic.myhuanji.com/img/19052909103300002.jpg"></image>
+       
+        <view class='rec-desc'>{{item.name}}</view>
+        <view class='fotter'>
+            <view class='left'>
+              <text class='new-price'>￥{{item.multi_price}}</text>
+              <text class='old-price'>￥{{item.singe_price}}</text>
+            </view>
+            <view class='btn-to'>
+              去开团
+            </view>
+        </view>
+      </view>
+    </view>
+</view>

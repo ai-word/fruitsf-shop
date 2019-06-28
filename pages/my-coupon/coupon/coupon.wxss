@@ -55,18 +55,17 @@
 }
 
 .draw{
-  width:140rpx;
-  height:48rpx;
+  width:40rpx;
+  height:40rpx;
   line-height: 48rpx;
-  background:rgba(255,255,255,1);
-  border:2rpx solid rgba(55,210,96,1);
-  border-radius:24rpx;
-  font-size: 13px;
-  color:#37D260;
-  text-align: center;
   position: absolute;
   right:54rpx;
   bottom:130rpx;
+}
+
+.draw image{
+  width: 40rpx;
+  height: 40rpx;
 }
 
 .footer-bottom{
@@ -90,11 +89,12 @@
 
 .coupon-title{
   padding: 0 20rpx;
+  height: 90rpx;
 }
-.active{
+/* .active{
   border: 1px solid #37D260;
   border-radius: 4rpx;
-}
+} */
 
 .freight{
   font-size: 14px;
@@ -104,4 +104,18 @@
   font-size: 12px;
   color: #909090;
   margin-left: 20rpx;
+}
+
+.no-use{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90rpx;
+  font-size: 14px;
+  padding:0 20rpx;
+  color:#212121;
+}
+.use-image image{
+  width: 40rpx;
+  height: 40rpx;
 }

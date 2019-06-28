@@ -10,15 +10,19 @@ Page({
     userInfo: '',
     couponNum: 0,
     available:0,
-    frozen: 0
+    enableamount:0,
+    frozen: 0,
+    cartNum1:0,
+    cartNum2: 0,
+    cartNum:10
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getWalletInfo()
-    this.getCouponNum()
+    this.getOrdersNum1()
+    this.getOrdersNum2()
   },
 
   /**
@@ -32,7 +36,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.hideShareMenu()
     var that = this
+    this.getWalletInfo()
+    this.getCouponNum()
     wx.getUserInfo({
       success: res => {
         console.log(res)
@@ -62,9 +69,49 @@ Page({
       }
     })
   },
+  goCode() {
+    wx.navigateTo({
+      url: '/pages/payment-code/code'
+    })
+  },
+  getOrdersNum1() {
+    var that = this
+    Http.HttpRequst(false, '/order/getOrdersNum?status=2', true, '', '', 'get', false, function (res) {
+      if (res.state == 'ok') {
+        that.setData({
+          cartNum1: res.data
+        })
+      }
+    })
+  },
+  getOrdersNum2() {
+    var that = this
+    Http.HttpRequst(false, '/order/getOrdersNum?status=999', true, '', '', 'get', false, function (res) {
+      if (res.state == 'ok') {
+        that.setData({
+          cartNum2: res.data
+        })
+      }
+    })
+  },
+  wuliu() {
+    wx.navigateTo({
+      url: '/pages/logistics-info/logistics-info'
+    })
+  },
   myCoupon() {
     wx.navigateTo({
       url: '/pages/my-coupon/couponList/couponList'
+    })
+  },
+  goBalance() {
+    wx.navigateTo({
+      url: '/pages/balance/balance'
+    })
+  },
+  aboutUs() {
+    wx.navigateTo({
+      url: '/pages/about-us/about-us'
     })
   },
   //获取余额
@@ -73,8 +120,8 @@ Page({
     Http.HttpRequst(false, '/wallet/getWalletInfo', true, '', '', 'get', false, function (res) {
       if (res.state == 'ok') {
         that.setData({
-          available: res.data.money,
-          frozen: res.data.freezeMoney,
+          frozen: res.data.freeze_money,
+          enableamount:res.data.enableamount
         })
       }
     })
@@ -104,11 +151,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+   
   },
   goAddRess() {
     wx.navigateTo({
-      url: '/pages/address/address'
+      url: '/pages/address/address?user=1'
     })
   },
   cooperation() {
@@ -121,9 +168,9 @@ Page({
       url: '/pages/coupon/coupon'
     })
   },
-  allOrder() {
+  allOrder(e) {
     wx.navigateTo({
-      url: '/pages/my-order/order'
+      url: '/pages/my-order/order?type=' + e.currentTarget.dataset.type + '&activeIndex=' + e.currentTarget.dataset.index +'&ordinary=1'
     })
   }
 })

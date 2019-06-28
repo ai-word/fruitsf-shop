@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "modal": "/components/modal/modal"
+    "modal": "/components/modal/modal",
+    "poster": "/components/poster/index"
   },
   "navigationBarTitleText": "商品详情"
 }

@@ -1,0 +1,39 @@
+<!--pages/total-revenue/revenue.wxml-->
+<view class="container-content">
+  <view class='header-top'>
+    <view class='left'>
+      <text>共收入{{num}}笔，合计:</text><text class='size-color'>￥{{money}}</text>
+      <view class='a'>共分享用户{{membernum}}人</view>
+    </view>
+    <view class='right'>
+      <view class='years' bindtap="translate">
+      {{year}}
+      <image src="/assets/fold.png" wx:if="{{isShow}}"></image>
+      <image src="/assets/unfold.png" wx:else></image>
+      </view>
+    </view>
+  </view>
+  <view class=''>
+    <view class="years-list" wx:if="{{isShow}}">
+      <view class="years-content" >
+        <view class='use'>
+            <view class='tag {{index === activeIndex ? "active" : ""}}' wx:for="{{years}}" wx:for-index="index" wx:key="index" data-years="{{item}}" data-index="{{index}}" bindtap='activeClick'>{{item}}</view>
+        </view>
+      </view>
+    </view>
+    <view class='montholy'>
+      <view class='montholy-title'><image src="/assets/month.png"></image>每月收入金额 (单位:元)</view>
+      <view class='montholy-canvas'>
+        <ff-canvas id="column-dom" wx:if="{{revenue.length!=0}}" canvas-id="column" opts="{{income}}"></ff-canvas> 
+      </view>
+    </view>
+
+    <view class='montholy'>
+      <view class='montholy-title'><image src="/assets/month.png"></image>每月分享用户数 (单位:人)</view>
+      <view class='montholy-canvas'>
+        <ff-canvas id="expenditure" wx:if="{{addNum.length!=0}}" canvas-id="expenditure" opts="{{expenditure}}"></ff-canvas> 
+      </view>
+    </view>
+  </view>
+</view>
+

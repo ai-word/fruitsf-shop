@@ -2,7 +2,7 @@
   <!-- 导航栏 -->
   <view class='header' wx:if="{{shopCartList.length !=0}}">
     <view>四季优选</view>
-    <view bindtap='deleteShopCar'>删除</view>
+    <view catchtap='deleteShopCar'>删除</view>
   </view>
   <view class='shop-nodata' wx:if="{{shopCartList.length ==0}}">
     <view class='nodata'>
@@ -11,7 +11,7 @@
     <view class='msg'>主人，购物车还是空的呢！</view>
   </view>
   <view  class='shop-cart-content' wx:else >
-    <view class='goodlist' wx:for='{{shopCartList}}' wx:for-index="index" wx:key='this'>
+    <view class='goodlist' wx:for='{{shopCartList}}' data-id="{{item.id}}" catchtap='goodDetails' wx:for-index="index" wx:key='this'>
       <view class='check-box'>
         <view class=''>
           <image class='check_img' data-index='{{index}}' hidden='{{item.select}}' src='/assets/index/check.png' catchtap='checkTap'></image>
@@ -26,10 +26,10 @@
         <text class='good-title'>{{item.name}}</text>
         <text class='good-desc'>{{item.sub_title}}</text>
         <view class='good-detail'>
-          <view class='original'>￥{{item.price}}</view>
+          <view class='original'>￥{{item.original_price}}</view>
           <view class='shop_detail_bottom'>
             <text class='shop_price'>￥{{item.price}}</text>
-            <view class='num_change'>
+            <view class='num_change' catchtap='stopClick'>
               <image class='minus_icon' hidden='{{item.product_amount<2}}' src='/assets/index/cut.png' data-index='{{index}}' data-price="{{item.price}}" data-id="{{item.id}}" data-types='minus' catchtap='numchangeTap'>
               </image>
               <image class='minus_icon' hidden='{{item.product_amount>=2}}' src='/assets/index/cut.png'>

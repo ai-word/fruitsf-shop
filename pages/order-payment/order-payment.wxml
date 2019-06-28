@@ -1,50 +1,99 @@
-<!--pages/order-payment/order-payment.wxml-->
+<wxs module="phone">
+  var toHide = function(array) {
+    var mphone = array.substring(0, 3) + '****' + array.substring(7);
+    return mphone;
+  }
+  module.exports.toHide = toHide;
+</wxs>
+<wxs src="../../utils/utils.wxs" module="tools"></wxs>
 <view class='order-payment'>
   <view class='nav'>
     <view class='header-title'>
-      <view class='left-text' wx:if="{{goodDetail.order.status == 0}}">
+      <view class='left-text' wx:if="{{goodDetail.status == 0}}">
         待付款<image src="/assets/right.png"></image>
       </view>
-      <view class='left-text' wx:if="{{goodDetail.order.status == 1}}">
+      <view class='left-text' wx:if="{{goodDetail.status == 1}}">
         待发货<image src="/assets/right.png"></image>
       </view>
-      <view class='left-text' wx:if="{{goodDetail.order.status == 2}}">
+      <view class='left-text' wx:if="{{goodDetail.status == 2}}">
         已发货<image src="/assets/right.png"></image>
       </view>
-      <view class='left-text' wx:if="{{goodDetail.order.status == 3}}">
+      <view class='left-text' wx:if="{{goodDetail.status == 3}}">
         已完成<image src="/assets/right.png"></image>
       </view>
-      <view class='left-text' wx:if="{{goodDetail.order.status == 4}}">
+      <view class='left-text' wx:if="{{goodDetail.status == 4}}">
         已关闭<image src="/assets/right.png"></image>
       </view>
-      <view class='left-text' wx:if="{{goodDetail.order.status == 5}}">
+      <view class='left-text' wx:if="{{goodDetail.status == 5}}">
         无效订单<image src="/assets/right.png"></image>
       </view>
-      <view class='right-text'>
-        {{goodDetail.order.createTime}}
+      <view class='left-text' wx:if="{{goodDetail.status === 999}}">
+        待自提<image src="/assets/right.png"></image>
       </view>
+      <view class='right-text' wx:if="{{goodDetail.status == 0}}">
+        {{tools.countDown(goodDetail.cutDown)}}
+      </view>
+      <view class='right-text' wx:if="{{goodDetail.status == 1}}">
+        {{goodDetail.order.modifyTime}}
+      </view>
+      <view class='right-text' wx:if="{{goodDetail.status == 2}}">
+        {{goodDetail.order.deliverySn}}
+      </view>
+      <view class='right-text' wx:if="{{goodDetail.status == 3}}">
+        {{goodDetail.order.modifyTime}}
+      </view>
+
     </view>
   </view>
 
   <view class='order-info'>
-    <view class='order-title' wx:if="{{goodDetail.order.status == 0}}">请尽快支付订单</view>
-      <view class='order-title' wx:if="{{goodDetail.order.status == 3}}">订单已完成</view>
-    <view class='order-type'>提货方式：配送</view>
-
-    <view class='purchase' wx:if="{{goodDetail.order.status == 3}}">
+    <view class='order-title' wx:if="{{goodDetail.status == 0}}">请尽快支付订单</view>
+    <view class='order-title' wx:if="{{goodDetail.status == 3}}">订单已完成</view>
+    <view class='order-type' wx:if="{{goodDetail.status == 999}}">提货方式：自提</view>
+    <view class='order-type' wx:else>提货方式：配送</view>
+    <view class='purchase' bindtap='purChase' wx:if="{{goodDetail.status == 3}}">
       <view class='again'>再次购买</view>
     </view>
-      <view class='order-button' wx:if="{{goodDetail.order.status != 4}}">
-      <button class="cancel" type="cancel" plain="true" data-orderid="{{goodDetail.order.id}}" bindtap='cancelOrder' wx:if="{{goodDetail.order.status == 0}}">取消订单</button>
-      <button class="wxpayment" type="wxpayment" data-ordersn="{{item.order_sn}}" bindtap='immediatePay' plain="true" wx:if="{{goodDetail.order.status == 0}}">去支付</button>
+      <view class='order-button' wx:if="{{goodDetail.status == 0}}">
+      <button class="cancel" type="cancel" plain="true" data-orderid="{{goodDetail.order.id}}" bindtap='cancelOrder' wx:if="{{goodDetail.status == 0}}">取消订单</button>
+      <button class="wxpayment" type="wxpayment" data-ordersn="{{item.order_sn}}" catchtap='immediatePay' plain="true" wx:if="{{goodDetail.status == 0}}">去支付</button>
       <!-- <button class="again" type="again" plain="true" wx:if="{{item.status == 4}}">提醒发货</button> -->
-      <button class="again" type="again" plain="true" wx:if="{{goodDetail.order.status == 2}}">查看物流</button>
-        <button class="again" type="again" plain="true" wx:if="{{goodDetail.order.status == 5}}">再次购买</button>
+      <button class="again" catchtap='logistics'  type="again" plain="true" wx:if="{{goodDetail.status === 2}}">查看物流</button>
+
       </view>
   </view>
 
+  <view class='order-details'  wx:if="{{goodDetail.status == 999}}">
+    <view class='order-cells'>
+      <view class='order-items left'>
+        <image src="/assets/open/time.png"></image>
+        自提时间
+      </view>
+      <view class='order-items color right'>
+        {{goodDetail.startTime}} - {{goodDetail.endTime}}
+      </view>
+    </view>
+    <view class='order-cells-ress'>
+      <view class='order-items left'>
+        <image src="/assets/open/address.png"></image>
+        提货地址
+      </view>
+      <view class='order-items right'>
+        {{goodDetail.order.receiverDetailAddress}}
+      </view>
+    </view>
+    <view class='order-cells'>
+      <view class='order-items left tuanzhan' data-phone="{{goodDetail.phone}}" bindtap='getPhone'>
+        <image src="/assets/open/mobile.png"></image>
+        联系团长
+      </view>
+      <view class='order-items color right ziti'>
+        {{phone.toHide(goodDetail.phone)}}
+      </view>
+    </view>
+  </view>
 
-  <view class='rece-goods'>
+  <view class='rece-goods' wx:if="{{goodDetail.status != 999}}">
     <view class='left'>
       <image src="/assets/address.png"></image>
       <text class='user-name'>{{goodDetail.order.receiverName}}</text>
@@ -52,7 +101,7 @@
       <text class='user-mobile'>{{goodDetail.order.receiverPhone}}</text>
     </view>
     <view class='right user-addess'>
-      {{goodDetail.order.receiverProvince}}{{goodDetail.order.receiverCity}}{{goodDetail.order.receiverRegion}}
+      <!-- {{goodDetail.order.receiverProvince}}{{goodDetail.order.receiverCity}}{{goodDetail.order.receiverRegion}} -->
       {{goodDetail.order.receiverDetailAddress}}
     </view>
   </view>
@@ -73,8 +122,11 @@
         <view class='good-num'>
           x{{item.productQuantity}}
         </view>
-        <view class='good-price'>
+        <view class='good-price' wx:if="{{goodDetail.order.orderType == 0}}">
           ￥{{item.productPrice}}
+        </view>
+        <view class='good-price' wx:else>
+          ￥{{item.groupsPrice}}
         </view>
       </view>
     </view>
@@ -164,7 +216,7 @@
       <view class='close' style='overflow:hidden'>
         <image src=""></image>
       </view>
-      <view class='pay-type'>请选择支付方式</view>
+      <view class='pay-type'>支付方式</view>
       <view class='close' bindtap='hideModal'>
         <image src="/assets/close.png"></image>
       </view>

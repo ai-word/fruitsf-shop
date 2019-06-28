@@ -9,52 +9,54 @@
         <view class='name'>{{userInfo.nickName}}</view>
         <view class='type-user'>普通用户</view>
       </view>
-      <view class='user-price'>
+      <view class='user-price' bindtap='goCode'>
         <image src="/assets/user/price.png"></image>
       </view>
     </view>
     <view class='coupon-content'>
         <view class='coupon' bindtap='myCoupon'>
             <view>{{couponNum}}</view>
-            <view class='coupon-color'>优惠券</view>
+            <view class='coupon-color'>优惠券<image src="/assets/right.png"></image></view>
         </view>
-        <view class='coupon'>
-            <view>￥{{available}}</view>
-            <view class='balance'>可用额</view>
+        <view class='coupon' bindtap='goBalance'>
+            <view>￥{{enableamount}}</view>
+            <view class='balance'>可用余额<image src="/assets/right.png"></image></view>
         </view>
-        <view class='coupon'>
+        <view class='coupon' bindtap='goBalance'>
             <view>￥{{frozen}}</view>
-            <view class='balance'>冻结额</view>
+            <view class='balance'>冻结余额 <image src="/assets/right.png"></image></view>
         </view>
     </view>
   </view>
 
   <view class='user-status'>
-    <view class='flex-item' bindtap='allOrder'>
+    <view class='flex-item' bindtap='allOrder' data-type="888" data-index="0">
       <view class='item'>
         <image src="/assets/user/delete.png"></image>
         <view>全部订单</view>
       </view>
     </view>
-    <view class='flex-item'>
+    <view class='flex-item' bindtap='allOrder'  data-type="0"  data-index="1">
       <view class='item'>
         <image src="/assets/user/payment.png"></image>
         <view>待付款</view>
       </view>
     </view>
-    <view class='flex-item'>
-      <view class='item'>
+    <view class='flex-item' bindtap='allOrder' data-type="2"  data-index="2">
+      <view class='item cartNum'>
         <image src="/assets/user/distribution.png"></image>
-        <view>待配送</view>
+        <view>配送中</view>
+        <view class='reddot' wx:if="{{cartNum1 !=0}}">{{cartNum1}}</view>
       </view>
     </view>
-    <view class='flex-item'>
-      <view class='item'>
+    <view class='flex-item' bindtap='allOrder'  data-type="999" data-index="3">
+      <view class='item cartNum'>
         <image src="/assets/user/mention.png"></image>
         <view>待自提</view>
+        <view class='reddot' wx:if="{{cartNum2!=0}}">{{cartNum2}}</view>
       </view>
     </view>
-    <view class='flex-item'>
+    <view class='flex-item' bindtap='allOrder'  data-type="3"  data-index="4">
       <view class='item'>
         <image src="/assets/user/complete.png"></image>
         <view>已完成</view>
@@ -63,14 +65,14 @@
   </view>
 
   <view class='list'>
-    <view class='list-cells'>
-      <view class='cells'>
+    <!-- <view class='list-cells'>
+      <button class='cells share-btn'bindtap='wuliu'>
         邀请好友
-      </view>
-      <view class='cells cel-right'>
+      </button>
+      <button class='cells cel-right share-right'  >
         <image src="/assets/user/right.png"></image>
-      </view>
-    </view>
+      </button>
+    </view> -->
     <view class='list-cells' bindtap='goAddRess'>
       <view class='cells'>
         收货地址
@@ -87,7 +89,7 @@
         <image src="/assets/user/right.png"></image>
       </view>
     </view>
-    <view class='list-cells'>
+    <view class='list-cells' bindtap='cooperation'>
       <view class='cells'>
         分享收益
       </view>
@@ -95,9 +97,9 @@
         <image src="/assets/user/right.png"></image>
       </view>
     </view>
-    <view class='list-cells' bindtap='cooperation'>
+    <view class='list-cells' bindtap='aboutUs'>
       <view class='cells'>
-        合作收益
+        关于我们
       </view>
       <view class='cells cel-right'>
         <image src="/assets/user/right.png"></image>

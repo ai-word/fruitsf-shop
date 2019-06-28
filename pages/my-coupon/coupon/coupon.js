@@ -24,6 +24,17 @@ Page({
     // }
     // this.getAllEnableCoupons()
   },
+  noCoupon() {
+    app.globalData.activeIndex = '-1'
+    app.globalData.finalamount = 0,
+    app.globalData.couponCode = '',
+    this.setData({
+      activeIndex: '-1'
+    })
+    wx.navigateBack({
+      delta: 1
+    })
+  },
   changeCoupon: function (e) {
     var that = this
     that.setData({
@@ -33,9 +44,10 @@ Page({
     });
     app.globalData.finalamount = e.currentTarget.dataset.finalamount
     app.globalData.couponCode = e.currentTarget.dataset.code
-    // wx.navigateBack({
-    //   delta: 1
-    // })
+    app.globalData.activeIndex = this.data.activeIndex
+    wx.navigateBack({
+      delta: 1
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -48,7 +60,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      activeIndex: app.globalData.activeIndex
+    })
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -58,10 +72,11 @@ Page({
   },
   submitOrder() {
     app.globalData.finalamount = this.data.finalamount,
-      app.globalData.couponCode = this.data.couponCode
-    wx.navigateBack({
-      delta: 1
-    })
+      app.globalData.couponCode = this.data.couponCode,
+      app.globalData.activeIndex = this.data.activeIndex
+      wx.navigateBack({
+        delta: 1
+      })
   },
   /**
    *查看用户，当前订单可用的优惠券列表
@@ -80,19 +95,6 @@ Page({
       }
     })
   },
-  // getCoupon(e) {
-  //   let that = this
-  //   let id = e.currentTarget.dataset.id
-  //   let params = {
-  //     couponId: id
-  //   }
-  //   Http.HttpRequst(false, '/coupon/getCoupon', false, '', params, 'get', false, function (res) {
-  //     if (res.state == 'ok') {
-  //       that.toastDialog.showDialog('领取成功!')
-  //       that.getAllEnableCoupons()
-  //     }
-  //   })
-  // },
   /**
    * 生命周期函数--监听页面卸载
    */

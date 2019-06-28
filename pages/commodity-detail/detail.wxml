@@ -8,7 +8,7 @@
         <swiper class="swipers" autoplay="{{autoplay}}" style="height:750rpx" bindchange="swiperChange" interval="5000">
           <block wx:for="{{groupPics}}" wx:key='index'>
             <swiper-item>
-              <image mode="widthFix" bindload='imageLoad' style="width:750rpx;height:750rpx" src="{{item.pic_url}}"></image>
+              <image mode="widthFix" style="width:750rpx;height:750rpx" src="{{item.pic_url}}"></image>
             </swiper-item>
           </block>
         </swiper>
@@ -26,13 +26,13 @@
         <view class='buying right'>
           <view class="group-box">
             <view class="group-time-down"> 距结束
-              <text class="last-hour txt">{{countDown[0].day}}</text>
+              <text class="last-hour txt">{{countDown.day}}</text>
               <text class="colon">天</text>
-              <text class="last-hour txt">{{countDown[0].hou}}</text>
+              <text class="last-hour txt">{{countDown.hou}}</text>
               <text class="colon">:</text>
-              <text class="last-minute txt">{{countDown[0].min}}</text>
+              <text class="last-minute txt">{{countDown.min}}</text>
               <text class="colon">:</text>
-              <text class="last-second txt">{{countDown[0].sec}}</text>
+              <text class="last-second txt">{{countDown.sec}}</text>
             </view>
             <view class="secKill-time-down" wx:if="{{secKillInfo.secKillStatus==='end'}}">活动已结束</view>
           </view>
@@ -56,8 +56,10 @@
           <view class="goods-soldNum">月售{{groups.sales_num}}</view>
         </view>
 
-        <view bindtap="handleClickShare" class="share-reamin">
-          <image src="http://app-1256684088.cos.ap-beijing.myqcloud.com/wujie/iconShare.png"></image>分享</view>
+          <button hover-class="other-button-hover" wx:if="{{isLogin == true}}" class="share-reamin" bindtap="showModal">
+          <image src="http://app-1256684088.cos.ap-beijing.myqcloud.com/wujie/iconShare.png"></image>分享</button>
+         <button hover-class="other-button-hover" wx:else class="share-reamin" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+          <image src="http://app-1256684088.cos.ap-beijing.myqcloud.com/wujie/iconShare.png"></image>分享</button>
       </view>
       <view class="goods-promise">
         <view>
@@ -81,11 +83,11 @@
           <text class=''>小伙伴们正在等你参团呢！</text>
         </view>
         <view class='hand-right' bindtap='toList'>
-          <text bindtap="toAllTeamList" class='hand'>立即参与</text>
+          <button bindtap="toAllTeamList" wx:if="{{isLogin == true}}" class='hand'>立即参与</button>
+          <button  wx:else class='hand' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">立即参与</button>
           <image src="/assets/detail/clor-right.png"></image>
         </view>
       </view>
-      <!-- <view class="no-data" hidden="{{teamBuyList.length>0?true:false}}">暂无正在进行中的拼团，赶快开团吧~</view> -->
     </view>
     <!-- 正在开团列表 -->
     <view class='user-grouplist'>
@@ -95,14 +97,16 @@
           <image src="{{item.avatarurl}}"></image>
           <view class='user-info'>
             <view class='mobile'>{{item.member_phone}}</view>
-            <view class='time'>剩余{{tools.countDown(item.get_endtime)}}</view>
+            <view class='time'>剩余{{tools.countDown(item.end_time)}}</view>
           </view>
         </view>
 
         <view class='flex'>
           <view class='right-style'>还差
             <text style="color:#37D260">{{item.total_count-item.attend_count}}</text>人成团</view>
-          <view class='together' data-groupId="{{item.id}}" data-time="{{tools.countDown(item.get_endtime)}}" bindtap='onShowModal'>一起拼</view>
+            
+            <button class='together' wx:if="{{isLogin == true}}" data-groupId="{{item.id}}" data-time="{{tools.countDown(item.end_time)}}"  bindtap='onShowModal'>一起拼</button>
+             <button class='together' wx:else open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">一起拼</button>
         </view>
       </view>
     </view>
@@ -126,16 +130,13 @@
         <view class='user-image item-style' wx:for="{{3-currentUserList.length}}" >
           <text>?</text>
         </view>
-        <!-- <view class='user-image item-style'>
-          <text>?</text>
-        </view> -->
       </view>
 
       <view class='modal-bottom' bindtap='onSubmitTap' wx:if="{{groupType == 1}}">
         确认拼团
       </view>
       <view class='modal-bottom' bindtap='logSumbitTap' wx:else>
-         物流确认拼团
+         确认拼团
       </view>
     </modal>
 
@@ -146,7 +147,6 @@
       <view class='pic-detail' wx:if="{{picContent}}">
         <import src="../../components/wxParse/wxParse.wxml" />
         <template is="wxParse" data="{{wxParseData:article.nodes}}" />
-        <!-- <image wx:for="{{productDetails}}" src="{{item.url}}" style="height:{{item.height}}rpx;width:{{item.width}}rpx;"></image> -->
       </view>
       <view class="pic-detail" wx:if="{{!picContent}}">
         <view class='noda'>
@@ -159,24 +159,61 @@
 
   <view class='detail-fotter'>
     <view class='flex-fotter left'>
-      <!-- <view class='img index' bindtap='goTabIndex'>
+      <view class='img index' bindtap='goTabIndex'>
         <image src="/assets/weapp/index.png"></image>
-      </view> -->
-      <view class='img shop-car'>
-        <image src="/assets/weapp/shop.png"></image>
       </view>
     </view>
-    <!-- <view class='flex-fotter center'>
-        <view >
-          <view style="font-size:16px;">￥{{groups.singe_price}}</view>
-          <view style="font-size:12px;">直接购买</view>
+    <button class='flex-fotter right' wx:if="{{isLogin == true}}" bindtap='openOrder' data-id="{{groups.id}}">
+        <view>
+          <view style="font-size:16px;line-height:40rpx;">￥{{groups.multi_price}}</view>
+          <view style="font-size:12px;line-height:40rpx;">立即开团</view>
         </view>
-    </view> -->
-    <view class='flex-fotter right'  bindtap='openOrder' data-id="{{groups.id}}">
-        <view >
-          <view style="font-size:16px;">￥{{groups.multi_price}}</view>
-          <view style="font-size:12px;">立即开团</view>
+    </button>
+
+    <button class='flex-fotter right' wx:else open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+        <view>
+          <view style="font-size:16px;line-height:40rpx;">￥{{groups.multi_price}}</view>
+          <view style="font-size:12px;line-height:40rpx;">立即开团</view>
         </view>
+    </button>
+  
+  </view>
+
+
+<view class='share-friend' hidden="{{hideShareModal}}">
+    <view class="share-cancel"></view>
+    <view class='share-dialog-body' bindtap="hideShareModal">
+      <image src="{{shareImage}}" mode='aspectFill' class="share-image"></image>
+      <poster id="poster" hide-loading="{{true}}" preload="{{false}}" config="{{posterConfig}}" bind:success="onPosterSuccess" bind:fail="onPosterFail">
+    </poster>
+      <view class='bottom-btn'>
+        <view catchtap="eventSave" class='preserve'>保存图片</view>
+      </view>
     </view>
   </view>
+
+  <view class="modals modals-bottom-dialog" hidden="{{hideModal}}">
+    <view class="modals-cancel" bindtap="hideModal"></view>
+    <view class="bottom-dialog-body bottom-pos" animation="{{animationData}}">
+      <view class='share-title' bindtap="hideModal">
+        <text>分享至</text>
+        <image src="/assets/guanbi.png"></image>
+      </view>
+      <view class='share-type'>
+        <view class='share-type-item'>
+         <button class='share-module' id="shareBtn" open-type="share" hover-class="other-button-hover">
+            <image src="/assets/wx.png"></image>
+          </button>
+          <view>分享给好友</view>
+        </view>
+        <view class='share-type-item'>
+          <button class='share-module' id="shareBtn" bindtap='showShareModal'hover-class="other-button-hover">
+            <image src="/assets/friend.png"></image>
+          </button>
+          <view>生成分享图</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
 </view>

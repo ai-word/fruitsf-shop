@@ -1,5 +1,6 @@
 const Http = require('../../../utils/request.js');
 const app = getApp();
+const Util = require('../../../utils/util.js');
 Page({
 
   /**
@@ -14,6 +15,7 @@ Page({
     showModal: false,
     commodity: 0,
     orderId: '',
+    endTime: ''
   },
 
   /**
@@ -21,10 +23,13 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
-    this.getOrderDetail(options.ordersn)
+    this.getOrderDetail(options.orderSn)
+    this.setData({
+      ordersn: options.orderSn
+    })
     console.log(this.data.payInfo)
     if (app.globalData.payInfo == '') {
-      this.wxOrderPay(options.ordersn)
+      this.wxOrderPay(options.orderSn)
     } else {
 
     }
@@ -142,13 +147,15 @@ Page({
   },
   wxPayShop() {
     //支付方法
-    console.log(this.data.payInfo)
+    var that = this
+    console.log(that.data.payInfo)
+    console.log(that.data.ordersn)
     wx.requestPayment({
-      timeStamp: this.data.payInfo.timeStamp,
-      nonceStr: this.data.payInfo.nonceStr,
-      package: this.data.payInfo.package,
+      timeStamp: that.data.payInfo.timeStamp,
+      nonceStr: that.data.payInfo.nonceStr,
+      package: that.data.payInfo.package,
       signType: 'MD5',
-      paySign: this.data.payInfo.paySign,
+      paySign: that.data.payInfo.paySign,
       success(res) {
         console.log('支付成功')
         wx: wx.showToast({
@@ -156,11 +163,11 @@ Page({
           icon: 'nonw',
           duration: 1500,
         })
-        setTimeout(() => {
+        // setTimeout(() => {
           wx.navigateTo({
-            url: '/pages/my-order/order'
+            url: '/pages/pay-success/pay-success?orderSn=' + that.data.ordersn
           })
-        }, 1500)
+        // }, 1000)
       },
       fail(res) { }
     })
@@ -169,6 +176,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.hideShareMenu()
     console.log(app.globalData.payInfo)
     this.setData({
       payInfo: app.globalData.payInfo
@@ -187,6 +195,7 @@ Page({
         var commodity = 0
         commodity = Number(res.data.order.totalAmount) - Number(res.data.order.freightAmount) - Number(res.data.order.packageAmount)
         console.log(params)
+        that.countDown()
         that.setData({
           goodDetail: res.data,
           wxPayInfo: params,
@@ -206,7 +215,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.switchTab({
+      url: '/pages/shopping-cart/shopping-cart',
+    })
   },
 
   /**
@@ -222,7 +233,24 @@ Page({
   onReachBottom: function () {
 
   },
-
+  countDown() { //倒计时函数
+    // 获取当前时间，同时得到活动结束时间数组
+    let newTime = Date.parse(new Date());
+    let endTimeList = this.data.endTime;
+    let countDownArr = []
+    // 对结束时间进行处理渲染到页面
+    let endTime = Date.parse(new Date(endTimeList.replace(/-/g, "/")));
+    let obj = null;
+    // 如果活动未结束，对时间进行处理
+    // console.log("endTime=" + endTime);
+    // console.log("newTime=" + newTime);
+    let time = (endTime - newTime) / 1000;
+    obj = Util.parseTimeToDay(time);
+    // countDownArr.push(obj);
+    // 渲染，然后每隔一秒执行一次倒计时函数
+    this.setData({ countDown: obj })
+    setTimeout(this.countDown, 1000);
+  },
   /**
    * 用户点击右上角分享
    */

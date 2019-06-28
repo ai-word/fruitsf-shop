@@ -8,6 +8,12 @@ page{
   padding: 30rpx 0;
   background: #ffffff;
 }
+.content-parse{
+  padding:  20rpx 30rpx;
+  color: #656565;
+  height: 350rpx;
+  font-size: 14px;
+}
 .nav image{
   height: 56rpx;
 }
@@ -18,7 +24,7 @@ page{
   background: #ffffff;
 }
 .open-regiment-content{
-  padding-bottom: 120rpx;
+  padding-bottom: 130rpx;
 }
 .header-address{
   background: #ffffff
@@ -41,6 +47,7 @@ page{
 .address .right,.add-right{
   display: flex;
   align-items: center;
+  color: #212121;
 }
 .delivery{
   width:96rpx;
@@ -78,6 +85,12 @@ page{
 .shu{
   padding:0 20rpx;
   color:#656565
+}
+.last{
+  padding: 20rpx 0;
+}
+.desc-title{
+  line-height: 32rpx;
 }
 .user-addess{
   color: #656565;
@@ -206,7 +219,7 @@ page{
 .good-item{
   display: flex;
   justify-content: space-between;
-  margin: 0 40rpx;
+  margin: 0 30rpx;
   padding: 20rpx 0;
   align-items: center;
   border-bottom: 1rpx solid #EEEEEE
@@ -250,8 +263,11 @@ page{
 .good-price{
   flex: 1;
   text-align: center;
+  display: flex;
+  align-items: center;
   color: #FF9F06;
   font-size: 14px;
+    padding: 0 20rpx 0 20rpx;
   font-weight: bold;
 }
 .packing{
@@ -349,7 +365,8 @@ page{
   justify-content: space-between;
 }
 .price{
-  color: #FF9F06
+  color: #FF9F06;
+  /* padding: 0 20rpx 0 0; */
 }
 
 
@@ -364,7 +381,6 @@ page{
   align-items: center;
 }
 .left-content{
-  /* width: 424rpx; */
   flex: 0 0 384rpx;
   background: #ffffff;
   height: 120rpx;
@@ -375,10 +391,14 @@ page{
 .right-content{
   flex: 1;
   height: 120rpx;
+  background: #37D260;
   color: #ffffff;
   font-size: 16px;
   text-align: center;
   line-height: 120rpx;
+}
+.right-content::after{
+  border:none;
 }
 
 .total-price{

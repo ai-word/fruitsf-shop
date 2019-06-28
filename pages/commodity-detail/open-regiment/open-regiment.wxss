@@ -1,4 +1,4 @@
-/* pages/commodity-detail/open-regiment/open-regiment.wxss *//* pages/order-payment/order-payment.wxss */
+
 page{
   background: #f5f5f5;
 }
@@ -18,7 +18,7 @@ page{
   background: #ffffff;
 }
 .open-regiment-content{
-  padding-bottom: 120rpx;
+  padding-bottom: 130rpx;
 }
 .header-address{
   background: #ffffff
@@ -197,7 +197,7 @@ page{
 .good-item{
   display: flex;
   justify-content: space-between;
-  margin: 0 40rpx;
+  margin: 0 30rpx;
   padding: 20rpx 0;
   align-items: center;
   border-bottom: 1rpx solid #EEEEEE
@@ -222,7 +222,8 @@ page{
   color: #656565;
 }
 .good-desc{
-  padding: 0 0 0 20rpx
+  padding: 0 0 0 20rpx;
+  width: 310rpx;
 }
 .good-left image{
   width: 80rpx;
@@ -230,7 +231,7 @@ page{
 }
 .good-right{
   display: flex;
-  flex: 1;
+  /* align-items: center; */
 }
 .good-num{
   flex: 1;
@@ -239,10 +240,12 @@ page{
   font-size: 13px;
 }
 .good-price{
-  flex: 1;
-  text-align: center;
+  /* display: flex;
+  align-items: center; */
   color: #FF9F06;
+  /* text-align: center; */
   font-size: 14px;
+  padding: 0 20rpx 0 20rpx;
   font-weight: bold;
 }
 .packing{
@@ -340,7 +343,10 @@ page{
   justify-content: space-between;
 }
 .price{
-  color: #FF9F06
+  color: #FF9F06;
+  display: flex;
+  align-items: center;
+  /* padding: 0 20rpx 30rpx 0; */
 }
 
 
@@ -365,11 +371,15 @@ page{
 }
 .right-content{
   flex: 1;
+  background: #37D260;
   height: 120rpx;
   color: #ffffff;
   font-size: 16px;
   text-align: center;
   line-height: 120rpx;
+}
+.right-content::after{
+  border:none;
 }
 
 .total-price{
@@ -438,4 +448,20 @@ page{
   z-index: 2000;
   background: #fff;
   padding-top: 20rpx;
+}
+.open-modal{
+  padding:  30rpx 0;
+  height: 300rpx;
+}
+.content-parse{
+  padding:  0 30rpx;
+  color: #656565;
+  font-size: 14px;
+}
+
+.last{
+  padding: 20rpx 0;
+}
+.desc-title{
+  line-height: 32rpx;
 }

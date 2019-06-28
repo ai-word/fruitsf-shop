@@ -2,11 +2,11 @@
 <view class="content">
     <form bindreset="formReset" bindsubmit="formSubmit">
         <view class="remark-box">
-            <textarea bindinput="handelTextArea" id="remark" maxlength="50" name="remark" placeholder="请输入您要备注的信息..." value="{{remark}}"></textarea>
+            <textarea bindinput="handelTextArea" id="remark" maxlength="50" name="remark" placeholder="果肉偏软或偏硬..." value="{{remark}}"></textarea>
             <label for="remark">{{wordCount}}/50</label>
         </view>
         <view class="btn-box">
-            <view class="cancel">取消</view>
+            <view class="cancel" bindtap='cancel'>取消</view>
             <view class="confirm" bindtap='confirm'>确定</view>
         </view>
     </form>

@@ -77,7 +77,10 @@
   width: 40rpx!important;
   height: 40rpx!important;
 }
-.item{
+.left{
+  flex: 2
+}
+.right{
   flex: 1;
 }
 .title{

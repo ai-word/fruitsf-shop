@@ -1,6 +1,7 @@
 // pages/shopping-cart/order-detail/order-detail.js
 const Http = require('../../../utils/request.js');
 const app = getApp();
+var WxParse = require('../../../components/wxParse/wxParse.js');
 Page({
 
   /**
@@ -8,18 +9,27 @@ Page({
    */
   data: {
     chooseSize: false,
+    showModal:false,
+    rewardModal: false,
     animationData: {},
     packageAmount: 0,
+    isAddRess: false,
     categoreyIds: '',
     goodList: [],
+    goodsPrice: 0,
+    memberAddId: '',
     packages: [],
     totalPrice: '',
+    ischecked:0,
+    hasPhone: true,
     address: '',
     remark: '',
     cartIds: '',
     freightAmount: 0,//运费
     finalamount: 0,//优惠费用
-    couponCode: ''
+    couponCode: '',
+    isClick: true,
+    productAttr: '',
   },
 
   /**
@@ -27,10 +37,13 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
+    wx.hideShareMenu()
     this.setData({
       cartIds: options.cartIds
     })
-    this.orderDetail(options.cartIds)
+    this.getHasPhone()
+    this.getAwards()
+    // this.orderDetail(options.cartIds)
   },
 
   /**
@@ -43,24 +56,33 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (app.globalData.finalamount) {
-      var totalPrice = Number(this.data.totalPrice) - Number(app.globalData.finalamount)
+    wx.hideShareMenu()
       this.setData({
         finalamount: app.globalData.finalamount,
-        totalPrice: totalPrice.toFixed(2),
         couponCode: app.globalData.couponCode
       })
-    }
-    console.log(app.globalData.addressId, '55555')
-    if (app.globalData.addressId) {
+      this.orderDetail(this.data.cartIds)
+    if (app.globalData.addressId == '') {
+  
+    } else {
       this.setData({
-        memberAddId: app.globalData.addressId
+        memberAddId: app.globalData.addressId,
+        isAddRess: true
       })
-      // this.getExpressFee() //算运费
       this.getAddDetails(app.globalData.addressId) //id查地址
     }
     this.setData({
       remark: wx.getStorageSync('remark')
+    })
+  },
+  showPayModal() {
+    this.setData({
+      showModal: true
+    })
+  },
+  hidePayToast() {
+    this.setData({
+      showModal: false
     })
   },
   /**
@@ -70,6 +92,7 @@ Page({
     let that = this
     Http.HttpRequst(false, '/order/orderDetail?cartIds=' + cartIds, false, '', '', 'post', false, function (res) {
       var totalPrice = 0
+      var goodsPrice = 0
       var totalWeight = 0
       var totalCount = 0
       if (res.state == 'ok') {
@@ -81,33 +104,66 @@ Page({
           if (i < res.data.prds.length - 1) {
             categoreyId = categoreyId + ',';
           }
-          totalPrice += res.data.prds[i].product_amount * res.data.prds[i].price;
+          totalPrice += res.data.prds[i].product_amount * res.data.prds[i].prdprice;
+          goodsPrice += res.data.prds[i].product_amount * res.data.prds[i].prdprice;
           totalWeight += res.data.prds[i].weight
           totalCount += res.data.prds[i].product_amount
         }
         let totalamount = 0
+        let productAttr = ''
         if (packages.length!=0) {
-          packages[0].checked = true
-          totalPrice += packages[0].totalamount //计算包装费
-          totalamount = packages[0].totalamount
+          packages[that.data.ischecked].checked = true
+          totalPrice += packages[that.data.ischecked].totalamount //计算包装费
+          totalamount = packages[that.data.ischecked].totalamount
+          productAttr = packages[that.data.ischecked].name
         } else {
 
         }
-
         that.setData({
+          goodsPrice: goodsPrice,
           categoreyIds: categoreyId,
           totalWeight: totalWeight,
+          productAttr: productAttr,
           totalCount: totalCount,
           totalPrice: totalPrice.toFixed(2),
-          memberAddId: res.data.address.id,
-          address: res.data.address,
+          productAttr: packages[0].name,
           goodList: res.data.prds,
           packages: packages,
           packageAmount: totalamount,
           walletAmount: res.data.wallet
         })
-        that.getExpressFee()
+        that.totalMoney(goodsPrice, that.data.freightAmount, that.data.finalamount, that.data.packageAmount)
+        //判断地址为空
+        console.log(that.data.address, '55566666666666666666')
+        if (res.data.address == undefined) {
+    
+        } else {
+          if (app.globalData.addressId == '') {
+            that.setData({
+              isAddRess: true,
+              address: res.data.address,
+              memberAddId: res.data.address.id
+            })
+            that.getExpressFee()
+          } else {
+
+          }
+        }
       }
+    })
+  },
+  radioText(e) {
+    console.log(e, '5555')
+    this.setData({
+      productAttr: e.currentTarget.dataset.name,
+      ischecked: e.currentTarget.dataset.index
+    })
+  },
+  totalMoney(shopPrice, freightAmount, finalamount, packageAmount) {
+    var total = Number(shopPrice) - Number(finalamount) + Number(freightAmount) + Number(packageAmount)
+    console.log(total,'total')
+    this.setData({
+      totalPrice: total.toFixed(2)
     })
   },
   /**
@@ -115,28 +171,23 @@ Page({
    */
   radioChange(e) {
     var totalPrice = 0
-    console.log(e.detail.value)
-    totalPrice = Number(this.data.totalPrice) - Number(this.data.packageAmount) + Number(e.detail.value)
-    console.log(totalPrice)
     this.setData({
       packageAmount: e.detail.value,
-      totalPrice: totalPrice.toFixed(2)
+      // totalPrice: totalPrice.toFixed(2)
     })
+    this.totalMoney(this.data.goodsPrice, this.data.freightAmount, this.data.finalamount, this.data.packageAmount)
   },
   /**
    * 根据目的地算运费
    */
   getExpressFee() {
     var that = this
-    Http.HttpRequst(false, '/express/getExpressFee?count=' + this.data.totalCount + '&weight=' + this.data.totalWeight + '&memberAddId=' + this.data.memberAddId + '&prdCategoryIds=' + this.data.categoreyIds, true, '', '', 'post', false, function (res) {
+    Http.HttpRequst(false, '/express/getExpressFee?count=' + that.data.totalCount + '&weight=' + that.data.totalWeight + '&memberAddId=' + that.data.memberAddId + '&prdCategoryIds=' + that.data.categoreyIds, true, '', '', 'post', false, function (res) {
       if (res.state == 'ok') {
-        var totalPrice = 0
-        totalPrice = Number(that.data.totalPrice - that.data.freightAmount) + res.data
-        console.log(res, '运费')
         that.setData({
           freightAmount: res.data,
-          totalPrice: totalPrice.toFixed(2)
         })
+        that.totalMoney(that.data.goodsPrice, that.data.freightAmount, that.data.finalamount, that.data.packageAmount)
       }
     })
   },
@@ -147,8 +198,21 @@ Page({
 
   },
   placeOrder() {
-    var oderItem = []
     var that = this
+    if (that.data.isClick) { //防止重复点击
+      that.setData({
+        isClick: false
+      })
+      setTimeout(function () {
+        that.setData({
+          isClick: true
+        })
+      }, 1000)
+    } else {
+      return false
+    }
+  console.log('4444')
+    var oderItem = []
     var size = 0
     var item = {
       productId: '',//商品id
@@ -158,7 +222,8 @@ Page({
       groupsPrice: '',//拼团价格
       productQuantity: '',//购买数量
       productWeight: '',//总重量
-      productCategotyId: ''//分类id
+      productCategotyId: '',//分类id
+      productAttr: '',
     }
     for (var i = 0; i < that.data.goodList.length; i++) {
       size += that.data.goodList[i].product_amount
@@ -168,6 +233,7 @@ Page({
         productName: that.data.goodList[i].name,//商品名称
         productPrice: that.data.goodList[i].price,//销售价格
         groupsPrice: '',//拼团价格
+        productAttr: that.data.productAttr,
         productQuantity: that.data.goodList[i].product_amount,//购买数量
         productWeight: that.data.goodList[i].weight,//总重量
         productCategotyId: that.data.goodList[i].product_category_id//分类id
@@ -190,6 +256,16 @@ Page({
       wxAmount = that.data.totalPrice - that.data.walletAmount
       walletAmount = that.data.walletAmount
     }
+    console.log(that.data.address, 'that.data.address')
+    if (that.data.address == '') {
+      wx.showToast({
+        title: '请选择收货地址',
+        icon: 'none',
+        duration: 1500,
+      })
+      return false
+    }
+
     var order = {
       totalAmount: that.data.totalPrice, //订单总金额 商品数量*单价 +包装金额 +运费总额
       payAmount: that.data.totalPrice, // 应付金额 总额-优惠券
@@ -214,14 +290,7 @@ Page({
       order: order,
       oderItem: oderItem
     }
-    if (that.data.address == '') {
-      wx.showToast({
-        title: '请选择收货地址',
-        icon: 'none',
-        duration: 1500,
-      })
-      return false
-    }
+
     console.log(params, 'paramsparamsparamsparams')
     Http.HttpRequst(false, '/order/order', true, '', JSON.stringify(params), 'post', false, function (res) {
       console.log(res.state == 'ok')
@@ -264,7 +333,31 @@ Page({
         that.setData({
           address: res.data
         })
-        that.getExpressFee()
+        if (that.data.goodList == '' || that.data.goodList == undefined) {
+          
+        } else {
+          that.getExpressFee()
+        }
+      }
+    })
+  },
+  // 用户购买，分享返现奖励说明
+  showRewardModal() {
+    this.setData({
+      rewardModal: true
+    })
+  },
+  hideRewardModal() {
+    this.setData({
+      rewardModal: false
+    })
+  },
+  getAwards() {
+    let that = this
+    Http.HttpRequst(false, '/pay/getAwards', false, '', '', 'get', false, function (res) {
+      if (res.state == 'ok') {
+        console.log(res, '44444')
+        WxParse.wxParse('article', 'html', res.data.rules, that, 5);
       }
     })
   },
@@ -296,7 +389,7 @@ Page({
 
   },
   addRemarks() {
-    app.globalData.finalamount = ''
+    // app.globalData.finalamount = that.data
     wx.navigateTo({
       url: '/pages/addRemarks/addRemarks'
     })
@@ -311,5 +404,48 @@ Page({
     wx.navigateTo({
       url: '/pages/address/address'
     })
+  },
+  // 判断用户是否有手机号 如果有责不授权获取手机号,没有则授权
+  getHasPhone() {
+    let that = this
+    console.log('5555')
+    Http.HttpRequst(true, '/login/hasPhone', false, '', '', 'get', false, function (res) {
+      that.setData({
+        hasPhone: res.data
+      })
+      app.globalData.hasPhone = res.data
+    })
+  },
+  /**
+   * 获取手机号码服务端解密用户信息接口，获取手机号码
+   */
+  getPhoneNumber(e) {
+    console.log(wx.getStorageSync('userInfo'))
+    // if (app.globalData.userInfo ==)
+    console.log(e)
+      var userInfo = wx.getStorageSync('userInfo')
+    if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+      wx.showToast({
+        title: '未授权',
+        icon: 'none',
+        duration: 1000
+      })
+    } else {
+      var params = {
+        signature: userInfo.signature,
+        rawData: userInfo.rawData,
+        encryptedData: e.detail.encryptedData,
+        iv: e.detail.iv
+      }
+      var that = this
+      Http.HttpRequst(true, '/login/getPhoneNumber', false, '', params, 'get', false, function (res) {
+        if (res.state == 'ok') {
+          that.setData({
+            hasPhone: true
+          })
+          app.globalData.hasPhone = true
+        }
+      })
+    }
   }
 })

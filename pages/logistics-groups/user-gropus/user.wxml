@@ -4,6 +4,19 @@
   <view class='nav'>
     <image src="/assets/user/pt.png"></image>
   </view>
+
+      <view class='cell-list'>
+      <view class='order-flex bordernone'>
+        <view class='order-cells order-detail' bindtap='showRewardModal'>
+          奖励信息
+          <image src="/assets/wenhao.png"></image>
+        </view>
+        <view class='order-cells'>
+          <text class='total'>分享好友的惊喜</text>
+        </view>
+      </view>
+    </view>
+
       <view class='header-address'>
         <view class='address'>
           <view class='left'>配送至</view>
@@ -12,8 +25,8 @@
             请选择收货地址
           </view>
         </view>
-        <view class='rece-goods'>
-          <view class='left'>
+        <view class='rece-goods' wx:if="{{address!=''}}">
+          <view class='left' >
             <image src="/assets/address.png"></image>
             <text class='user-name'>{{address.name}}</text>
             <text class='shu'>|</text>
@@ -25,10 +38,13 @@
         </view>
         <view class='address'>
           <view class='left delivery'>配送费</view>
-          <view class='right ship' wx:if="{{freightAmount == 0}}">
+          <view class='right ship' wx:if="{{freightAmount == 0 && isAddRess == false}}">
+            0.00
+          </view>
+          <view class='right ship' wx:elif="{{freightAmount == 0 && isAddRess == true}}">
             包邮
           </view>
-          <view class='right ship' wx:else>
+          <view class='right' wx:else>
             ￥ {{freightAmount}}
           </view>
         </view>
@@ -75,7 +91,7 @@
         </view>
         <view class='order-cell pack-right'>
           <radio-group class="radio-group" bindchange="radioChange">
-            <label class="radio" wx:for="{{packs}}" wx:for-index="index" wx:key="index">
+            <label class="radio" wx:for="{{packs}}" bindtap='radioText' data-name="{{item.name}}" wx:for-index="index" wx:key="index">
               <radio value="{{item.price}}" checked="{{item.checked}}">{{item.name}}</radio>
             </label>
           </radio-group>
@@ -87,17 +103,6 @@
         </view>
         <view class='order-cells price'>
           ￥ {{packageAmount}}
-        </view>
-      </view>
-    </view>
-
-   <view class='cell-list'>
-      <view class='order-flex bordernone'>
-        <view class='order-cells' bindtap='showPayModal'>
-          奖励信息
-        </view>
-        <view class='order-cells'>
-          <text class='total'>分享好友的惊喜</text>
         </view>
       </view>
     </view>
@@ -151,10 +156,25 @@
             优惠: ￥0.00
           </view>
       </view>
-      <view class='right-content'  bindtap='orderMemberGroups'>
+      <button class='right-content' wx:if="{{hasPhone == true}}" bindtap='orderMemberGroups'>
         提交提单
-      </view>
+      </button>
+        <button class='right-content' wx:else open-type='getPhoneNumber' bindgetphonenumber='getPhoneNumber'>
+        提交提单
+      </button>
   </view>
+  
+  <pay-toast show="{{rewardModal}}" bindcancel="showReward" bindconfirm='modalConfirm'>
+    <view class='pay-price-content'>
+      <view class='content-parse'>
+        <import src="../../../components/wxParse/wxParse.wxml" />
+        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+      </view>
+    </view>
+    <view class='pay-submit' bindtap='hideRewardModal'>
+      确定
+    </view>
+  </pay-toast>
 
   <pay-toast show="{{showModal}}" bindcancel="modalCancel" bindconfirm='modalConfirm'>
     <view class='pay-price-content'>
@@ -163,7 +183,7 @@
       </view>
       <view class='pay-item'>
         <text class='pay-left'>商品金额</text>
-        <text class='pay-right'>￥{{totalPrice}}</text>
+        <text class='pay-right'>￥{{shopPrice}}</text>
       </view>
       <view class='pay-item'>
         <text class='pay-left'>配送费</text>

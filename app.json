@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/authorize/authorize",
     "pages/index/index",
+    "pages/authorize/authorize",
     "pages/user/user",
     "pages/detail/detail",
     "pages/assemble/assemble",
@@ -11,7 +11,6 @@
     "pages/commodity-detail/open-list/open-list",
     "pages/coupon/coupon",
     "pages/my-order/order",
-    "pages/time/time",
     "pages/class/class",
     "pages/address/address",
     "pages/address/add-receiving/receiving",
@@ -28,7 +27,16 @@
     "pages/commodity-detail/user-regiment/user-regiment",
     "pages/logistics-groups/logistics",
     "pages/logistics-payment/payment",
-    "pages/logistics-groups/user-gropus/user"
+    "pages/logistics-groups/user-gropus/user",
+    "pages/payment-code/code",
+    "pages/pay-success/pay-success",
+    "pages/total-revenue/revenue",
+    "pages/share-goods/share-goods",
+    "pages/opening-group/opening",
+    "pages/about-us/about-us",
+    "pages/banner-detail/banner-detail",
+    "pages/invitation/invitation",
+    "pages/logistics-info/logistics-info"
   ],
   "window": {
     "backgroundTextStyle": "light",

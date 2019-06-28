@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "poster": "/components/poster/index"
+  },
+  "navigationBarTitleText": "支付成功"
+}

@@ -1,1 +1,52 @@
 /* pages/authorize/authorize.wxss */
+.canIUse-content{
+
+}
+.logo{
+  position: fixed;
+  top: 120rpx;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+.logo image{
+  width: 364rpx;
+  height: 319rpx;
+}
+.wxinfo-btn{
+  /* margin-top: 281rpx; */
+  position: fixed;
+  top: 762rpx;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+.bottom{
+  width: 394rpx;
+  background: #36CF24;
+  color: #ffffff;
+  font-size: 18px;
+  display: flex;
+  height: 84rpx;
+  border-radius:42px;
+  align-items: center;
+  text-align: right;
+}
+.bottom image{
+  width: 63rpx;
+  height: 52rpx;
+  padding: 0 30rpx 0 10rpx
+}
+.fotter{
+  position: fixed;
+  bottom: 30rpx;
+  display: flex;
+  width: 100%;
+  justify-content: center
+}
+.fotter image{
+  width: 280rpx;
+  height: 280rpx;
+}

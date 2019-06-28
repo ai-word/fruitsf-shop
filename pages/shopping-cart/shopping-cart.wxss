@@ -158,7 +158,9 @@ page{
   font-size:14px
 }
 .num_change{
-  display: flex;  
+  display: flex;
+  position: relative;
+  z-index: 666;  
   align-items: center;
   width:180rpx;
   height:50rpx;
@@ -174,13 +176,13 @@ page{
   color:#969696;
 }
 .shop_num{
-  line-height: 38rpx;  
-  height: 38rpx;  
+  line-height: 40rpx;  
+  height: 40rpx;  
   flex: 1;
   text-align: center;  
   font-size: 15px;
 }
 .add_icon,.minus_icon{
-  width: 38rpx;  
-  height: 38rpx;
+  width: 40rpx;  
+  height: 40rpx;
 }

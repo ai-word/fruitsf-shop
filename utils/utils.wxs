@@ -1,9 +1,18 @@
 function getTextByArray(start,end) {
-  var startMont = parseInt(start.substring(5, 7))
-  var end = parseInt(end.substring(8))
-  var day = parseInt(start.substring(8))
-  var str = startMont + '月' + day + '日' + '-' + end + '日'
-  return str
+  // var startMont = parseInt(start.substring(5, 7))
+  // var end = parseInt(end.substring(8))
+  // var day = parseInt(start.substring(8))
+  // var str = startMont + '月' + day + '日' + '-' + end + '日'
+  // return str
+
+  var date1 = getDate(start);  //开始时间
+
+  var date2 = getDate(end);    //结束时间
+  var date3 = date2.getTime() - date1.getTime()  //时间差的毫秒数
+
+  //计算出相差天数
+  var days = Math.floor(date3 / (24 * 3600 * 1000))
+  return days
 }
 
 
@@ -40,13 +49,20 @@ function timeFormat(param) {//小于10的格式化函数
   return param < 10 ? '0' + param : param;
 }
 
-function countDown(endTime) { //倒计时函数
+function countDown(endTime1,isTime) { //倒计时函数
   // 获取当前时间，同时得到活动结束时间数组
-  var newTime = getDate().getTime()
-  var endTimeList = '2019-5-30 10:50:20'
-  var countDownArr = []
+  var newTime = getDate().getTime();
+  var countDownArr = [];
   // 对结束时间进行处理渲染到页面
-  var endTime = getDate(endTimeList).getTime();
+  var reg = getRegExp("-", "g");
+  endTime1 = endTime1.replace(reg, "/");
+
+  if (isTime == true) {
+    endTime = (getDate(endTime1).getTime() / 1000 + 86400) * 1000
+  } else {
+    endTime = getDate(endTime1).getTime()
+  }
+
   var obj = null;
   // 如果活动未结束，对时间进行处理
   if (endTime - newTime > 0) {
@@ -70,7 +86,6 @@ function countDown(endTime) { //倒计时函数
       sec: '00'
     }
   }
-  // console.log(obj.day + '天' + obj.hou + ':' + obj.min + ':' + obj.sec, '8888888888888888888888888888888888888888888888888')
   // countDownArr.push(obj);
   // 渲染，然后每隔一秒执行一次倒计时函数
   // this.setData({ countDown: countDownArr })

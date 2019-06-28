@@ -17,7 +17,7 @@
         <view class="section">
             <view class="section-title">电　　话</view>
             <view class="right">
-                <input bindinput="handlePhone" name="phone" placeholder="手机号码" type="number" value="{{phone}}"></input>
+                <input bindinput="handlePhone" name="phone" placeholder="手机号码" type="number" value="{{phoneNumber}}"></input>
             </view>
         </view>
     </view>
@@ -32,14 +32,14 @@
         <view class="section">
             <view class="section-title">地　　址</view>
             <view bindtap="chooseAddress" class="right">
-                <input bindinput="handleDetails" disabled="true" name="details" placeholder="请选择地址" type="text" value="{{details}}"></input>
-                <image src="http://xianfengapp.oss-cn-hangzhou.aliyuncs.com/xianfengImages/iconPosition.png"></image>
+                <input bindinput="handleDetails" disabled="true" name="details" placeholder="请选择地址" type="text" value="{{address}}"></input>
+                <image src="https://app-1256684088.cos.ap-beijing.myqcloud.com/wujieImages/iconPointRight.png"></image >
             </view>
         </view>
         <view class="section detailed">
-            <view class="section-title">详细地址</view>
+            <view class="section-title">门牌号</view>
             <view class="right">
-                <textarea bindblur="handleBlur" bindfocus="handleFocus" bindinput="handleHouseNumber" id="detailed" maxlength="50" name="houseNumber" placeholder="如道路、门牌号、小区、楼栋号、单元室等" placeholderClass="placeholder"  type="text" value="{{detailAddRess}}"></textarea>
+                <textarea  bindinput="handleHouseNumber" id="detailed" maxlength="50" name="houseNumber" placeholder="如道路、门牌号、小区、楼栋号、单元室等" placeholderClass="placeholder"  type="text" value="{{detailAddRess}}"></textarea>
             </view>
         </view>
         <view class="lable-box">
@@ -57,7 +57,6 @@
     </view>
     <toast inner-text=""  id='toastDialog'></toast>
     <button class="btn" bindtap='getAddRess' formType="submit">保存并使用</button>
-    <!-- <button bindtap="doDeleteAddress" class="btn-delelte" hidden="{{pageType==='normal'}}">删除地址</button> -->
 </form>
             <!-- <picker class="weui-btn"  mode="region" name="region" value="{{date}}" bindchange="bindDateChange">
                 <button type="default">日期选择器</button>

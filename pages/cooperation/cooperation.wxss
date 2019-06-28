@@ -51,8 +51,15 @@
   color:#ffffff;
   font-size: 16px;
 }
+.coupon image{
+  width: 24rpx;
+  height: 26rpx;
+}
 .coupon-color,.balance{
   font-size:13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .user-info{
   position: relative
@@ -90,10 +97,11 @@
 
 .price{
   color: #212121;
-  font-size: 14px;
-  padding: 0 0 20rpx 0;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0 0 60rpx 0;
 }
 .username{
   color: #656565;
-  font-size: 13px
+  font-size: 13px;
 }

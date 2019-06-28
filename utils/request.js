@@ -2,11 +2,10 @@ module.exports = {
   HttpRequst: HttpRequst,
 }
 // const baseUrl = 'http://172.16.1.226/invi';
-const baseUrl = 'https://bms.microc.cn/shopguide';
-// const baseUrl = 'http://x34mm3.natappfree.cc/invi';
-const dataUrl = "https://xfshop.mynatapp.cc";//数据统计测试环境
+const baseUrl = 'https://xfshop.mynatapp.cc';
+// const baseUrl = 'https://www.xuerank.com';
+const dataUrl = "https://www.xuerank.com";//数据统计测试环境
 var app = getApp()
-
 
 //sessionChoose 1是带sessionID的GET方法  2是不带sessionID的GET方法, 3是带sessionID的Post方法,4是不带sessionID的Post方法
 //ask是是否要进行询问授权，true为要，false为不要

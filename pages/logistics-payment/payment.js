@@ -23,6 +23,9 @@ Page({
   onLoad: function (options) {
     console.log(options)
     this.getOrderDetail(options.ordersn)
+    this.setData({
+      ordersn: options.ordersn
+    })
     console.log(this.data.payInfo)
     if (app.globalData.payInfo == '') {
       this.wxOrderPay(options.ordersn)
@@ -143,24 +146,25 @@ Page({
   },
   wxPayShop() {
     //支付方法
+    let that = this
     wx.requestPayment({
-      timeStamp: this.data.payInfo.timeStamp,
-      nonceStr: this.data.payInfo.nonceStr,
-      package: this.data.payInfo.package,
+      timeStamp: that.data.payInfo.timeStamp,
+      nonceStr: that.data.payInfo.nonceStr,
+      package: that.data.payInfo.package,
       signType: 'MD5',
-      paySign: this.data.payInfo.paySign,
+      paySign: that.data.payInfo.paySign,
       success(res) {
         console.log('支付成功')
         wx: wx.showToast({
           title: '支付成功!',
           icon: 'nonw',
-          duration: 1500,
+          duration: 1000,
         })
-        setTimeout(() => {
+        // setTimeout(() => {
           wx.navigateTo({
-            url: '/pages/my-order/order'
+            url: '/pages/pay-success/pay-success?orderSn=' + that.data.ordersn
           })
-        }, 1500)
+        // }, 1000)
       },
       fail(res) { }
     })
@@ -169,6 +173,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.hideShareMenu()
     console.log(app.globalData.payInfo)
     this.setData({
       payInfo: app.globalData.payInfo
@@ -206,7 +211,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.switchTab({
+      url: '/pages/shopping-cart/shopping-cart',
+    })
   },
 
   /**

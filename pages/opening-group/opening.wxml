@@ -1,0 +1,66 @@
+<!--pages/pay-success/pay-success.wxml-->
+<wxs src="../../utils/utils.wxs" module="tools"></wxs>
+<view class='pay-success-content'>
+    <view class='top'>
+      <view class='good-detail'>
+        <view class='good-image'>
+          <image mode='widthFix' src="{{product.img}}"></image>
+        </view>
+        <view class='shop-detail'>
+          <view class='title'>{{product.name}}</view>
+          <view class='desc'>提货时间：{{product.starttime}} - {{product.endtime}}</view>
+          <view class='desc'>{{product.attend_count}}人团</view>
+          <view class='good-price'>
+            <view class='new'>￥{{product.multi_price}}</view>
+            <view class='old'>￥{{product.singe_price}}</view>
+          </view>
+        </view>
+      </view>
+      <view class='user-list'>
+        <view class='user-image' wx:for="{{users}}" wx:for-index="index" wx:key="index">
+          <image src='{{item.avatarurl}}'></image>
+          <view class='tuanzhang' wx:if="{{index == 0}}">团长</view>
+        </view>
+        <view class='user-image item-style' wx:for="{{3-users.length}}" wx:key="inex">
+          <text>?</text>
+        </view>
+      </view>
+      <view class='count-time'>拼单中，还差2人，还剩 {{tools.countDown(product.countdown)}}</view>
+      <view class='invitation-btn' wx:if="{{isLogin == true}}" bindtap='goShopDetail' data-instanceid="{{product.instance_id}}" data-groupid="{{product.groups_id}}" data-type="{{product.type}}">
+        <button class='friend'>一键参团</button>
+      </view>
+       <view class='invitation-btn' wx:else>
+            <button class='friend' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+          一键参团
+      </button>
+      </view>
+      <view class='share-title'>分享到3个群，有95%的机会在5分钟内成团</view>
+    </view>
+    <view class="recom-title">更多推荐</view>
+
+    <view class='recommend'>
+      <view class='recommend-list' wx:for="{{recommandList}}" wx:for-index="index" wx:key="index" data-id="{{item.id}}" data-type="{{item.type}}" bindtap='goShopList'>
+        <view class='num-total'>{{item.attend_count}}人团</view>
+        <image src="http://pic.myhuanji.com/img/19052909103300002.jpg"></image>
+       
+        <view class='rec-desc'>{{item.name}}</view>
+        <view class='fotter'>
+            <view class='left'>
+              <text class='new-price'>￥{{item.multi_price}}</text>
+              <text class='old-price'>￥{{item.singe_price}}</text>
+            </view>
+            <view class='btn-to'>
+              去开团
+            </view>
+        </view>
+      </view>
+    </view>
+    <view class='index-btn' catchtap='goIndex' wx:if="{{isLogin == true}}">
+    <view class='index-image'><image src="/assets/weapp/index.png"></image></view>
+    <view class='index-tezt'>首页</view>
+  </view>
+    <button class='index-btn'  wx:if="{{isLogin == false}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+      <view class='index-image'><image src="/assets/weapp/index.png"></image></view>
+      <view class='index-tezt' style='height:40rpx;line-height:40rpx'>首页</view>
+    </button>
+</view>

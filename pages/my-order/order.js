@@ -19,6 +19,7 @@ Page({
         name: '已完成',
         status: 3,
       }],
+    ordinary: 0,
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,
@@ -31,8 +32,19 @@ Page({
     loaderMore: true,
     hiddenloading: false,
   },
-  onLoad: function () {
+  onLoad: function (options) {
     var that = this;
+    if (options.type) {
+      that.setData({
+        activeIndex: options.activeIndex,
+        status: options.type
+      })
+    }
+    if (options.ordinary!= undefined) {
+      that.setData({
+        ordinary: options.ordinary
+      })
+    }
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -41,7 +53,12 @@ Page({
         });
       }
     });
-    that.getOrderList()
+  },
+  onShow(){
+    wx.hideShareMenu()
+    this.data.orderList = []
+    this.data.pageNumber = 1
+    this.getOrderList()
   },
   tabClick: function (e) {
     this.setData({
@@ -54,6 +71,7 @@ Page({
       icon: 'loading'
     })
     this.data.orderList = []
+    this.data.pageNumber = 1
     this.getOrderList()
   },
   //获取全部订单列表
@@ -89,6 +107,11 @@ Page({
           })
         }
       }
+    })
+  },
+  LogisticsInfo(e) {
+    wx.navigateTo({
+      url: '/pages/logistics-info/logistics-info?sn=' + e.currentTarget.dataset.sn,
     })
   },
   //取消订单
@@ -129,8 +152,34 @@ Page({
     console.log(e)
     app.globalData.payInfo = ''
     wx.navigateTo({
-      url: '/pages/order-payment/order-payment?ordersn=' + e.currentTarget.dataset.ordersn + '&orderid=' + e.currentTarget.dataset.orderid
+      url: '/pages/order-payment/order-payment?ordersn=' + e.currentTarget.dataset.ordersn + '&orderid=' + e.currentTarget.dataset.orderid + '&ordinary=' + '&status=' + e.currentTarget.dataset.status
     })
+  },
+  orderDetail(e) {
+    wx.navigateTo({
+      url: '/pages/order-payment/order-payment?ordersn=' + e.currentTarget.dataset.ordersn + '&orderid=' + e.currentTarget.dataset.orderid + '&ordinary=' +'&status=' +e.currentTarget.dataset.status
+    })
+  },
+  remindClick() {
+    wx.showToast({
+      title: '亲，已经通知商家',
+      icon: 'none',
+      duration: 1500,
+    })
+  },
+  purChase() {
+    wx.switchTab({
+      url: '/pages/class/class'
+    })
+  },
+  onUnload: function () {
+    if (this.data.ordinary == 1) {
+
+    } else {
+      wx.switchTab({
+        url: '/pages/shopping-cart/shopping-cart',
+      })
+    }
   },
   /**
    * 页面上拉触底事件的处理函数

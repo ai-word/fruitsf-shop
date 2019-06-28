@@ -13,10 +13,10 @@ Page({
     shopCartList: [],//购物车数据      
     totalPrice: 0,//总金额      
     allChecked: true,//全选      
-    hintText: '',//提示的内容      
+    hintText: '',//提示的内容
+    lenIndex:0,      
     hintShow: false,//是否显示提示
     checkedAll: true,
-
   },
   getAllCartList() {
     let that = this
@@ -53,7 +53,9 @@ Page({
   onLoad: function (options) {
     
   },
+  stopClick() {
 
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -83,16 +85,16 @@ Page({
   //点击单个选择按钮  
   checkTap: function (e) {
     console.log(this.data.allShopList, '555')
-    let Index = e.currentTarget.dataset.index,
-      shopcar = this.data.shopCartList,
-      totalPrice = this.data.totalPrice
+    let Index = e.currentTarget.dataset.index
+    let shopcar = this.data.shopCartList
+    let totalPrice = Number(this.data.totalPrice)
     shopcar[Index].select = !shopcar[Index].select || false;
     if (shopcar[Index].select) {
-      totalPrice += shopcar[Index].product_amount * shopcar[Index].price;
+      totalPrice += Number(shopcar[Index].product_amount) * Number(shopcar[Index].price);
     } else {
-      totalPrice -= shopcar[Index].product_amount * shopcar[Index].price;
+      totalPrice -= Number(shopcar[Index].product_amount) * Number(shopcar[Index].price);
     }
-    console.log(shopcar, 'shopcar')
+    console.log(totalPrice, 'totalPrice')
     this.setData({
       shopCartList: shopcar,
       totalPrice: totalPrice.toFixed(2),
@@ -122,8 +124,12 @@ Page({
     // let product_amount = shopcar[Index].product_amount
     switch (types) {
       case 'add':
-        shopcar[Index].product_amount++; // 对应商品的数量+1      
-        shopcar[Index].select && (totalPrice += shopcar[Index].price);//如果商品为选中的，则合计价格+商品单价
+        shopcar[Index].product_amount++; // 对应商品的数量+1   
+        
+        if (shopcar[Index].select) {
+          totalPrice = Number(shopcar[Index].product_amount) * Number(shopcar[Index].price)
+        }
+
         var num = wx.getStorageSync('cartNum')
         var product_amount = shopcar[Index].product_amount;
         wx.setStorageSync('cartNum', parseInt(num + 1))
@@ -131,11 +137,14 @@ Page({
         wx.setTabBarBadge({
           index: 3,
           text: "" + parseInt(num + 1) + ""
-        })      
+        })    
+        console.log(totalPrice)  
         break;
       case 'minus':
         shopcar[Index].product_amount--;//对应商品的数量-1      
-        shopcar[Index].select && (totalPrice -= shopcar[Index].price);//如果商品为选中的，则合计价格-商品单价
+        if (shopcar[Index].select) {
+          totalPrice = Number(shopcar[Index].product_amount) * Number(shopcar[Index].price)
+        }
         var num = wx.getStorageSync('cartNum')
         var product_amount = shopcar[Index].product_amount
         this.andAndSub(shopId, product_amount, price)
@@ -144,17 +153,22 @@ Page({
           index: 3,
           text: "" + parseInt(num - 1) + ""
         })   
+        console.log(totalPrice)
         break;
     }
     this.setData({
       shopCartList: shopcar,
-      totalPrice: totalPrice.toFixed(2)
+      totalPrice: parseFloat(totalPrice).toFixed(2)
     });
   },
   onShow: function () {
     // var shopcarData = app.globalData.shopcarData,//这里我是把购物车的数据放到app.js里的，这里取出来，开发的时候视情况加载自己的数据
+    wx.hideShareMenu()
     wx.setStorageSync('remark', '')
     this.getAllCartList()
+    app.globalData.addressId = ''
+    app.globalData.finalamount = 0
+    app.globalData.activeIndex = '-1'
   },
   // 判断是否为全选  
   judgmentAll: function () {
@@ -165,7 +179,8 @@ Page({
       shopcar[i].select && lenIndex++;
     }
     this.setData({
-      allChecked: lenIndex == shoplen//如果购物车选中的个数和购物车里货物的总数相同，则为全选，反之为未全选    
+      allChecked: lenIndex == shoplen,//如果购物车选中的个数和购物车里货物的总数相同，则为全选，反
+      lenIndex: lenIndex
     });
   },
   /**
@@ -186,6 +201,14 @@ Page({
     let params = {
       ids: str
     }
+    if (str == '') {
+      wx.showToast({
+        title: '请选择商品！',
+        icon: 'none',
+        duration: 15000
+      })
+      return false
+    }
     console.log(params)
     Http.HttpRequst(false, '/cart/delete', true, '', params, 'post', false, function (res) {
       if(res.state == 'ok') {
@@ -195,16 +218,31 @@ Page({
   },
   toPerfectOrder() {
     let dataList = this.data.shopCartList
+    let str = ''
+    for (let i = 0; i < dataList.length; i++) {
+      if (dataList[i].select == true) {
+        str += dataList[i].cartid + ','
+      }
+    }
+    if (str.length > 0) {
+      str = str.substr(0, str.length - 1);
+    }
+    if (str == '') {
+      this.toastDialog.showDialog('请选择商品!')
+      return false
+    }
     if (dataList.length == 0) {
       this.toastDialog.showDialog('请选择商品!')
     } else {
-      let str = ''
-      for (let i = 0; i < dataList.length; i++) {
-        str += dataList[i].cartid + ','
-      }
-      if (str.length > 0) {
-        str = str.substr(0, str.length - 1);
-      }
+      // let str = ''
+      // for (let i = 0; i < dataList.length; i++) {
+      //   if (dataList[i].select == true) {
+      //     str += dataList[i].cartid + ','
+      //   }
+      // }
+      // if (str.length > 0) {
+      //   str = str.substr(0, str.length - 1);
+      // }
       wx.navigateTo({
         url: '/pages/shopping-cart/order-detail/order-detail?cartIds=' + str
       })
@@ -216,7 +254,11 @@ Page({
   onHide: function () {
 
   },
-
+  goodDetails(e) {
+    wx.navigateTo({
+      url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id
+    })
+  },
   /**
    * 生命周期函数--监听页面卸载
    */

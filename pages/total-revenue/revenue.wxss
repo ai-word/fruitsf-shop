@@ -1,0 +1,125 @@
+/* pages/total-revenue/revenue.wxss */
+/* pages/chart/line/index.wxss */
+page{
+  background: #f5f5f5;
+  height: 100%;
+}
+.years-content{
+  background: #ffffff;
+}
+.montholy{
+  width: 100%;
+  background: #ffffff;
+  margin-top: 20rpx;
+}
+.montholy-canvas{
+  width: 100%;
+  height: 437rpx;
+}
+.header-top{
+  display: flex;
+  justify-content: space-between;
+  padding: 15rpx 30rpx;
+  align-items: center;
+  background: #ffffff;
+  color: #969696;
+  font-size: 13px;
+}
+.left{
+  /* display: flex; */
+  align-items: center;
+}
+.years image{
+  width: 30rpx;
+  height: 30rpx;
+  padding:  0 0 0 10rpx;
+}
+.size-color{
+  color: #37D260;
+}
+.montholy-title{
+  color: #212121;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  padding: 30rpx 30rpx 0 30rpx;
+}
+.montholy-title image{
+  width: 30rpx;
+  height: 30rpx;
+  padding: 0 10rpx 0 0;
+}
+
+
+
+
+/* 筛选 */
+.isRuleShow {
+  display: block;
+}
+
+.isRuleHide {
+  display: none;
+}
+.float {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  top: 0;
+  left: 0;
+}
+.iconuse {
+  margin-left: 11rpx;
+}
+.iconprice {
+  margin-left: 11rpx;
+}
+
+.animation-element {
+  width: 100%;
+  height: 300rpx;
+  background-color: #ffffff; 
+  border: 1px solid #f3f0f0;
+  position: absolute;
+  /* right: -572rpx; */
+}
+
+.use{
+  display: flex;
+  flex-wrap: wrap;
+}
+.tag{
+  padding: 10rpx 30rpx;
+  margin: 10rpx;
+  font-size: 14px;
+  border-radius: 10rpx;
+  color: #969696;
+  border:1px solid #f3f0f0;
+}
+.active{
+  background: #37D260;
+  color: #ffffff;
+  border-radius: 10rpx;
+}
+.buttom{
+  position: fixed;
+  bottom: 0;
+}
+.animation-reset{
+  float: left;
+ line-height: 2;
+  width: 260rpx;
+  margin: 15rpx 12rpx;
+  border: 1px solid #f3f0f0;
+  text-align: center;
+}
+.animation-button{
+  float: left;
+ line-height: 2;
+  width: 260rpx;
+  margin: 15rpx 12rpx;
+  border: 1px solid #f3f0f0;
+  text-align: center;
+}

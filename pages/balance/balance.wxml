@@ -1,2 +1,40 @@
 <!--pages/balance/balance.wxml-->
-<text>pages/balance/balance.wxml</text>
+<view class='balance'>
+  <view class='balance-header'>
+    <image src="http://pic.myhuanji.com/app/user/bg.png" mode='widthFix'></image>
+    <view class='header-title'>
+      <text class='price'>{{totalPrice}}</text>
+      <view class='title'>当前余额 (元)</view>
+    </view>
+  </view>
+  <view class='balance-list'>
+    <view class='list-item' wx:for="{{details}}" wx:key="index">
+      <view class='left'>
+        <image src="/assets/logo.png"></image>
+      </view>
+      <view class='right'>
+        <view class='right-item'>
+          <view class='price-type'>{{item.remark}}</view>
+          <view class='time'>{{item.create_time}}</view>
+        </view>
+        <view class='right-item money' wx:if="{{item.change_type == 0}}">
+          +{{item.change_money}}
+        </view>
+        <view class='right-item money' wx:else>
+          -{{item.change_money}}
+        </view>
+      </view>
+    </view>
+    <view class="weui-loadmore weui-loadmore_line" wx:if='{{hasmoreData}}'>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无更多数据      </view>
+    </view>
+    <view class="weui-loadmore" wx:if="{{hiddenloading}}">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+    </view>
+  </view>
+  <view class='fotter-bottom'>
+    <button bindtap='cash' class='price-btn' wx:if="{{hasPhone == true}}">余额提现</button>
+    <button class='price-btn'  open-type='getPhoneNumber' wx:else bindgetphonenumber='getPhoneNumber'>余额提现</button>
+  </view>
+</view>

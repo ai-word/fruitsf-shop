@@ -211,6 +211,7 @@ page{
 }
 .good-num{
   flex: 1;
+  padding: 0 20rpx;
   text-align: center;
   color: #212121;
   font-size: 13px;

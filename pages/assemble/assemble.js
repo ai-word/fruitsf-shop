@@ -13,6 +13,7 @@ Page({
     sliderOffset: 0,
     sliderLeft: 0,
     type: 1,
+    noData: false,
     groupList: [],
     pageNumber: 1,
     pageSize: 10,
@@ -37,8 +38,9 @@ Page({
     });
   },
   tabClick: function (e) {
-    // this.data.groupList = []
+    this.data.pageNumber = 1
     this.setData({
+      hasmoreData: false,
       sliderOffset: e.currentTarget.offsetLeft,
       activeIndex: e.currentTarget.id,
       type: e.currentTarget.dataset.type, //拼团类型
@@ -86,6 +88,13 @@ Page({
     Http.HttpRequst(false, '/group/getGroups', false, '', params, 'get', false, function (res) {
       setTimeout(() => {
         wx.hideLoading()
+        if (that.data.pageNumber == 1 && res.data.list.length == 0) {
+          that.setData({
+  
+            noData: true
+          })
+          return false
+        } 
         if (res.data.list.length < that.data.pageSize) {
           that.setData({
             groupList: that.data.groupList.concat(res.data.list),

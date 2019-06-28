@@ -1,0 +1,31 @@
+<!--pages/my-coupon/coupon.wxml-->
+<!--pages/coupon/coupon.wxml-->
+<view class='coupon-content'>
+
+  <view class='shop-nodata' wx:if="{{noData}}">
+    <view class='nodata'>
+    <image src="/assets/nodata.png"></image>
+    </view>
+    <view class='msg'>暂无领取的优惠券</view>
+  </view>
+  <view wx:else>
+     <view class="coupon-title">
+        <text class='freight'>运费券</text><text class='freight-detail'>(可与其他优惠券叠加使用)</text>
+      </view>
+    <view class="coupon-list {{activeIndex == idx ? 'active':''}}" wx:for-index="idx"  bindtap='changeCoupon' wx:for="{{couponList}}" data-finalamount="{{item.finalamount}}" wx:key="idx" data-index="{{idx}}">
+      <image src="/assets/coupon.png"></image>
+      <view class='content'>
+          <view class='title'>{{item.name}}</view>
+          <view class='desc'>{{item.note}}</view>
+      </view>
+        <view class='time'>
+          有效期: {{item.enable_time}} ~ {{item.end_time}}
+        </view>
+    </view>
+  </view>
+  <toast inner-text=""  id='toastDialog'></toast>
+  <view class='footer-bottom'>
+    <button class='weui-btn button-hover' bindtap='submitOrder' type="submit">确认</button>
+  </view>
+</view>
+

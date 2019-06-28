@@ -2,118 +2,98 @@
 <view class='container-shop'>
   <view class='search-bar'>
     <!-- 搜索框开始 -->
-      <view class='search-box'>
-          <view class="search-box-bar" bindtap='searchClick'>
-              <icon type='search' size="16"></icon>
-              <view class="search-view-input">搜索</view>
-          </view>
-          <view class='activity-add' ><image bindtap='addhandle' src='/assets/index/erweima.png'></image></view>
+    <view class='search-box'>
+      <view class="search-box-bar" bindtap='searchClick'>
+        <icon type='search' size="16"></icon>
+        <view class="search-view-input">搜索</view>
       </view>
+      <view class='activity-add'>
+        <image bindtap='payCode' src='/assets/index/erweima.png'></image>
+      </view>
+    </view>
 
-      </view>
+  </view>
   <!-- 搜索框结束 -->
   <!-- banner -->
-    <view class="wrap">
-      <swiper class="swipers" autoplay="{{autoplay}}" style="height:360rpx" current="{{currentSwiper}}" bindchange="swiperChange">  
-          <block wx:for="{{banner}}" wx:key='index'>  
-              <swiper-item>  
-                  <image bindload='imageLoad' style="height:360rpx" src="{{item.pic}}" ></image>  
-              </swiper-item>  
-          </block>  
-      </swiper>  
-      <view class="dots">  
-          <block wx:for="{{banner}}" wx:key='index'>  
-              <view class="dot {{index == currentSwiper ? ' active' : ''}}"></view>  
-          </block>  
-      </view>  
+  <view class="wrap">
+    <swiper class="swipers" autoplay="{{autoplay}}" style="height:360rpx" current="{{currentSwiper}}" bindchange="swiperChange">
+      <block wx:for="{{banner}}" wx:key='index' >
+        <swiper-item wx:if="{{item.file_type == 0}}">
+          <image bindload='imageLoad'  bindtap='bannerClick' data-id="{{item.id}}" style="height:360rpx" src="{{item.pic}}"></image>
+        </swiper-item>
+        <swiper-item  wx:else >
+        <image bindload='imageLoad' bindtap='onShowModal' data-id="{{item.id}}" style="height:360rpx" src="https://pic.xuerank.com/img/fm1.png"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="dots">
+      <block wx:for="{{banner}}" wx:key='index'>
+        <view class="dot {{index == currentSwiper ? ' active' : ''}}"></view>
+      </block>
+    </view>
   </view>
+  <!-- <view class='video-content'>
+
+  </view> -->
+
+     <modal  gropuId="{{groupsUser.groupsId}}" multiline='true' bindonSubmitTap="onSubmitTap"  bindinputCancel='onInputCancel' bindinputConfirm='onInputConfirm' wx:if='{{ addingText }}'>
+      <view class='modal-content video-content'>
+        <video id="myvideo" class='video-box' bindended="endvedio"	 src="http://pic.myhuanji.com/img/19060322140600001.mp4"  object-fit="cover" autoplay="{{true}}">
+    </video>
+      </view>
+    </modal>
   <!-- banner结束 -->
 
   <view class='tag-content'>
-    <view class='flex-list'>
+  
+    <button class='flex-list share-btn' open-type="share" hover-class="other-button-hover">
       <image src="/assets/index/firend.png"></image>
-      <view>邀请好友</view>
-    </view>
+      <view class='share-title'>邀请好友</view>
+    </button>
     <view class='flex-list' bindtap='goPing'>
-        <image src="/assets/index/pingtuan.png"></image>
-        <view>多人拼团</view>
+      <image src="/assets/index/pingtuan.png"></image>
+      <view>多人拼团</view>
     </view>
     <view class='flex-list' bindtap='goCoupon'>
-        <image src="/assets/index/youhui.png"></image>
-        <view>领优惠券</view>
+      <image src="/assets/index/youhui.png"></image>
+      <view>领优惠券</view>
     </view>
   </view>
 
   <view class='advertisement'>
-    <view class='left-ment'>
+    <view class='left-ment' data-url="{{indexPrd[0].url}}" bindtap='newShop'>
       <view class='left-ment-text'>
         <view class='banner-title'>新品上市</view>
-        <view  class='banner-desc'>超值尝鲜</view>
-        <view class=''>
-          <image  mode='aspectFill' src='/assets/index/xiangyou.png'></image>
+        <view class='banner-desc'>超值尝鲜</view>
+        <view class='image'>
+          <image mode='aspectFill' src='/assets/index/xiangyou.png'></image>
         </view>
       </view>
       <image src="{{indexPrd[0].pic}}"></image>
     </view>
     <view class='right-ment'>
-      <view class='item first' wx:for="{{activityList}}" wx:for-index="index" wx:key="index">
-          <view class='ban'>
-              <text class='ban-title'>{{item.name}}</text>
-              <view class='ban-desc'>{{item.note}}</view>
-              <view class='image'>
-                <image src='/assets/index/xiangyou.png'></image>
-              </view>
+      <view class='item first' bindtap='invitation' wx:for="{{activityList}}" wx:for-index="index" wx:key="index">
+        <view class='ban'>
+          <text class='ban-title'>{{item.name}}</text>
+          <view class='ban-desc'>{{item.note}}</view>
+          <view class='image'>
+            <image src='/assets/index/xiangyou.png'></image>
           </view>
-          <image src="{{item.pic}}"></image>
+        </view>
+        <image src="{{item.pic}}"></image>
       </view>
-      <!-- <view class='item'>
-          <view class='ban'>
-              <view class='ban-title'>邀请合作</view>
-              <view class='banner-desc'>共同分享收益</view>
-              <view class='image'>
-                <image src='/assets/index/xiangyou.png'></image>
-              </view>
+      <view class='item first' wx:for="{{indexGroups}}" data-url="{{item.url}}" bindtap='clickGroup' wx:for-index="index" wx:key="index">
+        <view class='ban'>
+          <text class='ban-title'>{{item.name}}</text>
+          <view class='ban-desc'>{{item.note}}</view>
+          <view class='image'>
+            <image src='/assets/index/xiangyou.png'></image>
           </view>
-          <image src="{{activityList[1].pic}}"></image>
-      </view> -->
+        </view>
+        <image src="{{item.pic}}"></image>
+      </view>
     </view>
   </view>
-
-
- <!-- <view class='advertisement'>
-    <view class='left-ment'>
-      <view class='left-ment-text'>
-        <view class='banner-title'>限时秒杀</view>
-        <view  class='banner-desc'>精细打算组合</view>
-        <view class='image'>
-          <image  mode='aspectFill' src='{{indexPrd[0].pic}}'></image>
-        </view>
-      </view>
-      <image src="/assets/index/yintao.png"></image>
-    </view>
-    <view class='right-ment'>
-      <view class='item first'  wx:for="{{activityList}}" wx:for-index="index" wx:key="index">
-          <view class='ban'>
-              <text class='ban-title'>限时秒杀</text>
-              <view class='ban-desc'>精细打算组合</view>
-              <view class='image'>
-                <image src='{{activityList[0]}}'></image>
-              </view>
-          </view>
-          <image src="/assets/index/pinggou.png"></image>
-      </view>
-      <view class='item'>
-          <view class='ban'>
-              <view class='ban-title'>限时秒杀</view>
-              <view class='banner-desc'>精细打算组合</view>
-              <view class='image'>
-                <image src='/assets/index/xiangyou.png'></image>
-              </view>
-          </view>
-          <image src="/assets/index/haoyou.png"></image>
-      </view>
-    </view>
-  </view> -->
 
   <view class='good-quality'>
     <image mode='widthFix' src="/assets/index/haohuo.png"></image>
@@ -121,7 +101,7 @@
 
   <!-- 商品列表 -->
   <view class='good-content'>
-    <view class='good-list' wx:for="{{goodList}}" data-id="{{item.id}}" bindtap='goShopDetail' wx:key="index">
+    <view class='good-list' wx:for="{{goodList}}"  data-id="{{item.id}}" bindtap='goShopDetail' wx:key="index">
       <view class='good-img'>
         <image mode='aspectFill' src="{{item.pic}}"></image>
       </view>
@@ -133,22 +113,27 @@
         <view class='good-price'>
           <view class='price present-price'>￥{{item.price}}</view>
           <view class='price original'>￥{{item.original_price}}</view>
-          <view class='price add' catchtap='addShopCart' data-id="{{item.id}}" data-price="{{item.price}}">
-            <image  src="/assets/index/add.png"></image>
-          </view>
-           <!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
-                        <image src="/assets/index/add.png"></image>
-                        <image src="/assets/index/add.png"></image>
-            </button> -->
+            <view class='price add' catchtap='addShopCart' data-id="{{item.id}}" data-price="{{item.price}}">
+              <image src="/assets/index/add.png"></image>
+            </view>
+            <!-- <view class='price add' catchtap='addBox' wx:else data-id="{{item.id}}" data-price="{{item.price}}">
+              <button open-type='getPhoneNumber' bindgetphonenumber='getPhoneNumber' class='getPhone'>
+                <image src="/assets/index/add.png"></image>
+              </button>
+            </view> -->
+          <!-- </form> -->
         </view>
       </view>
     </view>
     <view class="weui-loadmore weui-loadmore_line" wx:if='{{hasmoreData}}'>
-      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无更多数据</view>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无更多数据 </view>
     </view>
     <view class="weui-loadmore" wx:if="{{hiddenloading}}">
       <view class="weui-loading"></view>
       <view class="weui-loadmore__tips">正在加载</view>
     </view>
   </view>
+</view>
+<view class="good_box" hidden="{{hide_good_box}}" style="left: {{bus_x}}px; top: {{bus_y}}px;">
+  <image src="/assets/red_point.png"></image>
 </view>

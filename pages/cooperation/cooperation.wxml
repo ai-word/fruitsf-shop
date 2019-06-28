@@ -1,5 +1,10 @@
-<!--pages/cooperation/cooperation.wxml-->
-<!--pages/user/user.wxml-->
+<wxs module="phone">
+  var toHide = function(array) {
+    var mphone = array.substring(0, 3) + '****' + array.substring(7);
+    return mphone;
+  }
+  module.exports.toHide = toHide;
+</wxs>
 <view class='user-info'>
   <view class='header' style='background-image: url(http://shopimg123.test.upcdn.net/img/backgroupd.png)'>
     <view class='user-content-info'>
@@ -12,56 +17,37 @@
       </view>
     </view>
     <view class='coupon-content'>
-        <view class='coupon'>
-            <view>9家</view>
-            <view class='coupon-color'> 小区代理</view>
+        <view class='coupon' bindtap='goStatistics'>
+            <view>{{countNumber}}</view>
+            <view class='coupon-color'>分享用户数<image src="/assets/right.png"></image></view>
         </view>
-        <view class='coupon'>
-            <view>￥100.50</view>
-            <view class='balance'>余额</view>
+        <view class='coupon' bindtap='goStatistics'>
+            <view>￥{{totalAward}}</view>
+            <view class='balance'>分享收益<image src="/assets/right.png"></image></view>
         </view>
     </view>
   </view>
 
   <view class='cooperation-list'>
-      <view class='list-item'>
+      <view class='list-item' wx:for="{{profitDetail}}" wx:for-index="{{index}}" wx:key="index">
           <view class='left'>
-              <view class='title'>直属用户消费收益</view>
+              <view class='title'>{{item.remark}}</view>
               <view class=''>
-                <view class='time'>2019-04-16 17:43:52</view>
-                <view class='order'>订单号:201904161743052814</view>
+                <view class='time'>{{item.create_time}}</view>
+                <view class='order'>订单号:{{item.order_sn}}</view>
               </view>
           </view>
           <view class='right'>
-              <view class='price'>+42.21</view>
-              <view class='username'>微信名：mona****</view>
+              <view class='price'>+{{item.change_money}}</view>
+              <view class='username'>手机号：{{phone.toHide(item.phone)}}</view>
           </view>
       </view>
-      <view class='list-item'>
-          <view class='left'>
-              <view class='title'>直属用户消费收益</view>
-              <view class=''>
-                <view class='time'>2019-04-16 17:43:52</view>
-                <view class='order'>订单号:201904161743052814</view>
-              </view>
-          </view>
-          <view class='right'>
-              <view class='price'>+42.21</view>
-              <view class='username'>微信名：mona****</view>
-          </view>
+      <view class="weui-loadmore weui-loadmore_line" wx:if='{{hasmoreData}}'>
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无更多数据      </view>
       </view>
-      <view class='list-item'>
-          <view class='left'>
-              <view class='title'>直属用户消费收益</view>
-              <view class=''>
-                <view class='time'>2019-04-16 17:43:52</view>
-                <view class='order'>订单号:201904161743052814</view>
-              </view>
-          </view>
-          <view class='right'>
-              <view class='price'>+42.21</view>
-              <view class='username'>微信名：mona****</view>
-          </view>
+      <view class="weui-loadmore" wx:if="{{hiddenloading}}">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">正在加载</view>
       </view>
   </view>
 

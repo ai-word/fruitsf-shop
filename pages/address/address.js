@@ -10,7 +10,8 @@ Page({
     addressList: [],
     isDelete: false,
     isChecked: false,
-    addRessId: ''
+    addRessId: '',
+    user: 0
   },
 
   /**
@@ -18,6 +19,11 @@ Page({
    */
   onLoad: function (options) {
     // this.getAllAddress()
+    if (options.user != undefined) {
+      this.setData({
+        user:1
+      })
+    }
   },
 
   /**
@@ -100,14 +106,56 @@ Page({
   onUnload: function () {
 
   },
-
+  editAddress(e) {
+    wx.navigateTo({
+      url: '/pages/address/add-receiving/receiving?id=' + e.currentTarget.dataset.id + '&edit=1',
+    })
+  },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
 
   },
+  chooseAddress() {
+    var that = this
+    wx.getSetting({
+      success(res) {
+        console.log(res.authSetting['scope.userLocation'] == true, 'userLocation')
+        if (res.authSetting['scope.userLocation'] === true) {
+          wx.navigateTo({
+            url: '/pages/address/add-receiving/receiving'
+          })
+        } else if (res.authSetting['scope.userLocation'] === false) {
+          wx.openSetting({
+            success(res) {
+              console.log(res.authSetting)
+          
+            }
+          })
+        } else {
+          wx.authorize({
+            scope: 'scope.userLocation',
+            success: function (res) {
+              wx.getLocation({
+                type: 'gcj02',
+                success(res) {
+                  console.log(res, '资质')
+                  const latitude = res.latitude
+                  const longitude = res.longitude
+                  const speed = res.speed
+                  const accuracy = res.accuracy
+                }
+              })
+            },
+            fail: function (res) {
 
+            }
+          })
+        }
+      }
+    })
+  },
   /**
    * 页面上拉触底事件的处理函数
    */
@@ -120,10 +168,15 @@ Page({
     })
   },
   goToShop(e) {
-    app.globalData.addressId = e.currentTarget.dataset.id
-    wx.navigateBack({
-      delta: 1
-    })
+    var that = this
+    if (that.data.user == 1){
+
+    } else{
+      app.globalData.addressId = e.currentTarget.dataset.id
+      wx.navigateBack({
+        delta: 1
+      })
+    }
   },
   /**
    * 用户点击右上角分享

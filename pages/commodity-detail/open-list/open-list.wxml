@@ -1,21 +1,70 @@
 <!--pages/commodity-detail/open-regiment/regiment.wxml-->
-  <!-- 正在开团列表 -->
-  <view class='user-grouplist'>
-    <!-- wx:for="{{groups}}" wx:key="index" -->
-    <view class='user-item' wx:for="{{groups}}" wx:key="index">
-      <view class='flex'>
-        <image src="{{item.avatarurl}}"></image>
-        <view class='user-info'>
-          <view class='mobile'>{{item.member_phone}}</view>
-          <view class='time'>剩余01:27:13</view>
-        </view>
-      </view>
+<!-- 正在开团列表 -->
+<wxs module="phone">
+  var toHide = function(array) {
+    var mphone = array.substring(0, 3) + '****' + array.substring(7);
+    return mphone;
+  }
+  module.exports.toHide = toHide;
+</wxs>
+<wxs src="../../../utils/utils.wxs" module="tools"></wxs>
+<view class='user-grouplist'>
 
-      <view class='flex'>
-        <view class='right-style'>还差
-          <text style="color:#37D260">{{item.total_count-item.attend_count}}</text>人成团</view>
-        <view class='together'>一起拼</view>
-      </view>
+  <view class='shop-nodata' wx:if="{{groups.length ==0}}">
+    <view class='nodata'>
+    <image src="/assets/nodata.png"></image>
+    </view>
+    <view class='msg'>暂无数据！</view>
+  </view>
 
+  <view class='' wx:else>
+  <view class='user-item' wx:for="{{groups}}" wx:key="index">
+    <view class='flex'>
+      <image src="{{item.avatarurl}}"></image>
+      <view class='user-info'>
+        <view class='mobile'> {{phone.toHide(item.member_phone)}}</view>
+        <view class='time'>剩余{{tools.countDown(item.get_endtime)}}</view>
+      </view>
+    </view>
+
+    <view class='flex'>
+      <view class='right-style'>还差
+        <text style="color:#37D260">{{item.total_count-item.attend_count}}</text>人成团</view>
+      <button class='together' wx:if="{{hasPhone == true}}" data-groupId="{{item.id}}" data-time="{{tools.countDown(item.end_time)}}" bindtap='onShowModal'>一起拼</button>
+      <button class='together' wx:else open-type='getPhoneNumber' bindgetphonenumber='getPhoneNumber'>一起拼</button>
     </view>
   </view>
+  </view>
+  
+  <!-- 弹出组件  -->
+  <modal gropuId="{{groupsUser.groupsId}}" multiline='true' bindonSubmitTap="onSubmitTap" bindinputCancel='onInputCancel' bindinputConfirm='onInputConfirm' wx:if='{{ addingText }}'>
+    <view class='modal-content'>
+      <view class='title'>一起参与拼团</view>
+      <view class='desc'>仅剩余
+        <text style="color:#37D260;font-size:14px;">{{groupsUser.totalCount-groupsUser.attendCount}}</text> 个参团名额可用，赶紧来参团吧！</view>
+      <view class='modal-pularity'>
+        <image src="/assets/huo.png"></image>
+        <text class='pularity'>火热拼团ing</text>
+        <text class='down'>{{tools.countDown(groupsUser.getEndtime)}}</text>
+        <text class='end'>后结束。</text>
+      </view>
+    </view>
+
+    <view class='user-list'>
+      <view class='user-image' wx:for="{{currentUserList}}" wx:for-index="index" wx:key="{{index}}">
+        <image src='{{item.avatarurl}}'></image>
+        <view class='tuanzhang' wx:if="{{index == 0}}">团长</view>
+      </view>
+      <view class='user-image item-style' wx:for="{{3-currentUserList.length}}">
+        <text>?</text>
+      </view>
+    </view>
+
+    <view class='modal-bottom' bindtap='onSubmitTap' wx:if="{{groupType == 1}}">
+      确认拼团
+    </view>
+    <view class='modal-bottom' bindtap='logSumbitTap' wx:else>
+      确认拼团
+    </view>
+  </modal>
+</view>

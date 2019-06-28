@@ -1,6 +1,7 @@
 // pages/order-payment/order-payment.js
 const Http = require('../../utils/request.js');
 const app = getApp();
+const Util = require('../../utils/util.js');
 Page({
 
   /**
@@ -15,6 +16,9 @@ Page({
     showModal: false,
     commodity: 0,
     orderId: '',
+    isClick: true,
+    ordinary: 0,
+    endTime: '',
   },
 
   /**
@@ -23,12 +27,30 @@ Page({
   onLoad: function (options) {
     console.log(options)
     this.getOrderDetail(options.ordersn)
-    console.log(this.data.payInfo)
     if (app.globalData.payInfo == '') {
       this.wxOrderPay(options.ordersn)
     } else {
 
     }
+    if (options.ordinary != undefined) {
+      this.setData({
+        ordinary: 1
+      })
+    }
+    if (options.status == 0 || options.status == undefined) {
+      this.setData({
+        chooseSize: true
+      })
+    }else {
+      this.setData({
+        chooseSize: false
+      })
+    }
+  },
+  purChase() {
+    wx.switchTab({
+      url: '/pages/class/class'
+    })
   },
   chooseSezi: function (e) {
     // 用that取代this，防止不必要的情况发生
@@ -80,7 +102,20 @@ Page({
     }, 200)
   },
   immediatePay() {
-    this.chooseSezi()
+    let that = this
+    if (that.data.isClick) { //防止重复点击
+      that.setData({
+        isClick: false
+      })
+      setTimeout(function () {
+        that.setData({
+          isClick: true
+        })
+      }, 1500)
+    } else {
+      return false
+    }
+    that.chooseSezi()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -116,7 +151,7 @@ Page({
     }
     Http.HttpRequst(false, '/order/cancelOrder', true, '', params, 'post', false, function (res) {
       if (res.state == 'ok') {
-        that.getOrderDetail()
+        that.getOrderDetail(that.data.orderSn)
       }
     })
   },
@@ -133,6 +168,18 @@ Page({
   //订单支付
   wxOrderPay(orderSn) {
     let that = this
+    if (that.data.isClick) { //防止重复点击
+      that.setData({
+        isClick: false
+      })
+      setTimeout(function () {
+        that.setData({
+          isClick: true
+        })
+      }, 1000)
+    } else {
+      return false
+    }
     Http.HttpRequst(false, '/pay/orderPay?orderSn=' + orderSn, false, '', '', 'post', false, function (res) {
       if (res.state == 'ok') {
         that.setData({
@@ -143,6 +190,9 @@ Page({
   },
   wxPayShop() {
     //支付方法
+    // wx.navigateTo({
+    //   url: '/pages/my-order/order?ordinary=0'
+    // })
     wx.requestPayment({
       timeStamp: this.data.payInfo.timeStamp,
       nonceStr: this.data.payInfo.nonceStr,
@@ -150,17 +200,16 @@ Page({
       signType: 'MD5',
       paySign: this.data.payInfo.paySign,
       success(res) { 
-        console.log('支付成功')
-        wx:wx.showToast({
+        wx.showToast({
           title: '支付成功!',
           icon: 'nonw',
           duration: 1500,
         })
         setTimeout(()=>{
           wx.navigateTo({
-            url: '/pages/my-order/order'
+            url: '/pages/my-order/order?ordinary=0'
           })
-        },1500)
+        },1000)
       },
       fail(res) { }
     })
@@ -170,9 +219,14 @@ Page({
    */
   onShow: function () {
     console.log(app.globalData.payInfo)
-    this.setData({
-      payInfo: app.globalData.payInfo
-    })
+    wx.hideShareMenu()
+    if (app.globalData.payInfo == '') {
+      
+    } else {
+      this.setData({
+        payInfo: app.globalData.payInfo.payInfo
+      })
+    }
   },
 // 根据订单SN，查询商品订单详情
   getOrderDetail(orderSn) {
@@ -186,13 +240,31 @@ Page({
         }
         var commodity = 0
         commodity = Number(res.data.order.totalAmount) - Number(res.data.order.freightAmount) - Number(res.data.order.packageAmount)
-        console.log(params)
+        console.log(res.data,'res.datares.data')
         that.setData({
           goodDetail: res.data,
+          
           wxPayInfo: params,
+          orderSn: res.data.order.orderSn,
           commodity: commodity.toFixed(2)
         })
+        if (res.data.cutDown == undefined) {
+
+        } else{
+          that.setData({
+            endTime: res.data.cutDown,
+          })
+          that.countDown()
+        }
       }
+    })
+  },
+  logistics() {
+
+  },
+  getPhone(e) {
+    wx.makePhoneCall({
+      phoneNumber: e.currentTarget.dataset.phone //仅为示例，并非真实的电话号码
     })
   },
   /**
@@ -201,12 +273,41 @@ Page({
   onHide: function () {
 
   },
-
+  countDown() { //倒计时函数
+    // 获取当前时间，同时得到活动结束时间数组
+    let newTime = Date.parse(new Date());
+    let endTimeList = this.data.endTime;
+    let endTime = ''
+    let countDownArr = []
+    // 对结束时间进行处理渲染到页面
+    if (endTimeList == undefined) {
+      
+    } else {
+      endTime = Date.parse(new Date(endTimeList.replace(/-/g, "/")));
+    }
+    let obj = null;
+    // 如果活动未结束，对时间进行处理
+    // console.log("endTime=" + endTime);
+    // console.log("newTime=" + newTime);
+    let time = (endTime - newTime) / 1000;
+    obj = Util.parseTimeToDay(time);
+    // countDownArr.push(obj);
+    // 渲染，然后每隔一秒执行一次倒计时函数
+    this.setData({ countDown: obj })
+    setTimeout(this.countDown, 1000);
+  },
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    console.log(this.data.ordinary)
+    if (this.data.ordinary == 1) {
 
+    } else {
+      wx.switchTab({
+        url: '/pages/shopping-cart/shopping-cart',
+      })
+    }
   },
 
   /**

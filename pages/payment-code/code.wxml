@@ -1,0 +1,19 @@
+<!--pages/payment-code/code.wxml-->
+<view class='pay-content'>
+  <view class='user-content'>
+    <view class='user-info'>
+      <view class='left'>
+        <image src="{{userInfo.avatarUrl}}"></image>
+      </view>
+      <view class='right'>
+        <view class='user-name'>{{userInfo.nickName}}</view>
+        <view class='user-desc'>普通用户</view>
+      </view>
+    </view>
+
+    <view class="pay-code">
+      <image src="{{qrcodeUrl}}"></image>
+    </view>
+    <view class='title'>扫码购买更优惠</view>
+  </view>
+</view>

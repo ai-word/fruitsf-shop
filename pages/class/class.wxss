@@ -1,10 +1,12 @@
 /* pages/class/class.wxss */
+@import "../../style/cart_point.wxss";
 page{
   height: 100%;
 }
 .class-content{
   width: 100%;
   display: flex;
+  border-top: 1rpx solid #D2D2D2;
   height: 100%;
 }
 
@@ -31,8 +33,8 @@ page{
   border-left: 6rpx solid #37D260;
   color: #37D260;
   font-size: 15px;
-  border-top: 1rpx solid #EFEFEF;
-  border-bottom: 1rpx solid #EFEFEF;
+  /* border-top: 1rpx solid #EFEFEF;
+  border-bottom: 1rpx solid #EFEFEF; */
 }
 
 .list-box .category-item .name {
@@ -89,6 +91,7 @@ page{
 .add{
   display: flex;
   align-items: center;
+  padding: 0 20rpx
 }
 .goods-name{
   font-size:15px;
@@ -114,8 +117,8 @@ page{
   text-decoration:line-through;
 }
 .add image{
-  width: 40rpx;
-  height: 40rpx;
+  width: 45rpx;
+  height: 45rpx;
 }
 
 

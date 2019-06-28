@@ -1,0 +1,25 @@
+<!--pages/banner-detail/banner-detail.wxml-->
+<view class='pic-detail'>
+  <view class='banner1' wx:if="{{isShow}}">
+    <image mode='widthFix' src="http://pic.myhuanji.com/banner1/1.png"></image>
+    <image  mode='widthFix' src="http://pic.myhuanji.com/banner1/2.png"></image>
+    <image  mode='widthFix' src="http://pic.myhuanji.com/banner1/3.png"></image>
+    <image  mode='widthFix' src="http://pic.myhuanji.com/banner1/4.png"></image>
+    <image  mode='widthFix' src="http://pic.myhuanji.com/banner1/5.png"></image>
+    <image  mode='widthFix' src="http://pic.myhuanji.com/banner1/6.png"></image>
+    <image  mode='widthFix' src="http://pic.myhuanji.com/banner1/7.png"></image>
+    <view class='bottom-image' bindtap='goClass'>
+        <image  mode='aspectFill' src="http://pic.myhuanji.com/banner1/button.png"></image>
+    </view>
+  </view>
+  <view class='banner2' wx:else>
+    <image mode='widthFix' src="http://pic.myhuanji.com/banner2/1.png"></image>
+    <image  mode='widthFix' src="http://pic.myhuanji.com/banner2/2.png"></image>
+    <image  mode='widthFix' src="http://pic.myhuanji.com/banner2/3.png"></image>
+    <image  mode='widthFix' src="http://pic.myhuanji.com/banner2/4.png"></image>
+    <image  mode='widthFix' src="http://pic.myhuanji.com/banner2/5.png"></image>
+    <view class='bottom-image' bindtap='goClass'>
+        <image  mode='aspectFill' src="http://pic.myhuanji.com/banner2/button.png"></image>
+    </view>
+  </view>
+</view>

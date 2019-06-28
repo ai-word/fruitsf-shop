@@ -1,5 +1,8 @@
 // pages/address/add-receiving/receiving.js
 const Http = require('../../../utils/request.js');
+var QQMapWX = require('../../../utils/qqmap-wx-jssdk.js');
+var qqmapsdk;
+const app = getApp();
 Page({
 
   /**
@@ -27,19 +30,36 @@ Page({
     defaultStatus: 0,
     name: '',
     region: ["省", "市", "区"],
-    details: '',
+    address: '',
     phoneNumber: '',
     city: '',
+    id: '',
     detailAddRess: '',
     tag: 0,
-    isDefault: false
+    url: '/addr/save',
+    isDefault: false,
+    changeAddRess: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    qqmapsdk = new QQMapWX({
+      key: 'LNXBZ-PIPC4-EWFUB-DG6NM-5HEUJ-VCF5X'
+    });
+    if (options.id ==undefined) {
+      
+    }else{
+      this.getRess(options.id)
+    }
+    if (options.edit == undefined) {
+      this.getPosition()
+    } else {
+      this.setData({
+        url: '/addr/update',
+      })
+    }
   },
   handleName(e) {
     this.setData({
@@ -55,24 +75,28 @@ Page({
     this.setData({
       isDefault: e.detail.value
     });
+    console.log(e.detail.value)
   },
   // 创建收货地址
   getAddRess() {
     var that = this
     let defaultStatus = 0
-    if (!that.data.isDefault) {
+    if (that.data.isDefault == true) {
       defaultStatus = 1
     } else {
       defaultStatus = 0
     }
     
     let params = {
+      id: that.data.id,
       name: that.data.name,
       phoneNumber: that.data.phoneNumber,
       defaultStatus: defaultStatus,
       postCode: '',
-      city: that.data.region[0],
-      region: that.data.details,
+      address: that.data.address,
+      province: that.data.region[0],
+      city: that.data.region[1],
+      region: that.data.region[2],
       detailAddRess: that.data.detailAddRess,
       tag: that.data.tag
     }
@@ -92,7 +116,7 @@ Page({
       that.toastDialog.showDialog('请选择城市')
       return false;
     }
-    if (that.data.details == '') {
+    if (that.data.address == '') {
       that.toastDialog.showDialog('请选择地址')
       return false;
     }
@@ -100,8 +124,9 @@ Page({
       that.toastDialog.showDialog('请输入详细地址')
       return false;
     }
+
     console.log(params)
-    Http.HttpRequst(false, '/addr/save', false, '', params, 'post', false, function (res) {
+    Http.HttpRequst(false, that.data.url, false, '', params, 'post', false, function (res) {
       if (res.state == 'ok') {
         that.toastDialog.showDialog('保存成功！')
         setTimeout(() =>{
@@ -111,6 +136,7 @@ Page({
         },1000)
       }
     })
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -118,12 +144,46 @@ Page({
   onReady: function () {
     this.toastDialog = this.selectComponent("#toastDialog");
   },
-
+  getRess(id) {
+    var that = this
+    Http.HttpRequst(false, '/addr/getAdd?id=' + id, false, '', '', 'post', false, function (res) {
+      if (res.state == 'ok') {
+        if (res.data.defaultStatus == 1) {
+          that.setData({
+            isDefault: true
+          })
+        } else {
+          that.setData({
+            isDefault: false
+          })
+        }
+        if (res.data.tag == 1) {
+          that.setData({
+            currentLabel: 0
+          })
+        } else {
+          that.setData({
+            currentLabel: 1
+          })
+        }
+        that.setData({
+          region: [res.data.province, res.data.city, res.data.region],
+          name: res.data.name,
+          id: res.data.id,
+          address: res.data.address,
+          phoneNumber: res.data.phoneNumber,
+          detailAddRess: res.data.detailAddress,
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (this.data.changeAddRess == true) {
+      this.getPosition()
+    }
   },
 
   /**
@@ -169,29 +229,32 @@ Page({
         if (res.authSetting['scope.userLocation'] === true) {
           wx.chooseLocation({
             success(res) {
-              console.log(res)
+              console.log(res,'555')
               that.setData({
-                details: res.name,
-                detailAddRess:res.address
+                address: res.name,
+                changeAddRess: true
               })
             }
           })
         } else if (res.authSetting['scope.userLocation'] === false) {
           wx.openSetting({
-            success: function (res) {
+            success(res) {
               console.log(res.authSetting)
+
             }
           })
         } else {
           wx.authorize({
             scope: 'scope.userLocation',
-            success: function () {
-              wx.chooseLocation({
+            success: function (res) {
+              wx.getLocation({
+                type: 'gcj02',
                 success(res) {
-                  that.setData({
-                    details: res.name,
-                    detailAddRess: res.address
-                  })
+                  console.log(res, '资质')
+                  const latitude = res.latitude
+                  const longitude = res.longitude
+                  const speed = res.speed
+                  const accuracy = res.accuracy
                 }
               })
             },
@@ -200,6 +263,35 @@ Page({
             }
           })
         }
+      }
+    })
+  },
+  //获取经纬度
+  getPosition() {
+    let that = this;
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+        var latitude = res.latitude;
+        var longitude = res.longitude;
+        qqmapsdk.reverseGeocoder({
+          location: {
+            latitude: res.latitude,
+            longitude: res.longitude
+          },
+          success: function (res) {
+            let province = res.result.ad_info.province
+            let city = res.result.ad_info.city
+            let district = res.result.ad_info.district
+            app.globalData.region = [province, city, district]
+            that.setData({
+              region: [province, city, district],
+            })
+          }
+        })
+      },
+      fail() {
+    
       }
     })
   },

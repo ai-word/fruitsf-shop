@@ -14,15 +14,19 @@ page{
 .address{
   margin: 0 40rpx;
   display: flex;
-  padding: 32rpx 0;
+  padding: 28rpx 0;
   color:#969696;
   font-size: 14px;
   justify-content: space-between;
   border-bottom:1rpx solid #eeeeee;
 }
+.border{
+  border-bottom:none;
+}
 .address .right{
   display: flex;
   align-items: center;
+  color: #212121;
 }
 .address .right image{
   width: 26rpx;
@@ -68,6 +72,10 @@ page{
 }
 .good-left .title{
   font-size: 14px;
+  width: 300rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
   color: #212121;
 }
 .good-left .desc{
@@ -124,7 +132,11 @@ page{
   display: flex;
   align-items: center;
 }
-
+.content-parse{
+  padding:40rpx 20rpx;
+  color: #656565;
+  font-size: 14px;
+}
 .radio-group{
   display: flex;
   width: 100%;
@@ -162,9 +174,11 @@ page{
 }
 .desc-title{
   color: #212121;
+  line-height: 32rpx;
 }
 .last{
   border: none;
+  padding: 20rpx 0;
 }
 
 .footer-content{
@@ -188,6 +202,7 @@ page{
 }
 .right-content{
   flex: 1;
+  background: #37D260;
   height: 120rpx;
   color: #ffffff;
   font-size: 16px;
@@ -261,4 +276,48 @@ page{
   z-index: 2000;
   background: #fff;
   padding-top: 20rpx;
+}
+
+/*
+账单明细*/
+.pay-title,.pay-item{
+  height: 90rpx;
+  text-align: center;
+  line-height: 90rpx;
+  color: #000000;
+  font-size: 16px;
+  border-bottom:1rpx solid #E5E5E5;
+}
+
+.pay-title{
+  font-weight: bold;
+}
+.pay-item{
+  display: flex;
+  padding: 0 30rpx;
+  justify-content: space-between;
+}
+.pay-submit{
+  height:82rpx;
+  line-height: 82rpx;
+  color: #ffffff;
+  text-align: center;
+  background:rgba(55,210,96,1);
+  border-radius:0px 0px 4px 4px;
+}
+
+.pay-total{
+  display: flex;
+  padding: 0 30rpx;
+  justify-content: flex-end;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 14px;
+}
+
+.pay-right,.Pay{
+  color: #F16650
+}
+.cell-list{
+  margin-top: 20rpx;
 }

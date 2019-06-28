@@ -1,5 +1,6 @@
 // pages/order-payment/order-payment.js
 const Http = require('../../../utils/request.js');
+var WxParse = require('../../../components/wxParse/wxParse.js');
 const app = getApp();
 Page({
 
@@ -11,13 +12,20 @@ Page({
     ordersn: '',
     openDetail: '',
     showModal: false,
+    rewardModal: false,
     commodity: 0,
+    pagePrice: 0,
+    shopPrice: 0,
     orderId: '',
     totalPrice: 0,
+    freightAmount: 0,
+    finalamount: 0,
     packs: '',
     remark: '',
+    hasPhone: true,
     isPartner: false,
-    groupsInstanceId:''
+    groupsInstanceId:'',
+    productAttr: '',
   },
   addRemarks() {
     app.globalData.finalamount = ''
@@ -29,10 +37,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getHasPhone()
     this.setData({
       groupId: options.groupId,
       groupsInstanceId: options.groupsInstanceId,
     })
+    this.getAwards()
     this.getStartGrops(options.groupId, options.groupsInstanceId)
   },
   /**
@@ -41,7 +51,13 @@ Page({
   onReady: function () {
 
   },
-
+  totalMoney(shopPrice, freightAmount, finalamount, packageAmount) {
+    var total = Number(shopPrice) - Number(finalamount) + Number(freightAmount) + Number(packageAmount)
+    console.log(total, 'total')
+    this.setData({
+      totalPrice: total.toFixed(2)
+    })
+  },
   //用户
   getStartGrops(groupId, groupsInstanceId) {
     // let that = this
@@ -52,18 +68,20 @@ Page({
         var packs = res.data.packs
         packs[0].checked = true
         var packageAmount = 0
-        var totalPrice = 0
+        var shopPrice = 0
         packageAmount = packs[0].price
-        totalPrice += res.data.product.price * res.data.product.num
-        totalPrice += packageAmount //计算包装费
+        shopPrice = res.data.product.price * res.data.product.num
         that.setData({
           openDetail: res.data,
           packs: packs,
-          totalPrice: totalPrice.toFixed(2),
+          productAttr: packs[0].name,
+          shopPrice: shopPrice,
+          pagePrice: packageAmount,
           packageAmount: packageAmount,
           address: res.data.address,
           walletAmount: res.data.wallet
         })
+        that.totalMoney(shopPrice, that.data.freightAmount, that.data.finalamount, packageAmount)
       }
     })
   },
@@ -74,13 +92,10 @@ Page({
     var that = this
     Http.HttpRequst(false, '/express/getExpressFee?count=' + this.data.totalCount + '&weight=' + this.data.totalWeight + '&memberAddId=' + this.data.memberAddId + '&prdCategoryIds=' + this.data.categoreyIds, true, '', '', 'post', false, function (res) {
       if (res.state == 'ok') {
-        var totalPrice = 0
-        totalPrice = Number(that.data.totalPrice - that.data.freightAmount) + res.data
-        console.log(res, '运费')
         that.setData({
           freightAmount: res.data,
-          totalPrice: totalPrice.toFixed(2)
         })
+        that.totalMoney(that.data.shopPrice, res.data, that.data.finalamount, that.data.packageAmount)
       }
     })
   },
@@ -89,27 +104,32 @@ Page({
     var shopcar = this.data.openDetail
     console.log(shopcar)
     var types = e.currentTarget.dataset.types//是加号还是减号        
-    var totalPrice = Number(this.data.totalPrice)//总计
+    var shopPrice = 0
+    var packageNum = this.data.packageAmount
     switch (types) {
       case 'add':
         shopcar.product.num++; // 对应商品的数量+1
-        totalPrice += shopcar.product.price
-        console.log(totalPrice)
+        shopPrice = shopcar.product.price * shopcar.product.num
+        packageNum = shopcar.product.num * this.data.pagePrice
         break;
       case 'minus':
         if (shopcar.product.num == 1) {
-
+          shopPrice = shopcar.product.price * shopcar.product.num
+          packageNum = shopcar.product.num * this.data.pagePrice
         } else {
           shopcar.product.num--;//对应商品的数量-1
-          totalPrice -= shopcar.product.price
+          shopPrice = shopcar.product.price * shopcar.product.num
+          packageNum = shopcar.product.num * this.data.pagePrice
         }
         break;
     }
-    console.log(totalPrice)
-    this.setData({
+    var that = this
+    that.setData({
       openDetail: shopcar,
-      totalPrice: Number(totalPrice).toFixed(2)
-    });
+      packageAmount: packageNum,
+      shopPrice: shopPrice
+    })
+    that.totalMoney(shopPrice, that.data.freightAmount, that.data.finalamount, packageNum)
   },
   showPayModal() {
     this.setData({
@@ -121,16 +141,41 @@ Page({
       showModal: false
     })
   },
+  // 用户购买，分享返现奖励说明
+  showRewardModal() {
+    this.setData({
+      rewardModal: true
+    })
+  },
+  hideRewardModal() {
+    this.setData({
+      rewardModal: false
+    })
+  },
+  getAwards() {
+    let that = this
+    Http.HttpRequst(false, '/pay/getAwards', false, '', '', 'get', false, function (res) {
+      if (res.state == 'ok') {
+        console.log(res, '44444')
+        WxParse.wxParse('article', 'html', res.data.rules, that, 5);
+      }
+    })
+  },
+  radioText(e) {
+    console.log(e, '5555')
+    this.setData({
+      productAttr: e.currentTarget.dataset.name
+    })
+  },
   /**
  * 包装费
  */
   radioChange(e) {
-    var totalPrice = 0
-    totalPrice = Number(this.data.totalPrice) - Number(this.data.packageAmount) + Number(e.detail.value)
-    this.setData({
-      totalPrice: totalPrice.toFixed(2),
+    var that = this
+    that.setData({
       packageAmount: e.detail.value,
     })
+    that.totalMoney(that.data.shopPrice, that.data.freightAmount, that.data.finalamount, e.detail.value)
   },
   /**
    * 生命周期函数--监听页面显示
@@ -192,7 +237,8 @@ Page({
       groupsPrice: product.price * product.num,//拼团价格
       productQuantity: product.num,//购买数量
       productWeight: product.weight * product.num,//总重量
-      productCategotyId: product.categoryid//分类id
+      productCategotyId: product.categoryid,//分类id
+      productAttr: that.data.productAttr
     }
     oderItem.push(item)
     // }
@@ -253,14 +299,14 @@ Page({
         if (res.data.pay == 'SUCCESS') {
           wx.showToast({
             title: '下单成功！',
-            icon: 'nonew',
-            duration: 1500,
+            icon: 'none',
+            duration: 1000,
           })
           setTimeout(() => {
             wx.navigateTo({
-              url: '/pages/my-order/order'
+              url: '/pages/pay-success/pay-success?orderSn=' + res.data.orderSn
             })
-          }, 2000)
+          }, 1000)
         } else {
           // var payInfo = {
           //   walletAmount: that.data.walletAmount,
@@ -269,10 +315,60 @@ Page({
           // }
           app.globalData.payInfo = res.data
           wx.navigateTo({
-            url: '/pages/commodity-detail/self-mention/self-mention?ordersn=' + res.data.orderSn
+            url: '/pages/commodity-detail/self-mention/self-mention?orderSn=' + res.data.orderSn
           })
         }
       }
     })
   },
+  /**
+   * 给团长打电话
+   */
+  callLeader(){
+    if(this.data.openDetail.phone){
+      wx.makePhoneCall({
+        phoneNumber: this.data.openDetail.phone,
+      })
+    }
+  },
+  // 判断用户是否有手机号 如果有责不授权获取手机号,没有则授权
+  getHasPhone() {
+    let that = this
+    console.log('5555')
+    Http.HttpRequst(true, '/login/hasPhone', false, '', '', 'get', false, function (res) {
+      that.setData({
+        hasPhone: res.data
+      })
+      app.globalData.hasPhone = res.data
+    })
+  },
+  /**
+   * 获取手机号码服务端解密用户信息接口，获取手机号码
+   */
+  getPhoneNumber(e) {
+    console.log(e)
+    if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+      wx.showToast({
+        title: '未授权',
+        icon: 'none',
+        duration: 1000
+      })
+    } else {
+      var params = {
+        signature: app.globalData.userInfo.signature,
+        rawData: app.globalData.userInfo.rawData,
+        encryptedData: e.detail.encryptedData,
+        iv: e.detail.iv
+      }
+      var that = this
+      Http.HttpRequst(true, '/login/getPhoneNumber', false, '', params, 'get', false, function (res) {
+        if (res.state == 'ok') {
+          that.setData({
+            hasPhone: true
+          })
+          app.globalData.hasPhone = true
+        }
+      })
+    }
+  }
 })

@@ -1,6 +1,7 @@
 // pages/search/search.js
 const Http = require('../../utils/request.js');
 const app = getApp();
+const Util = require("../../utils/util.js");
 Page({
 
   /**
@@ -39,7 +40,12 @@ Page({
   onShow: function () {
 
   },
-
+  goShopDetail(e) {
+    let id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/detail/detail?id=' + id
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -116,7 +122,7 @@ Page({
         wx.showToast({
           title: '添加购物车成功！',
           icon: 'none',
-          duration: 2000,
+          duration: 1000,
         })
         that.setData({
           indexPrd: res.data

@@ -74,7 +74,7 @@
           x{{item.productQuantity}}
         </view>
         <view class='good-price'>
-          ￥{{item.productPrice}}
+          ￥{{item.groupsPrice}}
         </view>
       </view>
     </view>

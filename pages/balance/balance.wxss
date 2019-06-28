@@ -1,1 +1,85 @@
 /* pages/balance/balance.wxss */
+.balance-header{
+  width: 750rpx;
+  height: 240rpx;
+  position: relative;
+}
+.balance-header image{
+  width: 750rpx;
+  height: 240rpx;
+}
+.balance-list{
+  padding-bottom: 140rpx;
+}
+.header-title{
+  position: absolute;
+  top: 40rpx;
+  margin: 0;
+  padding: 0;
+  height: 102rpx;
+  left: 97rpx;
+}
+.price{
+  color: #ffffff;
+  font-size: 36px;
+}
+.title{
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.money{
+  color: #212121;
+  font-weight: bold;
+}
+.list-item{
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 30rpx;
+}
+.list-item .left{
+  display: flex;
+  align-items: center;
+}
+
+.left image{
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%
+}
+.price-type{
+  font-size: 14px;
+  color: #212121;
+}
+.time{
+  color: #909090;
+  font-size: 12px;
+}
+.list-item .right{
+  flex: 1;
+  margin: 0 0 0 20rpx;
+  padding: 20rpx 30rpx 20rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #EEEEEE;
+}
+.fotter-bottom{
+  position: fixed;
+  bottom:0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 0 20rpx 0;
+  background: #ffffff;
+}
+.price-btn{
+  width:670rpx;
+  height:100rpx;
+  text-align: center;
+  line-height: 100rpx;
+  margin: 0 auto;
+  background:rgba(55,210,96,1);
+  border-radius:4px;
+  color: #ffffff;
+  font-size: 16px;
+}

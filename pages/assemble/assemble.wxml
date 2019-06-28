@@ -1,20 +1,21 @@
 <!--pages/assemble/assemble.wxml-->
 <wxs src="../../utils/utils.wxs" module="tools"></wxs>
 <view class='assemble-container'>
-  <view class='navbar'>
-    <view class="weui-tab">
-      <view class="weui-navbar">
-        <block wx:for="{{tabs}}" wx:key="*this">
-          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick" data-type="{{item.value}}">
-            <view class="weui-navbar__title">{{item.name}}</view>
+  <view class="navbar weui-navbar">
+      <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" data-status="{{item.status}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}"  bindtap="tabClick" data-type="{{item.value}}">
+              <view class="weui-navbar__title">{{item.name}}</view>
           </view>
-        </block>
-        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
-      </view>
-    </view>
+      </block>
+      <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
   </view>
-  <view class="weui-tab-content">
-
+  <view class='shop-nodata' wx:if="{{noData}}">
+    <view class='nodata'>
+    <image src="/assets/nodata.png"></image>
+    </view>
+    <view class='msg'>暂无拼团!</view>
+  </view>
+  <view class="weui-tab-content" wx:else>
       <view class='self mention'>
         <view class='mention-list' wx:for="{{groupList}}" wx:key="index" wx:for-item="item">
           <view class='commodity-img'>
@@ -23,11 +24,11 @@
           <view class='commodity-desc'>
             <view class='tag-view'>
               <view class='tag-title tag-color'>{{item.attend_count}}人拼团</view>
-              <view class='tag-title tag-color-desc' wx:if="{{item.end<=0}}">已结束</view>
-              <view class='tag-title tag-color-desc' wx:else>距结束：{{item.end}}</view>
+              <view class='tag-title tag-color-desc' wx:if="{{tools.getTextByArray(item.getstart,item.getend) == 0}}">已结束</view>
+              <view class='tag-title tag-color-desc' wx:else>距结束：{{tools.getTextByArray(item.getstart,item.getend)}}天</view>
             </view>
             <view class='fruits-desc'>{{item.name}} {{item.desc}}</view>
-            <view class='fruits-time'>提货时间：{{tools.getTextByArray(item.getstart,item.getend)}}</view>
+            <view class='fruits-time'>发货时间：满团后{{item.period}}天内</view>
             <view class='fruits-price'>
               <view class='price'>￥{{item.multi_price}}</view>
             </view>

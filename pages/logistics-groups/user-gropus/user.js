@@ -1,6 +1,7 @@
 // pages/order-payment/order-payment.js
 const Http = require('../../../utils/request.js');
 const app = getApp();
+var WxParse = require('../../../components/wxParse/wxParse.js');
 Page({
 
   /**
@@ -10,18 +11,25 @@ Page({
     payInfo: '',
     ordersn: '',
     openDetail: '',
+    shopPrice:0,
     showModal: false,
     commodity: 0,
+    finalamount:0,
     freightAmount: 0,
     orderId: '',
     totalPrice: 0,
+    pagePrice: 0,
     packs: '',
     remark: '',
+    address: '',
+    isAddRess: false,
     isPartner: false,
-    groupsInstanceId: ''
+    hasPhone: true,
+    groupsInstanceId: '',
+    productAttr: '',
   },
   addRemarks() {
-    app.globalData.finalamount = ''
+    // app.globalData.finalamount = 0
     wx.navigateTo({
       url: '/pages/addRemarks/addRemarks'
     })
@@ -30,10 +38,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getHasPhone()
     this.setData({
       groupId: options.groupId,
       groupsInstanceId: options.groupsInstanceId,
     })
+    this.getAwards()
     this.getStartGrops(options.groupId, options.groupsInstanceId)
   },
   /**
@@ -41,6 +51,16 @@ Page({
    */
   onReady: function () {
 
+  },
+  /**
+   * 计算总金额
+   */
+  totalMoney(shopPrice, freightAmount, finalamount, packageAmount) {
+    var total = Number(shopPrice) - Number(finalamount) + Number(freightAmount) + Number(packageAmount)
+    console.log(total, 'total')
+    this.setData({
+      totalPrice: total.toFixed(2)
+    })
   },
   //用户开团
   getStartGrops(groupId, groupsInstanceId) {
@@ -51,24 +71,34 @@ Page({
         var packs = res.data.packs
         packs[0].checked = true
         var packageAmount = 0
-        var totalPrice = 0
+        var shopPrice = 0
         packageAmount = packs[0].price
-        totalPrice += res.data.product.price * res.data.product.num
-        totalPrice += packageAmount //计算包装费
-        console.log(totalPrice, 'totalPricetotalPricetotalPrice')
+        shopPrice = res.data.product.price * res.data.product.num
         that.setData({
           openDetail: res.data,//详情
           packs: packs, //包装
-          totalPrice: totalPrice.toFixed(2),//总金额
+          productAttr: packs[0].name,
+          shopPrice: shopPrice,
+          pagePrice: packageAmount,
           packageAmount: packageAmount,//包装费
-          memberAddId: res.data.address.id, //地址id
-          address: res.data.address, //地址
           walletAmount: res.data.wallet, //微信钱包
           categoreyIds: res.data.product.categoryid,//分类id
           totalCount: res.data.product.num, //箱数
           totalWeight: res.data.product.weight
         })
-        that.getExpressFee()
+        that.totalMoney(shopPrice, that.data.freightAmount, that.data.finalamount, packageAmount)
+        //判断地址为空
+     
+        if (res.data.address == undefined) {
+      
+        } else {
+          that.setData({
+            isAddRess: true,
+            address: res.data.address,
+            memberAddId: res.data.address.id,
+          })
+          that.getExpressFee()
+        }
       }
     })
   },
@@ -79,13 +109,10 @@ Page({
     var that = this
     Http.HttpRequst(false, '/express/getExpressFee?count=' + this.data.totalCount + '&weight=' + this.data.totalWeight + '&memberAddId=' + this.data.memberAddId + '&prdCategoryIds=' + this.data.categoreyIds, true, '', '', 'post', false, function (res) {
       if (res.state == 'ok') {
-        var totalPrice = 0
-        totalPrice = Number(that.data.totalPrice - that.data.freightAmount) + res.data
-        console.log(that.data.totalPrice, that.data.freightAmount, '运费')
         that.setData({
           freightAmount: res.data,
-          totalPrice: totalPrice.toFixed(2)
         })
+        that.totalMoney(that.data.shopPrice, that.data.freightAmount, that.data.finalamount, that.data.packageAmount)
         if (isAdd == true) {
 
         } else { }
@@ -96,44 +123,50 @@ Page({
   numchangeTap: function (e) {
     var shopcar = this.data.openDetail
     console.log(shopcar)
-    // this.data.freightAmount =  0
     var types = e.currentTarget.dataset.types//是加号还是减号        
-    var totalPrice = Number(this.data.totalPrice)//总计
     var totalCount = this.data.totalCount
     var totalWeight = this.data.totalWeight
+    var packageNum = this.data.packageAmount
+    var shopPrice = 0
     switch (types) {
       case 'add':
         shopcar.product.num++; // 对应商品的数量+1
-        totalPrice += shopcar.product.price
-        console.log(totalPrice)
+        shopPrice = shopcar.product.price * shopcar.product.num
         totalCount = shopcar.product.num, //箱数
-          totalWeight = shopcar.product.weight * shopcar.product.num//重量
-        // that.getExpressFee()
-        console.log(shopcar.product.num)
+        packageNum = shopcar.product.num * this.data.pagePrice,
+        totalWeight = shopcar.product.weight * shopcar.product.num//重量
         break;
       case 'minus':
         if (shopcar.product.num == 1) {
-
+          shopPrice = shopcar.product.price * shopcar.product.num
+          packageNum = shopcar.product.num * this.data.pagePrice
         } else {
-          shopcar.product.num--;//对应商品的数量-1
-          totalPrice -= shopcar.product.price
+          shopcar.product.num--;//对应商品的数量-
+          shopPrice = shopcar.product.price * shopcar.product.num
           totalCount = shopcar.product.num, //箱数
-            console.log(shopcar.product.num)
+          packageNum = shopcar.product.num * this.data.pagePrice,
           totalWeight = shopcar.product.weight * shopcar.product.num //重量
         }
         break;
     }
-    console.log(totalCount)
+    var that = this
+
     this.setData({
       openDetail: shopcar,
       totalCount: totalCount,
+      shopPrice: shopPrice,
       totalWeight: totalWeight,
-      totalPrice: Number(totalPrice).toFixed(2)
+      packageAmount: packageNum,
     });
+    that.totalMoney(shopPrice, that.data.freightAmount, that.data.finalamount, packageNum)
     if (shopcar.product.num == 1) {
-      // this.getExpressFee(true)
+     
     } else {
-      this.getExpressFee(true) //点击加减计算地址
+      if (app.globalData.addressId == '') {
+
+      } else {
+        this.getExpressFee(true) //点击加减计算地址
+      }
     }
   },
   getAddDetails(id) {
@@ -160,35 +193,38 @@ Page({
       showModal: false
     })
   },
+  radioText(e) {
+    console.log(e, '5555')
+    this.setData({
+      productAttr: e.currentTarget.dataset.name
+    })
+  },
   /**
  * 包装费
  */
   radioChange(e) {
-    var totalPrice = 0
-    totalPrice = Number(this.data.totalPrice) - Number(this.data.packageAmount) + Number(e.detail.value)
-    this.setData({
-      totalPrice: totalPrice.toFixed(2),
+    var that = this
+    that.setData({
       packageAmount: e.detail.value,
     })
+    that.totalMoney(that.data.shopPrice, that.data.freightAmount, that.data.finalamount, e.detail.value)
   },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (app.globalData.finalamount) {
-      var totalPrice = Number(this.data.totalPrice) - Number(app.globalData.finalamount)
+    // if (app.globalData.finalamount) {
       this.setData({
         finalamount: app.globalData.finalamount,
-        totalPrice: totalPrice.toFixed(2),
         couponCode: app.globalData.couponCode
       })
-    }
-    console.log(app.globalData.addressId, '55555')
-    if (app.globalData.addressId) {
+    // }
+    if (app.globalData.addressId == '') {
+
+    } else {
       this.setData({
         memberAddId: app.globalData.addressId
       })
-      // this.getExpressFee() //算运费
       this.getAddDetails(app.globalData.addressId) //id查地址
     }
     this.setData({
@@ -248,7 +284,8 @@ Page({
       groupsPrice: product.price * product.num,//拼团价格
       productQuantity: product.num,//购买数量
       productWeight: product.weight * product.num,//总重量
-      productCategotyId: product.categoryid//分类id
+      productCategotyId: product.categoryid,//分类id
+      productAttr: that.data.productAttr
     }
     oderItem.push(item)
     // }
@@ -326,4 +363,64 @@ Page({
       }
     })
   },
+  // 用户购买，分享返现奖励说明
+  showRewardModal() {
+    this.setData({
+      rewardModal: true
+    })
+  },
+  hideRewardModal() {
+    this.setData({
+      rewardModal: false
+    })
+  },
+  getAwards() {
+    let that = this
+    Http.HttpRequst(false, '/pay/getAwards', false, '', '', 'get', false, function (res) {
+      if (res.state == 'ok') {
+        console.log(res, '44444')
+        WxParse.wxParse('article', 'html', res.data.rules, that, 5);
+      }
+    })
+  },
+  // 判断用户是否有手机号 如果有责不授权获取手机号,没有则授权
+  getHasPhone() {
+    let that = this
+    console.log('5555')
+    Http.HttpRequst(true, '/login/hasPhone', false, '', '', 'get', false, function (res) {
+      that.setData({
+        hasPhone: res.data
+      })
+      app.globalData.hasPhone = res.data
+    })
+  },
+  /**
+   * 获取手机号码服务端解密用户信息接口，获取手机号码
+   */
+  getPhoneNumber(e) {
+    console.log(e)
+    if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+      wx.showToast({
+        title: '未授权',
+        icon: 'none',
+        duration: 1000
+      })
+    } else {
+      var params = {
+        signature: app.globalData.userInfo.signature,
+        rawData: app.globalData.userInfo.rawData,
+        encryptedData: e.detail.encryptedData,
+        iv: e.detail.iv
+      }
+      var that = this
+      Http.HttpRequst(true, '/login/getPhoneNumber', false, '', params, 'get', false, function (res) {
+        if (res.state == 'ok') {
+          that.setData({
+            hasPhone: true
+          })
+          app.globalData.hasPhone = true
+        }
+      })
+    }
+  }
 })

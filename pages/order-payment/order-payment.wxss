@@ -18,8 +18,9 @@ page{
   justify-content: space-between;
 }
 .left-text image{
-  width: 38rpx;
-  height: 38rpx;
+  width: 36rpx;
+  height: 36rpx;
+  padding: 0 0 0 10rpx;
 }
 .left-text{
   display: flex;
@@ -193,6 +194,10 @@ page{
 .good-left .title{
   font-size: 14px;
   color: #212121;
+  width: 300rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 .good-left .desc{
   font-size: 12px;
@@ -235,6 +240,17 @@ page{
   justify-content: space-between;
   background: #ffffff;
   border-bottom: 1rpx solid #EEEEEE;
+}
+.order-cells-ress{
+   display: flex;
+    margin: 0 40rpx;
+    padding: 10rpx 0;
+  justify-content: space-between;
+  background: #ffffff;
+  border-bottom: 1rpx solid #EEEEEE;
+}
+.order-cells-ress .left{
+  width: 300rpx;
 }
 .first{
   border-bottom: 1rpx solid #EEEEEE;
@@ -403,4 +419,64 @@ button[type=again]{
 
 .pay-right,.Pay{
   color: #F16650
+}
+
+/* 地址 */
+.order-info,.cell-list{
+  background: #ffffff;
+}
+
+.order-flex{
+  display: flex;
+  justify-content: space-between;
+  margin: 0 30rpx;
+  align-items: center;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 14px;
+  border-bottom:1px solid #EEEEEE
+}
+.bordernone{
+  border-bottom:none;
+}
+.order-items{
+  display: flex;
+  color: #656565;
+  font-size: 14px;
+  align-items: center;
+}
+.image-style{
+  font-size: 14px;
+}
+.left image{
+  padding: 0 20rpx 0 0;
+}
+.order-items image{
+  width: 32rpx;
+  height: 32rpx;
+}
+.color{
+ color:#37D260
+}
+.ziti{
+  color:#37D260!important;
+}
+.tuanzhan{
+  color: #212121;
+  font-weight: bold;
+}
+
+.right image{
+  width: 12rpx!important;
+  height: 22rpx!important;
+  padding:  0 0 0 20rpx;
+}
+.tuan{
+  color: #212121;
+  font-weight: 500;
+}
+.black image{
+  width: 12rpx!important;
+  height: 22rpx!important;
+  padding:  0 0 0 20rpx;
 }

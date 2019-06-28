@@ -1,0 +1,22 @@
+/* pages/banner-detail/banner-detail.wxss */
+page{
+  height: 100%;
+}
+.pic-detail,.banner2{
+  height: 100%;
+}
+.pic-detail image{
+  width: 750rpx;
+  height: 100%;
+  margin: 0;
+  padding: 0
+}
+.bottom-image{
+  display: flex;
+  padding: 0 0 30rpx 0;
+  justify-content: center;
+}
+.bottom-image image{
+  width: 300rpx;
+  height: 100rpx;
+}

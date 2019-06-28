@@ -5,7 +5,7 @@
       <view class='search-box'>
           <view class="search-box-bar">
               <icon type='search' size="16"></icon>
-              <input class="search-view-input" bindinput='getValue' placeholder='请输入搜索内容'/>
+              <input class="search-view-input" bindconfirm="getSearchGoods" bindinput='getValue' placeholder='请输入搜索内容'/>
           </view>
           <view class='activity-add' bindtap='getSearchGoods'>搜索</view>
       </view>

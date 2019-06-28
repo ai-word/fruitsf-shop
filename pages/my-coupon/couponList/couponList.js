@@ -49,14 +49,21 @@ Page({
       if(res.state == 'ok') {
         if(res.data.length == 0 ) {
           that.setData({
-            noData: true
+            noData: true,
+            couponList: []
           })
         } else {
           that.setData({
+            noData: false,
             couponList: res.data
           })
         }
       }
+    })
+  },
+  getCoupon() {
+    wx.switchTab({
+      url: '/pages/class/class',
     })
   },
 });

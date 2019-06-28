@@ -1,10 +1,24 @@
 <!--pages/commodity-detail/open-regiment/open-regiment.wxml-->
 <view class='order-payment'>
   <view class='open-regiment-content'>
-  <view class='nav'>
-    <image src="/assets/user/pt.png"></image>
-  </view>
-
+    <view class='nav'>
+      <image src="/assets/user/pt.png"></image>
+    </view>
+    <view class='cell-list ' wx:if="{{isPartner}}" style='margin-bottom:20rpx'>
+      <view class='order-flex bordernone'>
+        <view class='order-cells order-detail' bindtap='showRewardModal'>
+          团长奖励
+          <image src="/assets/wenhao.png"></image>
+        </view>
+        <view class='order-cells'>
+          <radio-group class="radio-group" bindtap="regChange">
+            <label class="radio">
+              <radio value="0" checked="{{isShow}}">仅建团不购买</radio>
+            </label>
+          </radio-group>
+        </view>
+      </view>
+    </view>
     <view class='header-address'>
       <view class='order-flex'>
         <view class='order-cells left'>
@@ -13,7 +27,6 @@
         </view>
         <view class='order-cells color right'>
           {{openDetail.endTime}}
-          <image src="/assets/open/right.png"></image>
         </view>
       </view>
         <view class='address'>
@@ -23,7 +36,7 @@
             请选择收货地址
           </view>
         </view>
-        <view class='rece-goods'>
+        <view class='rece-goods' wx:if="{{address!=''}}">
           <view class='left'>
             <image src="/assets/address.png"></image>
             <text class='user-name'>{{address.name}}</text>
@@ -49,19 +62,21 @@
           </view>
         </view>
         <view class='good-right'>
-          <!-- <view class='good-num'>
-            x6
-          </view> -->
           <view class='good-price price'>
             ￥{{openDetail.product.price}}
           </view>
-            <view class='num_change'>
+            <view class='num_change' wx:if="{{!isShow}}">
               <image class='minus_icon' src='/assets/index/cut.png' data-index='{{index}}' data-price="{{openDetail.product.price}}" data-types='minus' catchtap='numchangeTap'>
               </image>
-              <!-- <image class='minus_icon' src='/assets/index/cut.png'>
-              </image> -->
               <text class='shop_num'>{{openDetail.product.num}}</text>
               <image class='add_icon' data-price="{{openDetail.product.price}}" data-types='add' catchtap='numchangeTap' src='/assets/index/add.png'>
+              </image>
+            </view>
+            <view class='num_change' wx:else>
+              <image class='minus_icon' src='/assets/index/cut.png' data-index='{{index}}'>
+              </image>
+              <text class='shop_num'>{{0}}</text>
+              <image class='add_icon' data-price="{{openDetail.product.price}}"  src='/assets/index/add.png'>
               </image>
             </view>
         </view>
@@ -74,9 +89,14 @@
           包装选择
         </view>
         <view class='order-cell pack-right'>
-          <radio-group class="radio-group" bindchange="radioChange">
-            <label class="radio" wx:for="{{packs}}" wx:for-index="index" wx:key="index">
+          <radio-group class="radio-group" bindchange="radioChange" wx:if="{{!isShow}}">
+            <label class="radio" wx:for="{{packs}}" bindtap="radioText" wx:for-index="index" wx:key="index" data-name="{{item.name}}">
               <radio value="{{item.price}}" checked="{{item.checked}}">{{item.name}}</radio>
+            </label>
+          </radio-group>
+          <radio-group class="radio-group" wx:else>
+            <label class="radio" wx:for="{{packs}}" bindtap="radioText" wx:for-index="index" wx:key="index" data-name="{{item.name}}">
+              <radio  checked="{{item.checked}}">{{item.name}}</radio>
             </label>
           </radio-group>
         </view>
@@ -85,25 +105,11 @@
         <view class='order-cells'>
           包装费
         </view>
-        <view class='order-cells price'>
+        <view class='order-cells price' wx:if="{{!isShow}}">
           ￥ {{packageAmount}}
         </view>
-      </view>
-    </view>
-
-
-    <view class='cell-list ' wx:if="{{isPartner}}">
-      <view class='order-flex bordernone'>
-        <view class='order-cells order-detail'>
-          团长奖励
-          <image src="/assets/wenhao.png"></image>
-        </view>
-        <view class='order-cells'>
-          <radio-group class="radio-group" bindchange="radioChange">
-            <label class="radio">
-              <radio value="0" checked="{{isPartner}}">仅建团不购买</radio>
-            </label>
-          </radio-group>
+        <view class='order-cells price' wx:else>
+          ￥ 0.00
         </view>
       </view>
     </view>
@@ -116,7 +122,8 @@
         </view>
         <view class='order-cells black'>
           <text class='total'>合计:</text>
-          <text class='price'>￥{{totalPrice}}</text>
+          <text class='price' wx:if="{{!isShow}}">￥{{totalPrice}}</text>
+          <text class='price' wx:else>￥ 0.00</text>
         </view>
       </view>
     </view>
@@ -146,8 +153,11 @@
   </view>
   <view class='footer-content'>
       <view class='left-content'>
-          <view class='total-price'>
+          <view class='total-price' wx:if="{{!isShow}}">
             ￥{{totalPrice}}
+          </view>
+          <view class='total-price' wx:else>
+            ￥ 0.00
           </view>
           <text class='shu'>|</text>
           <view class='youhui' wx:if="{{finalamount ==0}}">
@@ -157,10 +167,26 @@
             优惠: ￥0.00
           </view>
       </view>
-      <view class='right-content'  bindtap='placeOrder'>
+      <button class='right-content' wx:if="{{hasPhone == true}}" bindtap='placeOrder'>
         提交提单
-      </view>
+      </button>
+        <button class='right-content' wx:else open-type='getPhoneNumber' bindgetphonenumber='getPhoneNumber'>
+        提交提单
+      </button>
   </view>
+
+  <pay-toast show="{{rewardModal}}" bindcancel="showReward" bindconfirm='modalConfirm'>
+    <view class='pay-price-content open-modal'>
+      <view class='content-parse' wx:for="{{rule}}" wx:for-index="index" wx:key="index">
+        <view class='title'>{{item.condition}}</view>
+        <view class='title'>{{item.connum}}</view>
+      </view>
+
+    </view>
+    <view class='pay-submit' bindtap='hideRewardModal'>
+      确定
+    </view>
+  </pay-toast>
 
   <pay-toast show="{{showModal}}" bindcancel="modalCancel" bindconfirm='modalConfirm'>
     <view class='pay-price-content'>
@@ -169,23 +195,26 @@
       </view>
       <view class='pay-item'>
         <text class='pay-left'>商品金额</text>
-        <text class='pay-right'>￥{{totalPrice}}</text>
+        <text class='pay-right'  wx:if="{{!isShow}}">￥{{goodsPrice}}</text>
+        <text class='pay-right'  wx:else>￥0.00</text>
       </view>
       <view class='pay-item'>
         <text class='pay-left'>配送费</text>
-        <text class='pay-right'>￥0.00}</text>
+        <text class='pay-right'>￥0.00</text>
       </view>
       <view class='pay-item'>
         <text class='pay-left'>包装费</text>
-        <text class='pay-right'>￥{{packageAmount}}</text>
+        <text class='pay-right' wx:if="{{!isShow}}">￥{{packageAmount}}</text>
+        <text class='pay-right' wx:else>￥0.00</text>
       </view>
       <view class='pay-item'>
         <text class='pay-left'>优惠券</text>
-        <text class='pay-right'>￥0.00</text>
+        <text class='pay-right'>-￥0.00</text>
       </view>
     </view>
     <view class='pay-total'>
-      <text class='pay-left'>实付款:<text class='Pay'>￥{{totalPrice}}</text></text>
+      <text class='pay-left'>实付款:<text class='Pay' wx:if="{{!isShow}}">￥{{totalPrice}}</text>
+      <text class='Pay' wx:else>￥ 0.00</text></text>
     </view>
     <view class='pay-submit' bindtap='hidePayToast'>
       确定

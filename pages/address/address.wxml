@@ -11,8 +11,8 @@
     <view class='msg'>您还没有添加收货地址</view>
   </view>
   <view class='receiving' wx:if="{{addressList.length>0}}">
-    <view class='receiving-list' wx:for="{{addressList}}" bindtap='goToShop' data-id="{{item.id}}" wx:key="index">
-      <view class='item'>
+    <view class='receiving-list' wx:for="{{addressList}}" catchtap='goToShop' data-id="{{item.id}}" wx:key="index">
+      <view class='item left'>
         <view class='title'>
           {{item.city}} - {{item.region}}
           <text class='tag' wx:if="{{item.tag == 1}}">家</text>
@@ -26,7 +26,7 @@
         </view>
       </view>
       <view class='item right' wx:if="{{!isDelete}}">
-        <image src="/assets/edit.png"></image>
+        <image src="/assets/edit.png" data-id="{{item.id}}" catchtap="editAddress"></image>
       </view>
       <view class='item right check' wx:else>
         <image class='check_img' wx:if="{{item.select == false}}" data-index='{{index}}' data-id="{{item.id}}" src='/assets/index/check.png' catchtap='checkTap'></image>
@@ -36,11 +36,11 @@
   </view>
   <toast inner-text=""  id='toastDialog'></toast>
   <view class='footer-bottom'>
-    <view class='add-ress' wx:if="{{!isDelete}}" bindtap='goAddress'>
+    <button class='add-ress' wx:if="{{!isDelete || addressList.length ==0}}" bindtap='chooseAddress'>
       添加新收货地址
-    </view>
-    <view class='add-ress delete-ress' wx:else bindtap='submitDelete'>
+    </button>
+    <button class='add-ress delete-ress' wx:else catchtap='submitDelete'>
       删除地址
-    </view>
+    </button>
   </view>
 </view>

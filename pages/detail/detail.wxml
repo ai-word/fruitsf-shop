@@ -7,7 +7,7 @@
         <swiper class="swipers" autoplay="{{autoplay}}" style="height:750rpx" bindchange="swiperChange" interval="5000">
           <block wx:for="{{groupPics}}" wx:key='index'>
             <swiper-item>
-              <image mode="aspectFill" bindload='imageLoad' style="height:750rpx" src="{{item.pic_url}}"></image>
+              <image mode="aspectFill" style="width:750rpx;height:750rpx" src="{{item.pic_url}}"></image>
             </swiper-item>
           </block>
         </swiper>
@@ -33,8 +33,11 @@
           <view class="goods-soldNum">月售{{groups.sales_num}}</view>
         </view>
 
-        <view bindtap="handleClickShare" class="share-reamin">
-          <image src="http://app-1256684088.cos.ap-beijing.myqcloud.com/wujie/iconShare.png"></image>分享</view>
+          <button hover-class="other-button-hover" wx:if="{{isLogin == true}}" class="share-reamin" bindtap="showModal">
+          <image src="http://app-1256684088.cos.ap-beijing.myqcloud.com/wujie/iconShare.png"></image>分享</button>
+         <button hover-class="other-button-hover" wx:else class="share-reamin" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+          <image src="http://app-1256684088.cos.ap-beijing.myqcloud.com/wujie/iconShare.png"></image>分享</button>
+          
       </view>
       <view class="goods-promise" wx:if="{{!isNull}}">
         <view>
@@ -73,18 +76,79 @@
   </view>
 
    <view class='footer-cart'>
-    <view class='flex-footer left'>
-      <view class='img index' bindtap='goTabIndex'>
-        <image src="/assets/weapp/index.png"></image>
+      
+      <view class='flex-footer left' wx:if="{{isLogin == true}}" >
+        <button class='img index'  bindtap='goTabIndex'>
+          <image src="/assets/weapp/index.png"></image>
+        </button>
+        <button class='img shop-car' bindtap='goTabCart'>
+          <image src="/assets/weapp/shop.png"></image>
+          <view class='reddot' wx:if="{{cartNum!=0}}">{{cartNum}}</view>
+        </button>
       </view>
-      <view class='img shop-car'>
-        <image src="/assets/weapp/shop.png"></image>
-      </view>
-    </view>
-    <view class='flex-footer right'>
-        <view >
+
+      <button class='flex-footer left' wx:else open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo"  >
+        <view class='img index' >
+          <image src="/assets/weapp/index.png"></image>
+        </view>
+        <view class='img shop-car'>
+          <image src="/assets/weapp/shop.png"></image>
+        </view>
+      </button>
+
+        <button  wx:if="{{isLogin == true}}" class='flex-footer right' bindtap='addCart'>
+        <view>
           加入购物车
         </view>
+    </button>
+    <button  wx:else open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class='flex-footer right'>
+        <view>
+          加入购物车
+        </view>
+    </button>
+  </view>
+
+  <!-- <canvasdrawer painting="{{painting}}" class="canvasdrawer" bind:getImage="eventGetImage"/>
+
+
+  <button bind:tap="eventDraw">绘制</button>
+  <button bind:tap="eventSave">保存到本地</button> -->
+
+  <view class='share-friend' hidden="{{hideShareModal}}">
+    <view class="share-cancel"></view>
+    <view class='share-dialog-body' bindtap="hideShareModal">
+      <image src="{{shareImage}}" mode='aspectFill' class="share-image"></image>
+      <poster id="poster" hide-loading="{{true}}" preload="{{false}}" config="{{posterConfig}}" bind:success="onPosterSuccess" bind:fail="onPosterFail">
+    </poster>
+      <view class='bottom-btn'>
+        <view catchtap="eventSave" class='preserve'>保存图片</view>
+      </view>
     </view>
   </view>
+
+
+  <view class="modals modals-bottom-dialog" hidden="{{hideModal}}">
+    <view class="modals-cancel" bindtap="hideModal"></view>
+    <view class="bottom-dialog-body bottom-pos" animation="{{animationData}}">
+      <view class='share-title' bindtap="hideModal">
+        <text>分享至</text>
+        <image src="/assets/guanbi.png"></image>
+      </view>
+      <view class='share-type'>
+        <view class='share-type-item'>
+         <button class='share-module' id="shareBtn" open-type="share" hover-class="other-button-hover">
+            <image src="/assets/wx.png"></image>
+          </button>
+          <view>分享给好友</view>
+        </view>
+        <view class='share-type-item'>
+          <button class='share-module' id="shareBtn" hover-class="other-button-hover" bindtap='showShareModal'>
+            <image src="/assets/friend.png"></image>
+          </button>
+          <view>生成分享图</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
 </view>

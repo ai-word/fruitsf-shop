@@ -111,7 +111,7 @@
   align-items: center;
 }
 .share-reamin{
-  width:144rpx;
+  /* width:144rpx; */
   position: absolute;
   right: 0;
   height:66rpx;
@@ -191,7 +191,11 @@
 .hand {
   color:#37D260;
   font-size: 13px;
+  background: #ffffff;
   padding: 0 15rpx 0 0;
+}
+.hand::after{
+  border: none
 }
 .team-box .hand-right{
   display: flex;
@@ -241,7 +245,7 @@
   padding: 0 30rpx 0 0;
 }
 .together{
-  width:126rpx;
+  /* width:126rpx; */
   height:48rpx;
   background:rgba(55,210,96,1);
   border-radius:24px;
@@ -291,7 +295,13 @@
 }
 .flex-fotter{
   flex: 1;
+  background: #37D260;
+  /* height: 120rpx;
+  line-height: 120rpx; */
   text-align: center;
+}
+.flex-fotter::after{
+  border: none;
 }
 
 .flex-fotter .index image{
@@ -308,9 +318,7 @@
   justify-content: center;
   align-items: center;
 }
-.flex-fotter .index{
-  border-right:1px solid #D2D2D2;
-}
+
 .detail-fotter .left .img{
   flex: 1;
   padding: 10rpx 0;
