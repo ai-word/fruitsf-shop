@@ -5,7 +5,7 @@
 目前涉及的功能有很多,购物车,倒计时，分享，生成海报分享朋友圈,拼团下单，优惠券等
 
 ## 在线预览
-![小程序码.jpg](https://github.com/yjx-passion/fruitsf-shop/blob/master/images/erweima.jpg)
+![image](https://github.com/yjx-passion/fruitsf-shop/blob/master/images/erweima.jpg)
 
 ## 小程序展示
 
